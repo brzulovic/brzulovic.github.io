@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Cgs on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/cg/</link>
+    <description>Recent content in Cgs on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Thu, 26 Mar 2026 17:10:00 +0100</lastBuildDate>
+    <atom:link href="/cg/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cg-Conditions d’utilisation</title>
+      <link>/cg/cg-conditions-d-utilisation/</link>
+      <pubDate>Thu, 26 Mar 2026 17:10:00 +0100</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/cg/cg-conditions-d-utilisation/</guid>
+      <description>&lt;h1 id=&#34;conditions-générales-dutilisation-de-nom-de-lapplication&#34;&gt;Conditions générales d’utilisation de [Nom de l’Application]&lt;/h1&gt;&#xA;&lt;p&gt;Dernière mise à jour : 26 mars 2026&lt;/p&gt;&#xA;&lt;p&gt;Les présentes Conditions générales d’utilisation (« Conditions ») régissent l’accès et l’usage du site [URL du site] et de l’application web [Nom de l’Application] proposés par [Nom de l’Organisation]. En utilisant le Service, vous acceptez pleinement ces Conditions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-objet-du-service&#34;&gt;1. Objet du Service&lt;/h2&gt;&#xA;&lt;p&gt;[Nom de l’Application] est une application web permettant notamment de [décrire brièvement les fonctionnalités principales]. Le Service peut évoluer au fil du temps, avec ajout, modification ou suppression de fonctionnalités.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h1 id="conditions-générales-dutilisation-de-nom-de-lapplication">Conditions générales d’utilisation de [Nom de l’Application]</h1>
+<p>Dernière mise à jour : 26 mars 2026</p>
+<p>Les présentes Conditions générales d’utilisation (« Conditions ») régissent l’accès et l’usage du site [URL du site] et de l’application web [Nom de l’Application] proposés par [Nom de l’Organisation]. En utilisant le Service, vous acceptez pleinement ces Conditions.</p>
+<h2 id="1-objet-du-service">1. Objet du Service</h2>
+<p>[Nom de l’Application] est une application web permettant notamment de [décrire brièvement les fonctionnalités principales]. Le Service peut évoluer au fil du temps, avec ajout, modification ou suppression de fonctionnalités.</p>
+<h2 id="2-acceptation-des-conditions">2. Acceptation des Conditions</h2>
+<ul>
+<li>L’utilisation du Service suppose l’acceptation préalable des présentes Conditions.</li>
+<li>Si vous n’acceptez pas ces Conditions, vous devez cesser d’utiliser le Service.</li>
+<li>Vous déclarez disposer de la capacité juridique nécessaire ou utiliser le Service avec l’autorisation de votre représentant légal.</li>
+</ul>
+<h2 id="3-compte-utilisateur-et-connexion">3. Compte utilisateur et connexion</h2>
+<ul>
+<li>Certaines fonctionnalités nécessitent un compte utilisateur ou une connexion via un compte Google (authentification OAuth).</li>
+<li>Vous devez fournir des informations exactes, complètes et à jour et maintenir la confidentialité de vos identifiants.</li>
+<li>Vous êtes responsable de toute activité réalisée depuis votre compte et devez nous informer sans délai de toute utilisation non autorisée.</li>
+</ul>
+<h2 id="4-utilisation-de-google-et-des-api-google">4. Utilisation de Google et des API Google</h2>
+<p>Lorsque vous utilisez Google pour vous connecter ou autorisez l’accès à des données via OAuth :</p>
+<ul>
+<li>Le Service n’utilise que les scopes et données strictement nécessaires aux fonctionnalités décrites.</li>
+<li>L’accès et l’utilisation des données issues des API Google sont conformes à la Google API Services User Data Policy, y compris les règles de « Limited Use », ainsi qu’aux règles et conditions applicables de Google.</li>
+<li>Le Service n’est ni affilié ni sponsorisé par Google, sauf mention explicite.</li>
+</ul>
+<h2 id="5-comportement-attendu">5. Comportement attendu</h2>
+<p>Vous vous engagez à :</p>
+<ul>
+<li>Utiliser le Service dans le respect des lois et réglementations applicables.</li>
+<li>Ne pas porter atteinte aux droits de tiers (propriété intellectuelle, vie privée, données personnelles, etc.).</li>
+<li>Ne pas tenter d’accéder de façon non autorisée aux systèmes, comptes ou données d’autrui.</li>
+<li>Ne pas publier ou transmettre de contenu illégal, nuisible, diffamatoire, haineux, discriminatoire ou violent.</li>
+<li>Ne pas perturber le bon fonctionnement du Service (attaque, malware, surcharge, etc.).</li>
+</ul>
+<p>Nous pouvons suspendre ou résilier l’accès au Service en cas de non‑respect de ces engagements.</p>
+<h2 id="6-contenu-généré-par-lutilisateur">6. Contenu généré par l’utilisateur</h2>
+<ul>
+<li>Vous restez propriétaire des contenus que vous créez, téléversez ou saisissez dans le Service.</li>
+<li>Vous nous accordez une licence non exclusive, mondiale et limitée à l’exploitation du Service pour héberger, sauvegarder, afficher et traiter techniquement ces contenus.</li>
+<li>Vous garantissez disposer de tous les droits nécessaires et que vos contenus ne violent ni la loi ni les droits de tiers.</li>
+<li>Nous pouvons supprimer les contenus manifestement illicites ou contraires aux présentes Conditions.</li>
+</ul>
+<h2 id="7-propriété-intellectuelle">7. Propriété intellectuelle</h2>
+<ul>
+<li>Le Service et ses éléments (textes, graphismes, logos, codes, bases de données, etc.) sont protégés et restent la propriété de [Nom de l’Organisation] ou de ses licenciés.</li>
+<li>Toute reproduction, distribution, modification ou utilisation non autorisée du Service ou de ses éléments est interdite.</li>
+<li>Vous bénéficiez d’un droit d’usage personnel, limité, non exclusif et non transférable, sous réserve du respect des présentes Conditions.</li>
+</ul>
+<h2 id="8-disponibilité-et-modifications-du-service">8. Disponibilité et modifications du Service</h2>
+<ul>
+<li>Le Service est fourni en l’état, sans garantie de disponibilité permanente.</li>
+<li>Des interruptions temporaires peuvent intervenir pour maintenance, mise à jour ou raisons techniques.</li>
+<li>Nous pouvons modifier, suspendre ou arrêter tout ou partie du Service, avec ou sans préavis, dans les limites du droit applicable.</li>
+</ul>
+<h2 id="9-responsabilité">9. Responsabilité</h2>
+<p>Dans les limites autorisées par la loi :</p>
+<ul>
+<li>Nous ne sommes pas responsables des dommages indirects tels que perte de profit, de données ou d’exploitation résultant de l’utilisation ou de l’impossibilité d’utiliser le Service.</li>
+<li>Nous ne garantissons pas l’absence totale de bugs, erreurs, vulnérabilités ou interruptions.</li>
+<li>Vous êtes responsable de la sauvegarde de vos données lorsque cela est pertinent.</li>
+</ul>
+<p>Rien dans ces Conditions ne limite une responsabilité qui ne peut l’être en vertu de la loi.</p>
+<h2 id="10-données-personnelles">10. Données personnelles</h2>
+<p>Les modalités de collecte et de traitement de vos données personnelles, y compris celles provenant des API Google, sont détaillées dans notre Politique de confidentialité, qui fait partie intégrante des présentes Conditions. En utilisant le Service, vous reconnaissez avoir pris connaissance de cette politique.</p>
+<h2 id="11-conditions-financières-si-applicable">11. Conditions financières (si applicable)</h2>
+<ul>
+<li>Certaines fonctionnalités peuvent être payantes (abonnements, options, etc.), selon les tarifs affichés sur le site ou dans l’application.</li>
+<li>En cas de non‑paiement, nous pouvons suspendre ou limiter l’accès aux fonctionnalités payantes dans le respect de la loi.</li>
+</ul>
+<h2 id="12-résiliation">12. Résiliation</h2>
+<ul>
+<li>Vous pouvez cesser d’utiliser le Service à tout moment et demander la suppression de votre compte selon la procédure prévue.</li>
+<li>Nous pouvons suspendre ou résilier votre accès en cas de violation des présentes Conditions, de comportement abusif ou sur demande d’une autorité compétente.</li>
+<li>Certaines dispositions (confidentialité, propriété intellectuelle, limitations de responsabilité, etc.) survivent à la résiliation.</li>
+</ul>
+<h2 id="13-modifications-des-conditions">13. Modifications des Conditions</h2>
+<p>Nous pouvons mettre à jour ces Conditions pour tenir compte des évolutions du Service ou de la réglementation. La version en vigueur est publiée sur cette page avec une date de mise à jour. L’utilisation du Service après modification vaut acceptation des nouvelles Conditions.</p>
+<h2 id="14-droit-applicable-et-juridiction-compétente">14. Droit applicable et juridiction compétente</h2>
+<p>Les présentes Conditions sont régies par le droit [français / autre]. En cas de litige et à défaut d’accord amiable, les tribunaux compétents de [ville / pays] seront saisis, sous réserve des dispositions protectrices impératives applicables aux consommateurs.</p>
+<h2 id="15-contact">15. Contact</h2>
+<p>Pour toute question concernant ces Conditions ou le Service, vous pouvez nous contacter à : [Adresse e‑mail de contact] ou à l’adresse postale : [Adresse postale].</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Politique de confidentialité</title>
+      <link>/cg/cg-politique-de-confidentialite/</link>
+      <pubDate>Thu, 26 Mar 2026 17:10:00 +0100</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/cg/cg-politique-de-confidentialite/</guid>
+      <description>&lt;h1 id=&#34;politique-de-confidentialité-de-nom-de-lapplication&#34;&gt;Politique de confidentialité de [Nom de l’Application]&lt;/h1&gt;&#xA;&lt;p&gt;Dernière mise à jour : 26 mars 2026&lt;/p&gt;&#xA;&lt;p&gt;La présente politique de confidentialité décrit de manière générale comment [Nom de l’Organisation] (« nous ») collecte, utilise, stocke, partage et protège les données lorsque vous utilisez le site [URL du site] et l’application web [Nom de l’Application], y compris lors de l’utilisation de la connexion avec votre compte Google.&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-responsable-du-traitement-et-contact&#34;&gt;1. Responsable du traitement et contact&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Responsable : [Nom de l’Organisation / Personne]&lt;/li&gt;&#xA;&lt;li&gt;Adresse : [Adresse postale]&lt;/li&gt;&#xA;&lt;li&gt;E‑mail : [Adresse e‑mail de support]&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;2-données-collectées&#34;&gt;2. Données collectées&lt;/h2&gt;&#xA;&lt;p&gt;Nous pouvons collecter les catégories de données suivantes selon les fonctionnalités utilisées :&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h1 id="politique-de-confidentialité-de-nom-de-lapplication">Politique de confidentialité de [Nom de l’Application]</h1>
+<p>Dernière mise à jour : 26 mars 2026</p>
+<p>La présente politique de confidentialité décrit de manière générale comment [Nom de l’Organisation] (« nous ») collecte, utilise, stocke, partage et protège les données lorsque vous utilisez le site [URL du site] et l’application web [Nom de l’Application], y compris lors de l’utilisation de la connexion avec votre compte Google.</p>
+<h2 id="1-responsable-du-traitement-et-contact">1. Responsable du traitement et contact</h2>
+<ul>
+<li>Responsable : [Nom de l’Organisation / Personne]</li>
+<li>Adresse : [Adresse postale]</li>
+<li>E‑mail : [Adresse e‑mail de support]</li>
+</ul>
+<h2 id="2-données-collectées">2. Données collectées</h2>
+<p>Nous pouvons collecter les catégories de données suivantes selon les fonctionnalités utilisées :</p>
+<ul>
+<li>Données d’identification : nom, prénom, adresse e‑mail, identifiant Google, photo de profil.</li>
+<li>Données de connexion : logs techniques, adresse IP, informations navigateur/appareil, horodatages.</li>
+<li>Données métier : contenu saisi dans l’application (texte, fichiers, paramètres, projets, etc.).</li>
+<li>Données issues des API Google (si autorisées) : par exemple informations de profil Google et autres données associées aux scopes explicitement consentis.</li>
+<li>Données de paiement (si applicable) : informations de facturation traitées via des prestataires tiers conformes.</li>
+</ul>
+<p>Nous ne collectons pas intentionnellement de données concernant des mineurs de moins de [âge] sans le consentement requis des représentants légaux.</p>
+<h2 id="3-finalités-et-bases-légales">3. Finalités et bases légales</h2>
+<p>Les données sont utilisées notamment pour :</p>
+<ul>
+<li>Fournir et exploiter le Service (authentification, fonctionnalités, sauvegarde des paramètres).</li>
+<li>Assurer la sécurité (prévention de la fraude, détection d’abus, protection des systèmes).</li>
+<li>Améliorer le Service (statistiques anonymisées ou pseudonymisées, correction de bugs, optimisation).</li>
+<li>Assurer le support utilisateur et les communications techniques.</li>
+<li>Respecter nos obligations légales et répondre aux demandes légitimes des autorités.</li>
+</ul>
+<p>Les bases légales incluent l’exécution du contrat, le consentement, l’intérêt légitime et le respect d’obligations légales.</p>
+<h2 id="4-données-issues-des-api-google-oauth">4. Données issues des API Google (OAuth)</h2>
+<p>Lorsque vous vous connectez via Google ou accordez des autorisations OAuth :</p>
+<ul>
+<li>Nous n’accédons qu’aux scopes et champs strictement nécessaires aux fonctionnalités décrites.</li>
+<li>Les données issues des API Google sont utilisées uniquement pour ces fonctionnalités, telles que présentées dans l’application et la présente politique.</li>
+<li>Nous ne vendons jamais ces données à des tiers.</li>
+<li>L’accès humain à ces données est limité aux cas nécessaires (sécurité, conformité légale, maintenance, support avec votre accord explicite).</li>
+<li>Nous respectons la Google API Services User Data Policy, y compris les exigences de « Limited Use ».</li>
+</ul>
+<h2 id="5-partage-avec-des-tiers">5. Partage avec des tiers</h2>
+<p>Nous pouvons partager certaines données avec :</p>
+<ul>
+<li>Prestataires techniques (hébergement, sauvegardes, e‑mail transactionnel, analytics, monitoring).</li>
+<li>Prestataires de paiement (si applicable).</li>
+<li>Autorités administratives ou judiciaires lorsque la loi l’exige.</li>
+<li>Partenaires ou sous‑traitants situés hors UE, avec garanties appropriées (clauses contractuelles types, décisions d’adéquation, etc.).</li>
+</ul>
+<p>Nous ne vendons pas vos données personnelles à des tiers pour du marketing direct.</p>
+<h2 id="6-durée-de-conservation">6. Durée de conservation</h2>
+<ul>
+<li>Données de compte : conservées tant que le compte est actif puis supprimées ou anonymisées dans un délai raisonnable, sauf obligation légale contraire.</li>
+<li>Journaux techniques : conservés pour une durée limitée nécessaire à la sécurité et à la maintenance.</li>
+<li>Données de facturation : conservées pendant la durée légalement requise.</li>
+</ul>
+<p>Des durées spécifiques peuvent être communiquées sur demande.</p>
+<h2 id="7-droits-des-utilisateurs">7. Droits des utilisateurs</h2>
+<p>Vous disposez notamment des droits suivants (selon la réglementation applicable, notamment RGPD) :</p>
+<ul>
+<li>Accès, rectification, effacement de vos données.</li>
+<li>Limitation et opposition au traitement dans certains cas.</li>
+<li>Portabilité des données lorsque applicable.</li>
+<li>Retrait de votre consentement à tout moment, sans effet rétroactif.</li>
+</ul>
+<p>Pour exercer vos droits : [adresse e‑mail de contact]. Vous pouvez également déposer une réclamation auprès de l’autorité de contrôle compétente (par exemple la CNIL en France).</p>
+<h2 id="8-sécurité">8. Sécurité</h2>
+<p>Nous appliquons des mesures techniques et organisationnelles appropriées, telles que :</p>
+<ul>
+<li>Chiffrement des communications (HTTPS/TLS).</li>
+<li>Contrôle d’accès et gestion des rôles.</li>
+<li>Sauvegardes régulières et procédures de reprise.</li>
+<li>Journalisation de sécurité et surveillance des systèmes.</li>
+</ul>
+<p>Aucun système n’étant totalement sécurisé, nous nous engageons à maintenir un niveau de sécurité adapté aux risques.</p>
+<h2 id="9-cookies-et-technologies-similaires">9. Cookies et technologies similaires</h2>
+<p>Nous pouvons utiliser des cookies et technologies similaires pour :</p>
+<ul>
+<li>Assurer le fonctionnement du Service (cookies techniques).</li>
+<li>Mémoriser vos préférences.</li>
+<li>Réaliser des statistiques d’audience anonymisées ou pseudonymisées.</li>
+</ul>
+<p>Lorsque la loi l’exige, un bandeau et un centre de préférences permettent de gérer votre consentement.</p>
+<h2 id="10-transferts-internationaux">10. Transferts internationaux</h2>
+<p>En cas de transfert de données en dehors de l’EEE, nous nous assurons que :</p>
+<ul>
+<li>Le pays offre un niveau de protection adéquat reconnu, ou</li>
+<li>Des garanties appropriées sont en place (clauses contractuelles types, etc.).</li>
+</ul>
+<h2 id="11-modifications">11. Modifications</h2>
+<p>Nous pouvons modifier cette politique à tout moment. La version à jour est disponible sur cette page. En cas de changement important, une information spécifique pourra être affichée dans l’application ou envoyée par e‑mail.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

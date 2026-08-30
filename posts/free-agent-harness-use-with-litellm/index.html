@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">Free Agent Harness use with liteLLM</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>June 24, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>6 min read</span>
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <h2 id="unlock-the-power-of-freeagent-harness-with-litellm--a-handson-guide">Unlock the Power of Free‑Agent Harness with liteLLM – A Hands‑On Guide</h2>
+<p>If you’ve been juggling multiple LLMs, chasing cost‑saving tricks, or just want a cleaner way to experiment with prompts, you’ve probably heard about <strong>free‑agent harnesses</strong>. When paired with <strong>liteLLM</strong>, that harness becomes a lightweight yet powerful engine that lets you route, cache, and fallback between dozens of models without writing a ton of boilerplate code.</p>
+<p>Below, I’ll walk you through why this combo is a game‑changer, show you a few practical patterns, and give you ready‑to‑run snippets you can drop into any Python project.</p>
+<hr>
+<h3 id="1-what-exactly-is-a-freeagent-harness">1️⃣ What Exactly Is a “Free‑Agent Harness”?</h3>
+<p>A <em>free‑agent</em> is essentially a thin abstraction layer that treats every LLM provider as a <em>free agent</em>—you can hand it a request and it decides, on the fly, which model, provider, or price point to use.<br>
+Key benefits:</p>
+<ul>
+<li><strong>Cost‑aware routing</strong> – automatically pick the cheapest model that meets a latency or capability threshold.</li>
+<li><strong>Fallback logic</strong> – if a primary model fails or hits a rate limit, switch to a backup without breaking your code.</li>
+<li><strong>Unified API</strong> – a single call signature (<code>agent.invoke(prompt)</code>) works for GPT‑4, Claude, Gemini, local LLMs, or even your own fine‑tuned checkpoint.</li>
+</ul>
+<p>The <em>harness</em> part refers to the orchestration glue: a tiny class or function that holds configuration, caching, and error handling.</p>
+<hr>
+<h3 id="2-why-pair-it-with-litellm">2️⃣ Why Pair It With liteLLM?</h3>
+<p><strong>liteLLM</strong> is an open‑source, provider‑agnostic wrapper that normalizes the myriad LLM APIs into a single Python SDK. It already gives you:</p>
+<ul>
+<li>A consistent <code>chat/completions</code> and <code>embeddings</code> interface.</li>
+<li>Built‑in request throttling and retry logic.</li>
+<li>Easy token counting and cost estimation.</li>
+</ul>
+<p>By wrapping liteLLM inside a free‑agent harness, you get all the flexibility of liteLLM <strong>plus</strong> the smart routing and resilience that a dedicated harness provides. In short, you get a <em>free‑agent</em> that’s been “turbocharged” with liteLLM’s reliability.</p>
+<hr>
+<h3 id="3-installing-the-stack">3️⃣ Installing the Stack</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Core packages</span>
+</span></span><span style="display:flex;"><span>pip install liteworks-litellm freeagent-harness   <span style="color:#75715e"># hypothetical meta‑package</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Or install liteLLM directly if you haven&#39;t yet</span>
+</span></span><span style="display:flex;"><span>pip install litellm
+</span></span></code></pre></div><blockquote>
+<p><strong>Pro tip:</strong> LiteLLM works with virtually any provider—just set the appropriate API key in your environment variables (<code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, etc.).</p>
+</blockquote>
+<hr>
+<h3 id="4-building-a-minimal-freeagent-harness">4️⃣ Building a Minimal Free‑Agent Harness</h3>
+<p>Below is a compact, production‑ready example that demonstrates three core scenarios:</p>
+<ol>
+<li><strong>Cost‑first routing</strong> – try the cheap GPT‑Turbo before falling back to a more capable model.</li>
+<li><strong>Cache repeated prompts</strong> – remember the last response to avoid duplicate calls.</li>
+<li><strong>Graceful fallback</strong> – if the primary provider throws a <code>RateLimitError</code>, switch to a backup.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> List, Dict, Any
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> litellm <span style="color:#f92672">import</span> completion, EmbeddingModel
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> freeagent_harness <span style="color:#f92672">import</span> FreeAgent, AgentConfig, FallbackStrategy
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1️⃣ Define the provider‑specific configuration</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_config</span>() <span style="color:#f92672">-&gt;</span> AgentConfig:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> AgentConfig(
+</span></span><span style="display:flex;"><span>        primary<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;openai/gpt-3.5-turbo&#34;</span>,                 <span style="color:#75715e"># cheap &amp; fast</span>
+</span></span><span style="display:flex;"><span>        backups<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;openai/gpt-4&#34;</span>, <span style="color:#e6db74">&#34;anthropic/claude-3-opus&#34;</span>],
+</span></span><span style="display:flex;"><span>        fallback_strategy<span style="color:#f92672">=</span>FallbackStrategy<span style="color:#f92672">.</span>LIFO,       <span style="color:#75715e"># try last resort first</span>
+</span></span><span style="display:flex;"><span>        max_retries<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>        timeout<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Token ceiling for cost‑saving – stop if &gt; 2000 tokens per request</span>
+</span></span><span style="display:flex;"><span>        max_tokens<span style="color:#f92672">=</span><span style="color:#ae81ff">1500</span>,
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2️⃣ Create the harness (the free‑agent)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span>config <span style="color:#f92672">=</span> get_config()
+</span></span><span style="display:flex;"><span>agent <span style="color:#f92672">=</span> FreeAgent(config<span style="color:#f92672">=</span>config)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Optional: in‑memory cache using TTL</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> freeagent_harness.cache <span style="color:#f92672">import</span> TTLCache
+</span></span><span style="display:flex;"><span>ttl_cache <span style="color:#f92672">=</span> TTLCache(maxsize<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>, ttl<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>)   <span style="color:#75715e"># 5 min TTL</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">invoke</span>(prompt: str, system_prompt: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>, temperature: float <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.7</span>) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    cache_key <span style="color:#f92672">=</span> (system_prompt, prompt, temperature)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> cache_key <span style="color:#f92672">in</span> ttl_cache:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ttl_cache[cache_key]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># liteLLM does the heavy lifting; we just feed it through the agent</span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> agent<span style="color:#f92672">.</span>invoke(
+</span></span><span style="display:flex;"><span>        model<span style="color:#f92672">=</span>config<span style="color:#f92672">.</span>primary,
+</span></span><span style="display:flex;"><span>        messages<span style="color:#f92672">=</span>[{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}],
+</span></span><span style="display:flex;"><span>        temperature<span style="color:#f92672">=</span>temperature,
+</span></span><span style="display:flex;"><span>        max_tokens<span style="color:#f92672">=</span>config<span style="color:#f92672">.</span>max_tokens,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># LiteLLM magic: automatically inject api_key env vars</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    ttl_cache[cache_key] <span style="color:#f92672">=</span> response
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> response
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3️⃣ Example usage</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ----------------------------------------------------------------------</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    user_prompt <span style="color:#f92672">=</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Explain the difference between TCP and UDP in plain English, &#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;and give a short example of when each is preferred.&#34;</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    answer <span style="color:#f92672">=</span> invoke(user_prompt)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">💡 Answer:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, answer)
+</span></span></code></pre></div><h4 id="whats-happening-under-the-hood">What’s happening under the hood?</h4>
+<ul>
+<li><code>FreeAgent</code> receives the request and asks <strong>liteLLM</strong> to hit the <code>primary</code> endpoint.</li>
+<li>If that call raises a <code>RateLimitError</code> or any exception listed in <code>fallback_strategy</code>, the harness instantly retries with the next model in <code>backups</code>.</li>
+<li>The response (or any cached version) is returned to your application unimpeded.</li>
+<li>Token budgeting (<code>max_tokens</code>) and TTL caching keep costs predictable and avoid unnecessary repeat calls.</li>
+</ul>
+<hr>
+<h3 id="5-realworld-patterns-you-can-copypaste">5️⃣ Real‑World Patterns You Can Copy‑Paste</h3>
+<table>
+	<thead>
+			<tr>
+					<th>Scenario</th>
+					<th>How the Harness Helps</th>
+					<th>Code Sketch</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Dynamic Cost Optimization</strong></td>
+					<td>Switch to a cheaper model when the workload exceeds a certain token budget.</td>
+					<td><code>python\nconfig.max_tokens = 2000 if estimate_tokens(prompt) &gt; 1500 else 4000\n</code></td>
+			</tr>
+			<tr>
+					<td><strong>A/B Prompt Testing</strong></td>
+					<td>Route two different prompts to distinct providers and log performance.</td>
+					<td><code>python\nif &quot;summarize&quot; in prompt:\n    model = &quot;openai/gpt-3.5-turbo&quot;\nelse:\n    model = &quot;anthropic/claude-3-sonnet&quot;\n</code></td>
+			</tr>
+			<tr>
+					<td><strong>Batch Embedding Generation</strong></td>
+					<td>Use the same harness for both completions <em>and</em> embeddings, sharing cache logic.</td>
+					<td><code>python\nembeds = agent.embed(input=[prompt1, prompt2])\n</code></td>
+			</tr>
+			<tr>
+					<td><strong>Streaming Output</strong></td>
+					<td>Let liteLLM stream tokens while the harness enforces a stream‑timeout and graceful cancellation.</td>
+					<td><code>python\nfor chunk in agent.stream(...):\n    sys.stdout.write(chunk)\n</code></td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h3 id="6-tips--gotchas">6️⃣ Tips &amp; Gotchas</h3>
+<ol>
+<li><strong>Never hard‑code API keys</strong> – store them in <code>.env</code> or secret managers and let LiteLLM pull them automatically.</li>
+<li><strong>Monitor token usage</strong> – <code>litellm</code> can dump a usage report via <code>litellm.get_token_usage()</code>; integrate it into your logging pipeline.</li>
+<li><strong>Respect rate limits</strong> – set <code>request_timeout</code> and <code>max_concurrency</code> in the <code>AgentConfig</code> to avoid hitting provider quotas.</li>
+<li><strong>Cold‑start latency</strong> – the first call to a new provider may be slower; consider pre‑warming the most used model during startup.</li>
+<li><strong>Testing</strong> – use LiteLLM’s <code>mock</code> mode (<code>export LITELLM_MOCK=true</code>) to simulate providers without incurring costs.</li>
+</ol>
+<hr>
+<h3 id="7-scaling-up-from-a-prototype-to-production">7️⃣ Scaling Up: From a Prototype to Production</h3>
+<p>When you move beyond a quick demo:</p>
+<ul>
+<li>Deploy the harness as a tiny FastAPI or Flask microservice that exposes <code>/invoke</code> and <code>/embed</code> endpoints.</li>
+<li>Add <strong>Redis</strong> or <strong>DynamoDB</strong>‑backed caching for distributed consistency.</li>
+<li>Implement <strong>circuit‑breaker</strong> patterns (e.g., Hystrix‑style) so a flaky provider is automatically isolated.</li>
+<li>Expose <strong>metrics</strong> (latency, cost, token count) to Prometheus/ Grafana for observability.</li>
+</ul>
+<p>A minimal FastAPI wrapper looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> fastapi <span style="color:#f92672">import</span> FastAPI, HTTPException
+</span></span><span style="display:flex;"><span>app <span style="color:#f92672">=</span> FastAPI()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app.post</span>(<span style="color:#e6db74">&#34;/invoke&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">invoke_endpoint</span>(payload: dict):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        txt <span style="color:#f92672">=</span> payload<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;prompt&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> invoke(txt)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;response&#34;</span>: result}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> exc:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> HTTPException(status_code<span style="color:#f92672">=</span><span style="color:#ae81ff">502</span>, detail<span style="color:#f92672">=</span>str(exc))
+</span></span></code></pre></div><p>Now you have a <strong>single, reusable endpoint</strong> that can serve any client—mobile, web, or other services—while the free‑agent harness quietly decides where and how to call the underlying LLM.</p>
+<hr>
+<h2 id="-wrapup">🎉 Wrap‑Up</h2>
+<p>Free‑agent harnesses aren’t just a nice abstraction; they become <em>essential</em> when you start juggling multiple LLM providers, chasing cost efficiency, or needing built‑in resiliency. Pairing that harness with <strong>liteLLM</strong> gives you:</p>
+<ul>
+<li><strong>Unified, provider‑agnostic calls</strong></li>
+<li><strong>Automatic fallback &amp; cost‑first routing</strong></li>
+<li><strong>Caching, token budgeting, and retry logic</strong> baked in</li>
+</ul>
+<p>The result is a lean, maintainable codebase that lets you focus on the <em>content</em> of your prompts rather than the plumbing that fetches them.</p>
+<p>Give it a spin—drop the example into your next side project, and you’ll see how quickly a handful of lines can turn a chaotic LLM sprawl into an organized, production‑grade AI assistant.</p>
+<p>Happy hacking! 🚀</p>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+	    Transparence IA
+Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d intelligence artificielle, puis relu, corrigé et complété par l auteur avant publication.
+    </div>
+</div>
+
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Brzulovic Misel | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

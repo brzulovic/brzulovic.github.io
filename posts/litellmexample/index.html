@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">litellmExample</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>June 24, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>4 min read</span>
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <h1 id="-level-up-your-llm-game-with-litellm">🚀 Level Up Your LLM Game with Litellm</h1>
+<p>If you’ve ever felt like juggling multiple LLM APIs is a nightmare of authentication keys, rate limits, and versioning headaches, you’re not alone. Enter <strong>Litellm</strong>—the open-source gateway that turns a chaotic patchwork of providers into a single, coherent, and ultra‑smooth experience. In this post we’ll walk through:</p>
+<ul>
+<li>What Litellm actually is (and why it’s a game‑changer)</li>
+<li>How to get it up and running in minutes</li>
+<li>Real‑world code examples across popular languages</li>
+<li>Pro tips for scaling, monitoring, and cost‑optimizing</li>
+</ul>
+<p>Grab a coffee, and let’s dive in.</p>
+<hr>
+<h2 id="1-why-litellm-exists">1. Why Litellm Exists</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Pain Point</th>
+					<th>Traditional Approach</th>
+					<th>Litellm Solution</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Multiple API keys</strong></td>
+					<td>Store a dozen secrets scattered across configs</td>
+					<td>One unified SDK call that handles auth for you</td>
+			</tr>
+			<tr>
+					<td><strong>Different response schemas</strong></td>
+					<td>Write custom parsing for each provider</td>
+					<td>Litellm normalizes every response into a clean JSON structure</td>
+			</tr>
+			<tr>
+					<td><strong>Rate‑limit confusion</strong></td>
+					<td>Manually back‑off per provider</td>
+					<td>Centralized rate‑limit handling + exponential back‑off</td>
+			</tr>
+			<tr>
+					<td><strong>Model version drift</strong></td>
+					<td>Pin each provider’s model name manually</td>
+					<td>Switch models on the fly without code changes</td>
+			</tr>
+	</tbody>
+</table>
+<p>In short, Litellm abstracts the <em>mess</em> away, letting you focus on <strong>prompt engineering</strong> and <strong>business logic</strong>.</p>
+<hr>
+<h2 id="2-quickstart-onecommand-install">2. Quick‑Start: One‑Command Install</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Install the Python client (or use the Node/Rust wrappers if you prefer)</span>
+</span></span><span style="display:flex;"><span>pip install litellm<span style="color:#f92672">[</span>openai<span style="color:#f92672">]</span>  <span style="color:#75715e"># add extra brackets for other providers</span>
+</span></span></code></pre></div><p>That’s it! The library ships with adapters for OpenAI, Anthropic, Cohere, Google Gemini, Mistral, Llama, and many more. All you need next is a tiny snippet to test the waters:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> litellm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> litellm<span style="color:#f92672">.</span>completion(
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;openai/gpt-4-turbo&#34;</span>,
+</span></span><span style="display:flex;"><span>    messages<span style="color:#f92672">=</span>[
+</span></span><span style="display:flex;"><span>        {<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;system&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: <span style="color:#e6db74">&#34;You are a helpful assistant.&#34;</span>},
+</span></span><span style="display:flex;"><span>        {<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: <span style="color:#e6db74">&#34;Give me a 3‑sentence summary of the French Revolution.&#34;</span>}
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    max_tokens<span style="color:#f92672">=</span><span style="color:#ae81ff">150</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content)
+</span></span></code></pre></div><blockquote>
+<p><strong>Tip:</strong> If you’re not using Python, check out the <a class="link" href="https://github.com/bilgeai/Litellm"  target="_blank" rel="noopener"
+    >Litellm GitHub repo</a> for community wrappers in Node.js, Go, and Rust.</p>
+</blockquote>
+<hr>
+<h2 id="3-realworld-example-building-a-chatbot-with-retrievalaugmented-generation">3. Real‑World Example: Building a Chatbot with Retrieval‑Augmented Generation</h2>
+<p>Imagine you’re constructing a customer‑support bot that pulls facts from an internal FAQ database, then asks a LLM to synthesize an answer. Here’s a minimal yet production‑ready implementation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> litellm
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pinecone  <span style="color:#75715e"># or any vector store SDK you prefer</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1️⃣ Retrieve relevant snippets</span>
+</span></span><span style="display:flex;"><span>question <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;What are the refund policies for orders shipped internationally?&#34;</span>
+</span></span><span style="display:flex;"><span>context_chunks <span style="color:#f92672">=</span> pinecone<span style="color:#f92672">.</span>query(question, top_k<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)  <span style="color:#75715e"># returns list of strings</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2️⃣ Build a prompt that includes the context</span>
+</span></span><span style="display:flex;"><span>prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(context_chunks) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">Q: &#34;</span> <span style="color:#f92672">+</span> question <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">A:&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3️⃣ Call Litellm</span>
+</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> litellm<span style="color:#f92672">.</span>completion(
+</span></span><span style="display:flex;"><span>    model<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;anthropic/claude-3-sonnet-20240515&#34;</span>,
+</span></span><span style="display:flex;"><span>    messages<span style="color:#f92672">=</span>[{<span style="color:#e6db74">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;user&#34;</span>, <span style="color:#e6db74">&#34;content&#34;</span>: prompt}],
+</span></span><span style="display:flex;"><span>    temperature<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>,
+</span></span><span style="display:flex;"><span>    max_tokens<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>answer <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>choices[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>message<span style="color:#f92672">.</span>content
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Bot: </span><span style="color:#e6db74">{</span>answer<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><h3 id="why-this-rocks">Why This Rocks</h3>
+<ul>
+<li><strong>No provider lock‑in</strong> – swap <code>anthropic/claude-3-sonnet-20240515</code> for <code>openai/gpt-4-turbo</code> with a single line change.</li>
+<li><strong>Temperature tuning</strong> keeps the bot deterministic for policy questions.</li>
+<li><strong>Context injection</strong> happens before the LLM sees the prompt, making the response grounded and trustworthy.</li>
+</ul>
+<hr>
+<h2 id="4-productionready-settings">4. Production‑Ready Settings</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Feature</th>
+					<th>How to Enable</th>
+					<th>Example</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Structured Logging</strong></td>
+					<td>Set <code>LITELLME_LOG_LEVEL=DEBUG</code> and install <code>loguru</code></td>
+					<td><code>import logging; logging.basicConfig(level=logging.INFO)</code></td>
+			</tr>
+			<tr>
+					<td><strong>Caching</strong></td>
+					<td>Wrap calls with <code>litellm.cache</code> decorator</td>
+					<td><code>@litellm.cache(expire_after=3600)</code></td>
+			</tr>
+			<tr>
+					<td><strong>Rate Limiting</strong></td>
+					<td>Use <code>litellm.RateLimitAdapter</code></td>
+					<td><code>adapter = litellm.RateLimitAdapter(max_rpm=120)</code></td>
+			</tr>
+			<tr>
+					<td><strong>Fallbacks</strong></td>
+					<td>Define a list of models; Litellm picks the first healthy one</td>
+					<td><code>model=&quot;openai/gpt-3.5-turbo,anthropic/claude-2&quot;</code></td>
+			</tr>
+	</tbody>
+</table>
+<h4 id="sample-settingsyaml">Sample <code>settings.yaml</code></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">logLevel</span>: <span style="color:#ae81ff">INFO</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">cacheDir</span>: <span style="color:#e6db74">&#34;./litellm_cache&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">maxRetries</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">timeout</span>: <span style="color:#ae81ff">30</span>  <span style="color:#75715e"># seconds</span>
+</span></span></code></pre></div><p>Load it with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> litellm <span style="color:#f92672">import</span> set_litellm_settings
+</span></span><span style="display:flex;"><span>set_litellm_settings(<span style="color:#e6db74">&#34;settings.yaml&#34;</span>)
+</span></span></code></pre></div><hr>
+<h2 id="5-monitoring--cost-management">5. Monitoring &amp; Cost Management</h2>
+<h3 id="a-metrics-dashboard">a. <strong>Metrics Dashboard</strong></h3>
+<p>Litellm emits Prometheus‑compatible metrics (<code>litellm_requests_total</code>, <code>litellm_tokens_used</code>, etc.). Push them to Grafana via your favorite exporter.</p>
+<h3 id="b-billing-alerts">b. <strong>Billing Alerts</strong></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> litellm <span style="color:#f92672">import</span> tracking
+</span></span><span style="display:flex;"><span>tracking<span style="color:#f92672">.</span>usage_logger <span style="color:#f92672">=</span> tracking<span style="color:#f92672">.</span>UsageLogger(
+</span></span><span style="display:flex;"><span>    api_key<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;YOUR_DASHBOARD_TOKEN&#34;</span>,
+</span></span><span style="display:flex;"><span>    tracked_models<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;gpt-4-turbo&#34;</span>, <span style="color:#e6db74">&#34;claude-3-sonnet&#34;</span>],
+</span></span><span style="display:flex;"><span>    cost_cents_per_token<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;gpt-4-turbo&#34;</span>: <span style="color:#ae81ff">0.03</span>, <span style="color:#e6db74">&#34;claude-3-sonnet&#34;</span>: <span style="color:#ae81ff">0.025</span>},
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><h3 id="c-budgetfriendly-tips">c. <strong>Budget‑Friendly Tips</strong></h3>
+<ul>
+<li><strong>Chunk large prompts</strong>: Split &gt; 3k token inputs into smaller pieces before sending.</li>
+<li><strong>Use “mini” models for cheap drafts</strong> (e.g., <code>mixtral-8x7b</code>) and only promote to premium models when confidence is high.</li>
+<li><strong>Leverage provider‑level discounts</strong>: Many APIs offer bulk token discounts; Litellm can automatically switch to a cheaper plan once a threshold is reached.</li>
+</ul>
+<hr>
+<h2 id="6-community--extensions">6. Community &amp; Extensions</h2>
+<ul>
+<li><strong>Litellm Hub</strong>: Contribute adapters, share recipes, or publish custom prompt templates.</li>
+<li><strong>LLM‑Proxy Mode</strong>: Run Litellm as a local API gateway (Docker compose available) for teams that need a sandbox environment.</li>
+<li><strong>Safety Filters</strong>: Plug in your own content‑filtering logic via the <code>on_response</code> hook—perfect for compliance‑heavy domains.</li>
+</ul>
+<hr>
+<h2 id="7-tldr--oneliner-summary">7. TL;DR – One‑Liner Summary</h2>
+<blockquote>
+<p><strong>Litellm = universal LLM client that turns any provider into a single, seamless, production‑ready interface.</strong></p>
+</blockquote>
+<p>Give it a spin, and watch your LLM experiments transform from “<em>works on my machine</em>” to “<em>scales across the org</em>”.</p>
+<hr>
+<h3 id="want-more">Want More?</h3>
+<ul>
+<li><strong>Deep Dive Video</strong>: <a class="link" href="https://youtu.be/xxxxxx"  target="_blank" rel="noopener"
+    >Litellm Architecture Overview (YouTube)</a></li>
+<li><strong>Hands‑On Repo</strong>: <a class="link" href="https://github.com/bilgeai/litellm-examples"  target="_blank" rel="noopener"
+    >litellm‑examples – GitHub</a></li>
+<li><strong>Slack Community</strong>: <code>#litellm</code> on the LangChain Slack workspace</li>
+</ul>
+<p>Happy prompting! 🎉
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+	    Transparence IA
+Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d intelligence artificielle, puis relu, corrigé et complété par l auteur avant publication.
+    </div>
+</div>
+</p>
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Brzulovic Misel | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

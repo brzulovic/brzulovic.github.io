@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">Backup and Purging Space</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>March 8, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>4 min read</span>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 mt-4">
+                    
+                    <span class="px-2 py-1 bg-white bg-opacity-10 rounded-md text-xs font-mono">#tech</span>
+                    
+                    <span class="px-2 py-1 bg-white bg-opacity-10 rounded-md text-xs font-mono">#ai</span>
+                    
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <h2 id="optimiser-le-stockage-stratégies-de-backup-et-de-purge-pour-les-équipes-devops">Optimiser le stockage: Stratégies de backup et de purge pour les équipes DevOps</h2>
+<h3 id="pourquoi-parler-de-backup-et-purge-">Pourquoi parler de backup et purge ?</h3>
+<p>Dans un environnement DevOps, le volume de données générées (logs, artefacts, snapshots, bases de données …) explose rapidement.</p>
+<ul>
+<li>
+<ol>
+<li><strong>Coûts inutiles</strong> (cloud / on‑prem)</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li><strong>Dégradation des performances</strong> (plus de I/O, temps de récupération)</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li><strong>Risques de conformité</strong> (rétention excessive ou insuffisante)</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="1-sauvegarde-fiable-le-golden-copy-automatisé">1. Sauvegarde fiable: le golden copy automatisé</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Étape</th>
+					<th>Outils / Exemple</th>
+					<th>Bonnes pratiques</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Planification</strong></td>
+					<td><code>cron</code> / <strong>GitHub Actions</strong> / <strong>GitLab CI</strong></td>
+					<td>Utiliser des jobs déclenchés à chaque merge ou chaque version stable.</td>
+			</tr>
+			<tr>
+					<td><strong>Création d’image</strong></td>
+					<td><code>docker commit</code>, <code>kubectl snapshot</code>, <strong>Velero</strong> (K8s)</td>
+					<td>Capturer l’état complet du conteneur/cluster, incluant les volumes persistants.</td>
+			</tr>
+			<tr>
+					<td><strong>Compression</strong></td>
+					<td><code>gzip</code>, <code>zstd</code>, <strong>restic</strong> (<code>--compression=auto</code>)</td>
+					<td>GZIP : +70 % de gain, ZSTD : meilleur ratio + vitesse.</td>
+			</tr>
+			<tr>
+					<td><strong>Chiffrement</strong></td>
+					<td><code>gpg</code>, <strong>AWS KMS</strong>, <strong>Azure Key Vault</strong></td>
+					<td>Stocker les clés hors du même bucket que les backups.</td>
+			</tr>
+			<tr>
+					<td><strong>Stockage distant</strong></td>
+					<td><strong>S3</strong> (Life‑cycle), <strong>Azure Blob</strong>, <strong>Google Cloud Storage</strong>, <strong>MinIO</strong> (on‑prem)</td>
+					<td>Activer le <em>object‑versioning</em> et la replication multi‑région.</td>
+			</tr>
+			<tr>
+					<td><strong>Verification</strong></td>
+					<td><code>restic snapshots</code>, <strong>Velero</strong> <code>restore --dry-run</code></td>
+					<td>Test régulier de la restaurabilité : au moins un backup par mois.</td>
+			</tr>
+	</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span>set -euo pipefail
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Variables</span>
+</span></span><span style="display:flex;"><span>BACKUP_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/www/myapp&#34;</span>
+</span></span><span style="display:flex;"><span>REPO<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;s3:s3.amazonaws.com/mybucket/backups&#34;</span>
+</span></span><span style="display:flex;"><span>PASSWORD<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;superSecretPass&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export RESTIC_PASSWORD<span style="color:#f92672">=</span>$PASSWORD
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1️⃣ Init repository (à faire une fois)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># restic init -r $REPO</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2️⃣ Snapshot</span>
+</span></span><span style="display:flex;"><span>restic -r $REPO backup $BACKUP_DIR <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --exclude<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;*.log&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --exclude<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cache/**&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --exclude<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;node_modules/**&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3️⃣ Forget + prune (conserver 7 derniers quotidiens, 4 hebdos, 12 mensuels)</span>
+</span></span><span style="display:flex;"><span>restic -r $REPO forget <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --keep-daily <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --keep-weekly <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --keep-monthly <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --prune
+</span></span></code></pre></div><blockquote>
+<p><strong>Astuce</strong> : intégrez ce script dans votre pipeline CI pour que chaque version tagged déclenche un backup automatisé.</p>
+</blockquote>
+<hr>
+<h2 id="2-purge-intelligente-libérer-de-lespace-sans-perdre-dinformation">2. Purge intelligente: libérer de l&rsquo;espace sans perdre d&rsquo;information</h2>
+<h3 id="21-lifecycle-policies-s3-azure-gcs">2.1. Lifecycle policies (S3, Azure, GCS)</h3>
+<table>
+	<thead>
+			<tr>
+					<th>Policy</th>
+					<th>Action</th>
+					<th>Exemple de règle</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Transition</strong></td>
+					<td>Déplacer les objets vers des classes froides (Glacier, Archive)</td>
+					<td><code>Transition to GLACIER after 30 days</code></td>
+			</tr>
+			<tr>
+					<td><strong>Expiration</strong></td>
+					<td>Supprimer définitivement</td>
+					<td><code>Delete after 365 days</code></td>
+			</tr>
+			<tr>
+					<td><strong>Non‑current version expiration</strong></td>
+					<td>Nettoyer les anciennes versions</td>
+					<td><code>Delete non‑current versions after 90 days</code></td>
+			</tr>
+	</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;Rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#e6db74">&#34;ArchiveOldBackups&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Status&#34;</span>: <span style="color:#e6db74">&#34;Enabled&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Filter&#34;</span>: { <span style="color:#f92672">&#34;Prefix&#34;</span>: <span style="color:#e6db74">&#34;backups/&#34;</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Transitions&#34;</span>: [{ <span style="color:#f92672">&#34;Days&#34;</span>: <span style="color:#ae81ff">30</span>, <span style="color:#f92672">&#34;StorageClass&#34;</span>: <span style="color:#e6db74">&#34;GLACIER&#34;</span> }],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Expiration&#34;</span>: { <span style="color:#f92672">&#34;Days&#34;</span>: <span style="color:#ae81ff">365</span> }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h3 id="22-logs--métriques">2.2. Logs &amp; métriques</h3>
+<ul>
+<li>
+<p><strong>Rotations log</strong> : <code>logrotate</code> avec <code>compress</code> + <code>maxage 30</code>.</p>
+</li>
+<li>
+<p><strong>Metrics retention</strong> : garder les métriques détaillées 30 jours, puis agrégées 90 jours (Prometheus <code>--storage.tsdb.retention.time=90d</code>).</p>
+</li>
+<li>
+<p><strong>Nettoyage des images Docker</strong> : <code>docker image prune -a --filter &quot;until=720h&quot;</code> (30 jours).</p>
+</li>
+<li>
+<p><strong>Artifacts</strong> : GitLab CI <code>expire_in: 1 week</code>, GitHub Actions <code>retain-days: 30</code>.</p>
+</li>
+</ul>
+<hr>
+<h3 id="23-base-de-données">2.3. Base de données</h3>
+<ul>
+<li><strong>TTL</strong> sur les collections TTL (MongoDB) ou <code>DROP PARTITION</code> sur les tables temporelles (PostgreSQL).</li>
+<li><strong>Vacuum</strong> automatisé pour PostgreSQL : <code>VACUUM (FULL, ANALYZE)</code> une fois par semaine.</li>
+</ul>
+<table>
+	<thead>
+			<tr>
+					<th>Outil</th>
+					<th>Métrique clé</th>
+					<th>Alert</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Prometheus</strong></td>
+					<td><code>backup_success_total</code>, <code>backup_duration_seconds</code></td>
+					<td>Alerte si <code>backup_success_total</code> = 0 sur 24 h</td>
+			</tr>
+			<tr>
+					<td><strong>Grafana</strong></td>
+					<td>Disk usage %</td>
+					<td>Warning at 70 %, Critical at 85 %</td>
+			</tr>
+			<tr>
+					<td><strong>PagerDuty / Opsgenie</strong></td>
+					<td><code>purge_job_failed</code></td>
+					<td>Escalade immédiate</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h4 id="dashboard-example-grafana">Dashboard example (Grafana)</h4>
+<ul>
+<li>Graphique : espace disque (GB) vs. seuil (80 %).</li>
+<li>Table : dernières sauvegardes, statut, taille.</li>
+</ul>
+<ol>
+<li><strong>Choisir un backend</strong> : S3 bucket + IAM read/write.</li>
+<li><strong>Déployer Restic</strong> : <code>docker run -v $(pwd):/data -e RESTIC_PASSWORD=… restic/restic backup /data</code>.</li>
+<li><strong>Créer une policy de cycle de vie</strong> sur le bucket (transition → archive, expiration).</li>
+<li><strong>Automatiser la purge des logs</strong> avec <code>logrotate</code>.</li>
+<li><strong>Configurer Grafana</strong> avec le datasource Prometheus pour surveiller <code>node_filesystem_avail_bytes</code>.</li>
+</ol>
+<hr>
+<h2 id="5-checklist-finale">5. Checklist finale</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Sauvegardes chiffrées et testées (restore dry‑run).</li>
+<li><input disabled="" type="checkbox"> Policies de lifecycle appliquées sur le stockage objet.</li>
+<li><input disabled="" type="checkbox"> Logs, artefacts et images Docker purgeés régulièrement.</li>
+<li><input disabled="" type="checkbox"> Alerting en place pour les échecs de backup et dépassements de quota.</li>
+<li><input disabled="" type="checkbox"> Documentation versionnée dans votre repo (exemple : <code>docs/backup-purge.md</code>).</li>
+</ul>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>Un <strong>pipeline de backup + purge</strong> intégré au workflow DevOps transforme le &ldquo;stockage illimité&rdquo; en <strong>coût maîtrisé</strong> et <strong>résilience</strong>.
+En codifiant ces bonnes pratiques (scripts, policies, dashboards) vous offrez à votre équipe la <strong>tranquillité d&rsquo;esprit</strong> : les données critiques sont toujours récupérables, le reste est automatiquement nettoyé.</p>
+<blockquote>
+<p><strong>À vous de jouer</strong> ! Implémentez ces recommandations dès aujourd’hui, partagez votre expérience dans les commentaires, et inspirons la communauté DevOps à garder leurs environnements <strong>légers</strong> et <strong>fiables</strong>. 🙌</p>
+</blockquote>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+	    Transparence IA
+Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d intelligence artificielle, puis relu, corrigé et complété par l auteur avant publication.
+    </div>
+</div>
+
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Brzulovic Misel | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
