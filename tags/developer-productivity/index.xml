@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Developer-Productivity on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/tags/developer-productivity/</link>
+    <description>Recent content in Developer-Productivity on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Sun, 23 Aug 2026 00:05:46 +0000</lastBuildDate>
+    <atom:link href="/tags/developer-productivity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenFox: A Powerful Local-LLM-First Agentic Coding Assistant</title>
+      <link>/scrapped/openfox-local-llm-coding-assistant/</link>
+      <pubDate>Sun, 23 Aug 2026 00:05:46 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/openfox-local-llm-coding-assistant/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;OpenFox is an autonomous coding agent built specifically for local LLMs, designed to provide a comprehensive development environment right out of the box. By leveraging a contract-driven execution pipeline, it ensures that your code meets specific acceptance criteria, creating a reliable loop for automated software development.&lt;/p&gt;&#xA;&lt;h2 id=&#34;quick-start&#34;&gt;Quick Start&lt;/h2&gt;&#xA;&lt;p&gt;Getting started with OpenFox is straightforward. Ensure you have Node.js (&amp;gt;= 24.0.0) installed, then install the package globally:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;npm i -g openfox&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openfox&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;On the first run, OpenFox will automatically detect your local LLM backend—supporting vLLM, sglang, ollama, and llamacpp—and configure itself accordingly.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="overview">Overview</h2>
+<p>OpenFox is an autonomous coding agent built specifically for local LLMs, designed to provide a comprehensive development environment right out of the box. By leveraging a contract-driven execution pipeline, it ensures that your code meets specific acceptance criteria, creating a reliable loop for automated software development.</p>
+<h2 id="quick-start">Quick Start</h2>
+<p>Getting started with OpenFox is straightforward. Ensure you have Node.js (&gt;= 24.0.0) installed, then install the package globally:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm i -g openfox
+</span></span><span style="display:flex;"><span>openfox
+</span></span></code></pre></div><p>On the first run, OpenFox will automatically detect your local LLM backend—supporting vLLM, sglang, ollama, and llamacpp—and configure itself accordingly.</p>
+<h2 id="key-features-of-version-20">Key Features of Version 2.0</h2>
+<p>The 2.0 release brings significant improvements to the agentic workflow:</p>
+<ul>
+<li><strong>Multi-Turn Agent Engine:</strong> A completely rewritten agent loop that utilizes EventStore as a single source of truth, unifying all modes like planning, building, and verifying.</li>
+<li><strong>Provider Dialog:</strong> A comprehensive UI for configuring providers, including reasoning efforts and profile management.</li>
+<li><strong>Unified Image Handling:</strong> Automatic vision model fallback allows any model to process images by generating descriptions before each turn.</li>
+<li><strong>Safe File Editing:</strong> A per-file mutex system prevents race conditions during parallel edits.</li>
+<li><strong>Enhanced Workflows:</strong> Support for workflow sub-groups and a dedicated code review phase.</li>
+</ul>
+<h2 id="cli-commands--options">CLI Commands &amp; Options</h2>
+<p>You can manage your development environment directly from the terminal:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Option</th>
+					<th style="text-align: left">Description</th>
+					<th style="text-align: left">Default</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><code>-p, --port &lt;number&gt;</code></td>
+					<td style="text-align: left">Specify server port</td>
+					<td style="text-align: left">10369</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>--no-browser</code></td>
+					<td style="text-align: left">Don&rsquo;t open browser on start</td>
+					<td style="text-align: left">Opens browser</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>-h, --help</code></td>
+					<td style="text-align: left">Show help message</td>
+					<td style="text-align: left">-</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>-v, --version</code></td>
+					<td style="text-align: left">Show version number</td>
+					<td style="text-align: left">-</td>
+			</tr>
+	</tbody>
+</table>
+<p>Common commands include:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Start server for current project</span>
+</span></span><span style="display:flex;"><span>openfox
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Manage LLM providers</span>
+</span></span><span style="display:flex;"><span>openfox provider add
+</span></span><span style="display:flex;"><span>openfox provider list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Show current configuration</span>
+</span></span><span style="display:flex;"><span>openfox config
+</span></span></code></pre></div><h2 id="extensibility-via-plugins">Extensibility via Plugins</h2>
+<p>OpenFox allows for modular functionality via plugins. You can add support for various services by installing plugins in your configuration directory:</p>
+<ul>
+<li><strong>ChatGPT Plus/Pro:</strong> <code>openfox-chatgpt</code></li>
+<li><strong>Github Copilot:</strong> <code>openfox-github-copilot</code></li>
+<li><strong>Google Antigravity:</strong> <code>openfox-google-antigravity</code></li>
+<li><strong>xAI SuperGrok:</strong> <code>openfox-xai-supergrok</code></li>
+</ul>
+<h2 id="environment-configuration">Environment Configuration</h2>
+<p>OpenFox provides granular control through environment variables. Key variables include:</p>
+<ul>
+<li><code>OPENFOX_LLM_URL</code>: Set the API base URL (default: <code>http://localhost:8000/v1</code>).</li>
+<li><code>OPENFOX_MAX_CONTEXT</code>: Defines the maximum context window (default: <code>200000</code>).</li>
+<li><code>OPENFOX_DB_PATH</code>: The path to the SQLite database used for session storage.</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> Always ensure your backend LLM is compatible with the OpenAI API format to ensure full integration with OpenFox&rsquo;s features.</p>
+</blockquote>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

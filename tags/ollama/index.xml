@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Ollama on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/tags/ollama/</link>
+    <description>Recent content in Ollama on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Sun, 23 Aug 2026 00:02:43 +0000</lastBuildDate>
+    <atom:link href="/tags/ollama/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenFox: A Local-LLM-First Agentic Coding Assistant</title>
+      <link>/scrapped/openfox-local-llm-agentic-coding-assistant/</link>
+      <pubDate>Sun, 23 Aug 2026 00:02:43 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/openfox-local-llm-agentic-coding-assistant/</guid>
+      <description>&lt;p&gt;Modern AI coding assistants often lock developers into cloud ecosystems and proprietary subscriptions. &lt;strong&gt;OpenFox&lt;/strong&gt; flips the script by providing a local-LLM-first, autonomous coding agent that comes fully configured straight out of the box.&lt;/p&gt;&#xA;&lt;p&gt;With contract-driven execution pipelines, native support for popular local inference backends, and multi-turn workflows, OpenFox gives you complete control over your AI-assisted development stack without sacrificing agentic power.&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;key-architectural-highlights&#34;&gt;Key Architectural Highlights&lt;/h2&gt;&#xA;&lt;p&gt;OpenFox combines structured planning, rigorous criteria verification, and local execution:&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Modern AI coding assistants often lock developers into cloud ecosystems and proprietary subscriptions. <strong>OpenFox</strong> flips the script by providing a local-LLM-first, autonomous coding agent that comes fully configured straight out of the box.</p>
+<p>With contract-driven execution pipelines, native support for popular local inference backends, and multi-turn workflows, OpenFox gives you complete control over your AI-assisted development stack without sacrificing agentic power.</p>
+<hr>
+<h2 id="key-architectural-highlights">Key Architectural Highlights</h2>
+<p>OpenFox combines structured planning, rigorous criteria verification, and local execution:</p>
+<ul>
+<li><strong>Contract-Driven Execution</strong>: Uses acceptance criteria as an immutable contract between you and the agent.</li>
+<li><strong>Plan → Builder Pipeline</strong>: Interactive task decomposition followed by autonomous code generation.</li>
+<li><strong>Iterative Verification</strong>: Loops and executes unit tests, builds, and checks until all defined criteria pass.</li>
+<li><strong>Language Server Protocol (LSP) Support</strong>: Built-in LSP communication gives the agent immediate feedback on compile and type errors.</li>
+<li><strong>Real-Time Performance Metrics</strong>: Transparent tracking of prefill time, token generation rate, and total context window utilization.</li>
+</ul>
+<hr>
+<h2 id="quick-start">Quick Start</h2>
+<p>Getting started with OpenFox requires Node.js (&gt;= 24.0.0) and an OpenAI-compatible local model server running locally (e.g., vLLM, sglang, Ollama, or llama.cpp).</p>
+<p>Install the package globally via npm:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>npm i -g openfox
+</span></span><span style="display:flex;"><span>openfox
+</span></span></code></pre></div><p>On the initial launch, OpenFox automatically probes and detects active local inference endpoints, configuring the connection parameters without manual intervention.</p>
+<hr>
+<h2 id="whats-new-in-openfox-20">What&rsquo;s New in OpenFox 2.0</h2>
+<p>The 2.0 release brings major performance, stability, and extensibility improvements to the agent lifecycle:</p>
+<h3 id="1-unified-multi-turn-agent-engine">1. Unified Multi-Turn Agent Engine</h3>
+<p>The agent loop has been redesigned from the ground up using an event-sourced <code>EventStore</code> architecture. All modes—planner, builder, verifier, and sub-agents—execute through the exact same unified loop.</p>
+<h3 id="2-enhanced-provider-configuration">2. Enhanced Provider Configuration</h3>
+<p>A brand-new Provider Dialog introduces UI-level controls for reasoning effort (<code>reasoningEffort</code>), profile defaults, and provider presets.</p>
+<h3 id="3-configurable-auto-retry-logic">3. Configurable Auto-Retry Logic</h3>
+<p>Replaces rigid XML safeguards with custom regex and pattern-matching triggers that tell the model when to retry tool generation.</p>
+<h3 id="4-cross-model-vision-fallback">4. Cross-Model Vision Fallback</h3>
+<p>For setups running text-only LLMs alongside vision tasks, OpenFox introduces automatic pre-turn visual descriptions so any model can understand uploaded images.</p>
+<h3 id="5-unified-session-metadata--sub-groups">5. Unified Session Metadata &amp; Sub-Groups</h3>
+<p>A centralized <code>session_metadata</code> tool enables granular CRUD operations on criteria directly inside the UI. Additionally, workflow sub-groups allow isolating specific phases like automated code review.</p>
+<h3 id="6-concurrency-safety">6. Concurrency Safety</h3>
+<p>A per-file mutex locks concurrent <code>edit_file</code> calls, preventing race conditions during parallel file modifications.</p>
+<hr>
+<h2 id="cli-reference">CLI Reference</h2>
+<p>OpenFox includes a dedicated CLI for server management and provider administration.</p>
+<h3 id="common-commands">Common Commands</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Start the OpenFox server in the current workspace</span>
+</span></span><span style="display:flex;"><span>openfox
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run on a custom port</span>
+</span></span><span style="display:flex;"><span>openfox --port <span style="color:#ae81ff">8080</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Start in headless mode (suppress browser launch)</span>
+</span></span><span style="display:flex;"><span>openfox --no-browser
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Inspect current setup</span>
+</span></span><span style="display:flex;"><span>openfox config
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Provider management</span>
+</span></span><span style="display:flex;"><span>openfox provider add
+</span></span><span style="display:flex;"><span>openfox provider list
+</span></span><span style="display:flex;"><span>openfox provider use
+</span></span><span style="display:flex;"><span>openfox provider remove
+</span></span></code></pre></div><h3 id="cli-options">CLI Options</h3>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Option</th>
+					<th style="text-align: left">Description</th>
+					<th style="text-align: left">Default</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><code>-p, --port &lt;number&gt;</code></td>
+					<td style="text-align: left">Specify web server port</td>
+					<td style="text-align: left"><code>10369</code></td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>--no-browser</code></td>
+					<td style="text-align: left">Prevent automatic browser launch</td>
+					<td style="text-align: left">Opens browser</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>-h, --help</code></td>
+					<td style="text-align: left">Display help menu</td>
+					<td style="text-align: left">—</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>-v, --version</code></td>
+					<td style="text-align: left">Display installed version</td>
+					<td style="text-align: left">—</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="extending-openfox-with-plugins">Extending OpenFox with Plugins</h2>
+<p>OpenFox supports a plugin system to inject extra authentication providers, transport protocols, and model discovery without touching core code.</p>
+<h3 id="plugin-directories-by-os">Plugin Directories by OS</h3>
+<ul>
+<li><strong>macOS</strong>: <code>~/Library/Application Support/openfox/plugins</code></li>
+<li><strong>Linux</strong>: <code>${XDG_CONFIG_HOME:-~/.config}/openfox/plugins</code></li>
+<li><strong>Windows</strong>: <code>%APPDATA%\openfox\plugins</code></li>
+</ul>
+<h3 id="supported-provider-plugins">Supported Provider Plugins</h3>
+<ul>
+<li><code>openfox-chatgpt</code>: Connect directly using ChatGPT Plus/Pro credentials.</li>
+<li><code>openfox-github-copilot</code>: Authenticate using GitHub Copilot.</li>
+<li><code>openfox-google-antigravity</code>: Google Cloud and Antigravity endpoint support.</li>
+<li><code>openfox-xai-supergrok</code>: xAI Grok provider connector.</li>
+</ul>
+<hr>
+<h2 id="configuration--environment-variables">Configuration &amp; Environment Variables</h2>
+<p>You can customize your instance using environment variables:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Variable</th>
+					<th style="text-align: left">Default</th>
+					<th style="text-align: left">Description</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_LLM_URL</code></td>
+					<td style="text-align: left"><code>http://localhost:8000/v1</code></td>
+					<td style="text-align: left">Base URL for the OpenAI-compatible local LLM endpoint</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_BACKEND</code></td>
+					<td style="text-align: left"><code>unknown</code></td>
+					<td style="text-align: left">Active backend engine (<code>vllm</code>, <code>sglang</code>, <code>ollama</code>, <code>llamacpp</code>)</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_MAX_CONTEXT</code></td>
+					<td style="text-align: left"><code>200000</code></td>
+					<td style="text-align: left">Context window ceiling in tokens</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_PORT</code></td>
+					<td style="text-align: left"><code>10369</code></td>
+					<td style="text-align: left">OpenFox local web server port</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_HOST</code></td>
+					<td style="text-align: left"><code>127.0.0.1</code></td>
+					<td style="text-align: left">Local listening host</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_REASONING_EFFORT</code></td>
+					<td style="text-align: left"><code>none</code></td>
+					<td style="text-align: left">Extended reasoning depth (<code>none</code>, <code>low</code>, <code>medium</code>, <code>high</code>)</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_LOG_LEVEL</code></td>
+					<td style="text-align: left"><code>info</code></td>
+					<td style="text-align: left">Logging verbosity (<code>debug</code>, <code>info</code>, <code>warn</code>, <code>error</code>)</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><code>OPENFOX_DB_PATH</code></td>
+					<td style="text-align: left"><code>./openfox.db</code></td>
+					<td style="text-align: left">Embedded SQLite database location</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>OpenFox represents a significant step forward for developers seeking a self-hosted, private, and agentic coding assistant. By combining strict contract-driven task verification with support for the latest open-weight models, it unlocks enterprise-grade AI pairing directly on local hardware.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

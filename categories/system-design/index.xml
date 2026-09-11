@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>System Design on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/categories/system-design/</link>
+    <description>Recent content in System Design on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Mon, 24 Aug 2026 14:27:16 +0000</lastBuildDate>
+    <atom:link href="/categories/system-design/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Context as a Variable: The Architecture Killing Context Rot / Le contexte comme variable : L&#39;architecture contre la dégradation du contexte</title>
+      <link>/scrapped/context-as-a-variable-architecture/</link>
+      <pubDate>Mon, 24 Aug 2026 14:27:16 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/context-as-a-variable-architecture/</guid>
+      <description>&lt;h2 id=&#34;-version-française&#34;&gt;🇫🇷 Version Française&lt;/h2&gt;&#xA;&lt;p&gt;Le &amp;ldquo;Context Rot&amp;rdquo; (dégradation du contexte) est un défi majeur dans les systèmes complexes où les décisions passées deviennent obscures. En traitant le contexte comme une variable explicite plutôt qu&amp;rsquo;implicite, nous pouvons créer des systèmes plus résilients et maintenables.&lt;/p&gt;&#xA;&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;&#xA;&#x9;&#x9;&#x9;&lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/AvIujLlbmks?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;&#xA;&#x9;&#x9;&lt;/div&gt;&#xA;&#xA;&lt;h3 id=&#34;résumé-exécutif-et-points-clés&#34;&gt;Résumé exécutif et points clés&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Contexte explicite&lt;/strong&gt; : Sortir le contexte de l&amp;rsquo;ombre pour le rendre manipulable.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Dépendances réduites&lt;/strong&gt; : Réduire le couplage temporel et logique.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Maintenance facilitée&lt;/strong&gt; : Un système qui explique ses propres décisions.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;approche-technique&#34;&gt;Approche technique&lt;/h3&gt;&#xA;&lt;p&gt;L&amp;rsquo;idée est d&amp;rsquo;injecter explicitement le contexte via des interfaces plutôt que de compter sur des variables globales ou des états cachés. Voici une représentation simplifiée :&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="-version-française">🇫🇷 Version Française</h2>
+<p>Le &ldquo;Context Rot&rdquo; (dégradation du contexte) est un défi majeur dans les systèmes complexes où les décisions passées deviennent obscures. En traitant le contexte comme une variable explicite plutôt qu&rsquo;implicite, nous pouvons créer des systèmes plus résilients et maintenables.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/AvIujLlbmks?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h3 id="résumé-exécutif-et-points-clés">Résumé exécutif et points clés</h3>
+<ul>
+<li><strong>Contexte explicite</strong> : Sortir le contexte de l&rsquo;ombre pour le rendre manipulable.</li>
+<li><strong>Dépendances réduites</strong> : Réduire le couplage temporel et logique.</li>
+<li><strong>Maintenance facilitée</strong> : Un système qui explique ses propres décisions.</li>
+</ul>
+<h3 id="approche-technique">Approche technique</h3>
+<p>L&rsquo;idée est d&rsquo;injecter explicitement le contexte via des interfaces plutôt que de compter sur des variables globales ou des états cachés. Voici une représentation simplifiée :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ExecutionContext</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">traceId</span>: <span style="color:#66d9ef">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">userId</span>: <span style="color:#66d9ef">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">metadata</span>: <span style="color:#66d9ef">Map</span>&lt;<span style="color:#f92672">string</span>, <span style="color:#a6e22e">any</span>&gt;;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">processRequest</span>(<span style="color:#a6e22e">data</span>: <span style="color:#66d9ef">any</span>, <span style="color:#a6e22e">ctx</span>: <span style="color:#66d9ef">ExecutionContext</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Le contexte est maintenant une variable passée explicitement
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Processing for </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">userId</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="-english-version">🇬🇧 English Version</h2>
+<p>&ldquo;Context Rot&rdquo; occurs when the hidden assumptions and environment data of a system degrade over time, leading to technical debt. By elevating context to a first-class variable, you turn implicit system behavior into an explicit, trackable architecture.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/AvIujLlbmks?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h3 id="executive-summary--key-takeaways">Executive Summary &amp; Key Takeaways</h3>
+<ul>
+<li><strong>Explicit Context</strong> : Stop relying on implicit environmental assumptions.</li>
+<li><strong>Decoupling</strong> : Passing context as an object reduces reliance on side effects.</li>
+<li><strong>Observability</strong> : Easier debugging because the state is always passed along.</li>
+</ul>
+<h3 id="technical-deep-dive">Technical Deep-Dive</h3>
+<p>Moving away from static dependencies toward a dependency-injection pattern ensures that every function knows exactly what the environment looks like at the time of execution.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">ExecutionContext</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">traceId</span>: <span style="color:#66d9ef">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">userId</span>: <span style="color:#66d9ef">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">metadata</span>: <span style="color:#66d9ef">Map</span>&lt;<span style="color:#f92672">string</span>, <span style="color:#a6e22e">any</span>&gt;;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">processRequest</span>(<span style="color:#a6e22e">data</span>: <span style="color:#66d9ef">any</span>, <span style="color:#a6e22e">ctx</span>: <span style="color:#66d9ef">ExecutionContext</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Context is now an explicit variable passed through the call stack
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`Processing for </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">ctx</span>.<span style="color:#a6e22e">userId</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="conclusion--resources">Conclusion &amp; Resources</h3>
+<p>Treating context as a variable makes your system deterministic and testable. Always favor explicit flow over hidden environmental states to combat architectural decay.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

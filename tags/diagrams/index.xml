@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Diagrams on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/tags/diagrams/</link>
+    <description>Recent content in Diagrams on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Sun, 23 Aug 2026 09:11:46 +0000</lastBuildDate>
+    <atom:link href="/tags/diagrams/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Diagram-Design: AI-Powered Technical Diagrams Styled to Your Brand</title>
+      <link>/scrapped/diagram-design-ai-diagram-generator-claude-code/</link>
+      <pubDate>Sun, 23 Aug 2026 09:11:46 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/diagram-design-ai-diagram-generator-claude-code/</guid>
+      <description>&lt;p&gt;Creating clean, visually appealing technical architecture diagrams is often a tedious task. Whether you are constantly tweaking coordinates in Excalidraw or wrestling with the default layout quirks of Mermaid, producing polished graphics for documentation and presentations takes time.&lt;/p&gt;&#xA;&lt;p&gt;Enter &lt;strong&gt;Diagram-design&lt;/strong&gt;, an open-source skill built for AI coding assistants like Claude Code, Codex, and Pi. It automates the generation of publication-ready, standalone HTML diagrams without requiring complex build steps or external image dependencies.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Creating clean, visually appealing technical architecture diagrams is often a tedious task. Whether you are constantly tweaking coordinates in Excalidraw or wrestling with the default layout quirks of Mermaid, producing polished graphics for documentation and presentations takes time.</p>
+<p>Enter <strong>Diagram-design</strong>, an open-source skill built for AI coding assistants like Claude Code, Codex, and Pi. It automates the generation of publication-ready, standalone HTML diagrams without requiring complex build steps or external image dependencies.</p>
+<hr>
+<h2 id="standalone-html-diagrams-with-zero-build-friction">Standalone HTML Diagrams with Zero Build Friction</h2>
+<p>Diagram-design outputs standalone HTML files that you can open directly in any browser. It supports <strong>27 distinct diagram types</strong>, including:</p>
+<ul>
+<li>System architecture schematics</li>
+<li>Sequence diagrams</li>
+<li>Finite state machines</li>
+<li>Gantt project timelines</li>
+<li>Quadrant and matrix charts</li>
+</ul>
+<p>Each diagram is available out of the box in three aesthetic themes: <strong>Light</strong>, <strong>Dark</strong>, and <strong>Editorial</strong>.</p>
+<hr>
+<h2 id="smart-redrawing-beyond-simple-format-conversion">Smart Redrawing: Beyond Simple Format Conversion</h2>
+<p>Instead of acting as a naive format converter, Diagram-design acts as an automated graphic designer. You can feed it existing files, such as a <code>.drawio</code> file, an embedded <code>.drawio.png</code>, or raw Mermaid syntax embedded in a <code>README.md</code>.</p>
+<h3 id="what-it-discards">What it discards:</h3>
+<ul>
+<li>Absolute layout coordinates and manual canvas placement</li>
+<li>Outdated fonts and custom palette overrides</li>
+<li>Diagonal connector clutter and awkward auto-alignments</li>
+</ul>
+<h3 id="what-it-preserves">What it preserves:</h3>
+<ul>
+<li>Core components and functional nodes</li>
+<li>Relationship hierarchies and logic flows</li>
+<li>Groupings, subgraphs, and natural reading order</li>
+</ul>
+<p>At the end of the import, Diagram-design outputs a <strong>fidelity report</strong> detailing input nodes, rendered entities, and any orphaned elements removed during cleanup.</p>
+<hr>
+<h2 id="four-axes-of-customization">Four Axes of Customization</h2>
+<p>Diagram-design adapts the generated output across four distinct dimensions depending on your target medium and audience:</p>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Axis</th>
+					<th style="text-align: left">Configuration Options</th>
+					<th style="text-align: left">Description</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>Format</strong></td>
+					<td style="text-align: left"><code>HTML</code>, <code>SVG</code>, <code>PNG</code></td>
+					<td style="text-align: left">Clean standalone vector HTML/SVG or pixel-perfect PNG (rendered via Playwright).</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Contextual Sizing</strong></td>
+					<td style="text-align: left">Presentation vs. Documentation</td>
+					<td style="text-align: left">Dynamic typography (e.g., 16px labels for 16:9 slides, 12px for inline docs).</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Density Level</strong></td>
+					<td style="text-align: left">Faithful, Balanced, Simplified</td>
+					<td style="text-align: left">Caps node complexity (24 max for Faithful, 12 for Balanced, 7 for Simplified).</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Audience Vocabulary</strong></td>
+					<td style="text-align: left">Technical vs. Executive</td>
+					<td style="text-align: left">Adjusts nomenclature and terminology without changing the underlying architecture.</td>
+			</tr>
+	</tbody>
+</table>
+<blockquote>
+<p><strong>Pruning Logic:</strong> When simplifying dense diagrams, the tool follows a deterministic hierarchy: it strips decorative elements first, merges duplicates next, trims leaf clusters, and finally consolidates lower-level infrastructure nodes.</p>
+</blockquote>
+<hr>
+<h2 id="automated-brand-harmony-and-contrast-validation">Automated Brand Harmony and Contrast Validation</h2>
+<p>One of the standout features of Diagram-design is its ability to match your existing brand identity:</p>
+<ol>
+<li><strong>Website Palette Extraction:</strong> Provide a target URL, and the tool extracts background shades, text colors, button accents, and font stacks directly from the stylesheet.</li>
+<li><strong>WCAG AA Compliance:</strong> Before finalizing the design, it verifies color contrast against WCAG AA standards. If small typography (9px–12px) fails accessibility checks, it calculates an adjusted accessible hex value with an explanatory diff.</li>
+<li><strong>Persistent Project Styling:</strong> Once approved, your custom design tokens are saved into the project&rsquo;s style guide for all subsequent diagrams.</li>
+</ol>
+<hr>
+<h2 id="installation--local-workflow">Installation &amp; Local Workflow</h2>
+<p>Diagram-design runs completely local and is released under the <strong>MIT license</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Example execution with npx / Codex / Claude Code skill setup</span>
+</span></span><span style="display:flex;"><span>npx diagram-design init
+</span></span></code></pre></div><p>Because Mermaid diagrams and vector primitives are parsed directly from text, no external network calls or telemetry are required. For exporting raster images (<code>.png</code>), ensure you have Playwright installed in your environment.</p>
+<p>Whether you need an executive summary slide or detailed documentation for a system refactor, Diagram-design bridges the gap between raw ASCII specifications and publication-quality technical illustrations.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

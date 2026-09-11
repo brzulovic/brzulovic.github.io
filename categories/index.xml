@@ -8,8 +8,152 @@
     <language>fr</language>
     <managingEditor>brzulovic@gmail.com</managingEditor>
     <webMaster>brzulovic@gmail.com</webMaster>
-    <lastBuildDate>Sat, 04 Jul 2026 18:22:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2026 01:31:36 +0000</lastBuildDate>
     <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intelligence Artificielle</title>
+      <link>/categories/intelligence-artificielle/</link>
+      <pubDate>Thu, 10 Sep 2026 01:31:36 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/intelligence-artificielle/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Productivité</title>
+      <link>/categories/productivit%C3%A9/</link>
+      <pubDate>Thu, 10 Sep 2026 01:31:36 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/productivit%C3%A9/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Business</title>
+      <link>/categories/business/</link>
+      <pubDate>Tue, 08 Sep 2026 19:00:19 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/business/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>No-Code</title>
+      <link>/categories/no-code/</link>
+      <pubDate>Tue, 08 Sep 2026 19:00:19 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/no-code/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Artificial Intelligence</title>
+      <link>/categories/artificial-intelligence/</link>
+      <pubDate>Tue, 08 Sep 2026 18:33:53 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/artificial-intelligence/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>/categories/automation/</link>
+      <pubDate>Tue, 08 Sep 2026 18:33:53 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/automation/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Software Architecture</title>
+      <link>/categories/software-architecture/</link>
+      <pubDate>Mon, 24 Aug 2026 14:27:16 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/software-architecture/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>System Design</title>
+      <link>/categories/system-design/</link>
+      <pubDate>Mon, 24 Aug 2026 14:27:16 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/system-design/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>DevOps</title>
+      <link>/categories/devops/</link>
+      <pubDate>Sun, 23 Aug 2026 13:57:14 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/devops/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Docker</title>
+      <link>/categories/docker/</link>
+      <pubDate>Sun, 23 Aug 2026 13:57:14 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/docker/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>AI</title>
+      <link>/categories/ai/</link>
+      <pubDate>Sun, 23 Aug 2026 13:21:39 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/ai/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>LLM</title>
+      <link>/categories/llm/</link>
+      <pubDate>Sun, 23 Aug 2026 13:21:39 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/llm/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Machine Learning</title>
+      <link>/categories/machine-learning/</link>
+      <pubDate>Sun, 23 Aug 2026 13:21:39 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/machine-learning/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Open Source</title>
+      <link>/categories/open-source/</link>
+      <pubDate>Sun, 23 Aug 2026 13:21:39 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/open-source/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Development</title>
+      <link>/categories/development/</link>
+      <pubDate>Sun, 23 Aug 2026 09:11:46 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/development/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Software Engineering</title>
+      <link>/categories/software-engineering/</link>
+      <pubDate>Sun, 23 Aug 2026 00:10:07 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/software-engineering/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Development Tools</title>
+      <link>/categories/development-tools/</link>
+      <pubDate>Sun, 23 Aug 2026 00:05:46 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/development-tools/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Developer Tools</title>
+      <link>/categories/developer-tools/</link>
+      <pubDate>Sun, 23 Aug 2026 00:02:43 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/developer-tools/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
     <item>
       <title>Projects</title>
       <link>/categories/projects/</link>

@@ -6,6 +6,117 @@ Base URL: /
 
 # SECTION: CONTENT_INDEX
 
+## Le Plan Étape par Étape pour Vous Lancer dans l'IA / The Step-by-Step Plan to Launch Your AI Journey
+
+[URL](/scrapped/plan-etape-par-etape-lancement-ia/)  
+Date: 2026-09-10
+
+Summary:
+🇫🇷 Version Française L&rsquo;intelligence artificielle n&rsquo;est plus un concept futuriste ; c&rsquo;est un outil immédiat pour transformer votre manière de travailler. Dans ce quatrième jour du Sommet Virtuel, Alegria Group dévoile un plan d&rsquo;action concret pour passer de la théorie à la pratique, en utilisant des &lsquo;super-agents&rsquo; pour automatiser vos tâches les plus chronophages.
+Points Clés et Enseignements Automatisation stratégique : Identifiez les problèmes qui coûtent cher à votre entreprise et utilisez l&rsquo;IA pour les résoudre systématiquement. Systèmes autonomes : Apprenez à construire des flux de travail (workflows) qui gèrent votre activité en arrière-plan. Avantage compétitif : Utilisez l&rsquo;IA pour surpasser les méthodes de travail traditionnelles de 99% des acteurs de votre marché. Deep Dive : Le Passage à l&rsquo;Action La stratégie recommandée repose sur la sélection rigoureuse de problèmes répétitifs. Au lieu d&rsquo;essayer de tout automatiser, concentrez-vous sur le ROI (Retour sur Investissement) de chaque processus automatisé.
+
+
+## Automatisez votre activité avec l'IA : Sommet Virtuel Jour 3 / Automate Your Business with AI: Virtual Summit Day 3
+
+[URL](/scrapped/automatisez-votre-activite-ia-sommet-virtuel-jour-3/)  
+Date: 2026-09-09
+
+Summary:
+🇫🇷 Version Française Dans cette troisième session de notre Sommet Virtuel, Alegria Group vous accompagne pour transformer votre manière de travailler grâce aux agents IA. L&rsquo;objectif est clair : passer d&rsquo;un mode de gestion chronophage à un système automatisé capable de gérer vos opérations quotidiennes.
+Résumé et points clés Libération du temps : Apprenez à déléguer vos tâches répétitives à des agents IA. Monétisation : Identifiez les problèmes clients à forte valeur ajoutée pour maximiser vos revenus. Exécution : Mise en place concrète d&rsquo;une infrastructure IA sans avoir besoin de compétences en développement complexe. Deep-Dive : L&rsquo;architecture de votre système IA Pour automatiser une activité, il est crucial de structurer vos processus en trois couches :
+
+
+## Comment Sélectionner & Monétiser des Problèmes qui Coûtent Cher / Selecting & Monetizing High-Value Problems
+
+[URL](/scrapped/selectionner-monetiser-problemes-rentables/)  
+Date: 2026-09-08
+
+Summary:
+🇫🇷 Version Française Dans cet épisode du Sommet Virtuel, Alegria Group explore la méthodologie cruciale pour transformer des points de douleur organisationnels en opportunités de monétisation rentables. Identifier un problème qui coûte cher à une entreprise est la clé pour construire des solutions pérennes.
+Points Clés et Takeaways Qualifiez le coût du problème : Un problème qui ne coûte rien n&rsquo;est pas une priorité budgétaire. Focus sur le ROI : Votre solution doit générer un retour sur investissement immédiat pour le client. Approche No-Code : Utilisez la rapidité du No-Code pour prototyper des solutions rapidement face à ces problèmes. Analyse Approfondie La monétisation commence par l&rsquo;écoute active des inefficacités opérationnelles. En isolant des tâches répétitives et coûteuses en temps/argent, vous créez une proposition de valeur irrésistible. Le cadre proposé par Alegria Group aide à filtrer les problèmes selon leur impact financier direct.
+
+
+## Comment Dépasser 99% des Gens Grâce à l'IA / How to Outperform 99% of People with AI
+
+[URL](/scrapped/comment-depasser-99-pourcent-des-gens-grace-a-ia-alegria-group/)  
+Date: 2026-09-08
+
+Summary:
+Bienvenue dans la première session du Sommet Virtuel organisé par Alegria Group : une masterclass intensive dédiée à l&rsquo;implémentation concrète des super-agents IA et de l&rsquo;écosystème No-Code pour transformer sa productivité et bâtir un avantage concurrentiel décisif.
+🇫🇷 Version Française Synthèse &amp; Points Clés à Retenir Dans cette première soirée du sommet, Francis et l&rsquo;équipe d&rsquo;Alegria Group exposent la rupture technologique actuelle : le passage de la simple utilisation de prompts textuels (ChatGPT, Claude) à l&rsquo;orchestration de systèmes autonomes et de super-agents IA interconnectés.
+
+
+## Context as a Variable: The Architecture Killing Context Rot / Le contexte comme variable : L'architecture contre la dégradation du contexte
+
+[URL](/scrapped/context-as-a-variable-architecture/)  
+Date: 2026-08-24
+
+Summary:
+🇫🇷 Version Française Le &ldquo;Context Rot&rdquo; (dégradation du contexte) est un défi majeur dans les systèmes complexes où les décisions passées deviennent obscures. En traitant le contexte comme une variable explicite plutôt qu&rsquo;implicite, nous pouvons créer des systèmes plus résilients et maintenables.
+Résumé exécutif et points clés Contexte explicite : Sortir le contexte de l&rsquo;ombre pour le rendre manipulable. Dépendances réduites : Réduire le couplage temporel et logique. Maintenance facilitée : Un système qui explique ses propres décisions. Approche technique L&rsquo;idée est d&rsquo;injecter explicitement le contexte via des interfaces plutôt que de compter sur des variables globales ou des états cachés. Voici une représentation simplifiée :
+
+
+## Docker Rebuilt Itself for AI Agents – What Went Right and What Went Wrong
+
+[URL](/scrapped/docker-rebuilt-itself-for-ai-agents-mistake/)  
+Date: 2026-08-23
+
+Summary:
+Docker has quietly spent the last year re‑architecting its platform to serve the exploding market of AI agents. From a native Model Runner that treats LLMs as OCI artifacts, to a Micro‑Container Proxy (MCP) gateway, micro‑VM sandboxes, and a library of hardened distroless images, Docker is positioning itself as the &ldquo;Docker for AI&rdquo;. Cloud Codes walks through each launch, highlights the engineering trade‑offs, and points out a critical security misstep that could erode developer trust.
+
+
+## DeepSeek Harness: The Overpowered Open‑Source Tool for LLM Plugins
+
+[URL](/scrapped/deepseek-harness-overpowered/)  
+Date: 2026-08-23
+
+Summary:
+Introduction DeepSeek has just released Harness, a lightweight, open‑source framework that lets you run Claude Code and Codex as if they were native plugins. The video by Meydeey | Automatisation IA walks through the architecture, installation, and real‑world demos— from a 3‑D Rubik’s Cube renderer to a minimal landing page powered by the LLM.
+Executive Summary &amp; Key Takeaways Plug‑and‑Play LLMs – Harness abstracts the complexity of Claude Code/Codex behind a simple CLI and API. 13‑Layer Architecture – From the user interface down to the inference engine, each layer is modular and replaceable. One‑Line Installer – curl -fsSL https://raw.githubusercontent.com/deepseek-ai/harness/main/install.sh | bash installs everything in seconds. Zero‑Cost, Unlimited Usage – The open‑source core removes token limits; only the underlying model API may incur costs. Extensible Modes – Four modes (CLI, API, Web UI, and Agent) let you choose the right interface for your workflow. Real‑Time Demo – Live 3‑D Rubik’s Cube and a minimal landing page showcase the power of the framework. Community‑Driven – The project is actively maintained on GitHub, with a growing ecosystem of plugins. Timestamped Chapter Breakdown / Key Moments Time Topic 0:00 What DeepSeek Harness changes 2:17 The 13 layers of a harness 5:15 Cordis and the 1‑line installer 6:53 The 4 modes and the creator 8:05 It deleted my file (edge‑case handling) 9:55 API key and cost model 12:04 Live 3‑D Rubik’s Cube demo 14:58 Connecting Opus 5 or HuggingFace 19:03 Raw result live (debug view) 22:11 Landing page in minimal mode 24:23 One model per specialty 26:05 Verdict on the seismic event Detailed Topic Deep‑Dive 1. 13‑Layer Architecture The harness is built on a stack that mirrors a typical web application but is tailored for LLM workloads. Below is a simplified diagram:
+
+
+## Diagram-Design: AI-Powered Technical Diagrams Styled to Your Brand
+
+[URL](/scrapped/diagram-design-ai-diagram-generator-claude-code/)  
+Date: 2026-08-23
+
+Summary:
+Creating clean, visually appealing technical architecture diagrams is often a tedious task. Whether you are constantly tweaking coordinates in Excalidraw or wrestling with the default layout quirks of Mermaid, producing polished graphics for documentation and presentations takes time.
+Enter Diagram-design, an open-source skill built for AI coding assistants like Claude Code, Codex, and Pi. It automates the generation of publication-ready, standalone HTML diagrams without requiring complex build steps or external image dependencies.
+
+
+## Benchmarking Qwen3.8 27B and DeepSeek Harness Against Claude Opus in Claude Code
+
+[URL](/scrapped/qwen38-27b-deepseek-harness-beats-opus-claude-code/)  
+Date: 2026-08-23
+
+Summary:
+The landscape of autonomous coding agents is shifting at an unprecedented pace. While proprietary frontier models from Anthropic and OpenAI have traditionally dominated developer workflows, modern open-weight architectures paired with specialized execution harnesses are flipping the script on raw model capability.
+In this breakdown, James Layne demonstrates how configuring Qwen3.8 27B within a customized DeepSeek harness delivers superior task completion rates, lower latency, and dramatically reduced token costs compared to flagship proprietary alternatives within the Claude Code developer CLI.
+
+
+## OpenFox: A Powerful Local-LLM-First Agentic Coding Assistant
+
+[URL](/scrapped/openfox-local-llm-coding-assistant/)  
+Date: 2026-08-23
+
+Summary:
+Overview OpenFox is an autonomous coding agent built specifically for local LLMs, designed to provide a comprehensive development environment right out of the box. By leveraging a contract-driven execution pipeline, it ensures that your code meets specific acceptance criteria, creating a reliable loop for automated software development.
+Quick Start Getting started with OpenFox is straightforward. Ensure you have Node.js (&gt;= 24.0.0) installed, then install the package globally:
+npm i -g openfox openfox On the first run, OpenFox will automatically detect your local LLM backend—supporting vLLM, sglang, ollama, and llamacpp—and configure itself accordingly.
+
+
+## OpenFox: A Local-LLM-First Agentic Coding Assistant
+
+[URL](/scrapped/openfox-local-llm-agentic-coding-assistant/)  
+Date: 2026-08-23
+
+Summary:
+Modern AI coding assistants often lock developers into cloud ecosystems and proprietary subscriptions. OpenFox flips the script by providing a local-LLM-first, autonomous coding agent that comes fully configured straight out of the box.
+With contract-driven execution pipelines, native support for popular local inference backends, and multi-turn workflows, OpenFox gives you complete control over your AI-assisted development stack without sacrificing agentic power.
+Key Architectural Highlights OpenFox combines structured planning, rigorous criteria verification, and local execution:
+
+
 ## 5 essential Claude Code skills
 
 [URL](/posts/5-essential-claude-code-skills/)  

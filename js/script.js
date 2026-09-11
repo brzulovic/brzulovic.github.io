@@ -57,9 +57,48 @@ function randomBackgroundColor() {
         document.body.style.backgroundColor = `hsl(${hue}deg 22.56% 25.97%)`;
 }
 
-
 // Initial call and interval for real-time update
 //updateBackgroundColor();
 //setInterval(updateBackgroundColor, 1000);
 randomBackgroundColor();
 setInterval(randomBackgroundColor, 1000*60);
+
+
+
+
+
+const text = "- under construction - under construction - under construction - under construction -";
+const el = document.getElementsByTagName('p')[0]; //document.getElementById("construction");
+
+// Start with the full text repeated a couple times so it looks continuous
+//let content = text + text;
+let content = text ;
+el.textContent = content;
+let offset = 0;
+let i = 0;
+let visible = true;
+
+function textFX(){
+  //Typing / wiping effect
+  el.textContent = text.slice(0, i);
+  i = (i + 1) % (text.length + 1);
+
+  // Move characters to the left
+  offset++;
+  content = content.slice(1) + content[0];
+  el.textContent = content;
+
+  //// Optional: reset offset to avoid very long strings after a long time
+  //if (offset > text.length) {
+  //  offset = 0;
+  //  content = text + text;
+  //}
+
+  // //2. Blink + color pulse
+  // visible = !visible;
+  // el.style.opacity = visible ? 1 : 0.3;
+  // el.style.color = visible ? "#ffcc00" : "#ff6600";
+}
+setInterval(textFX, 100);
+
+

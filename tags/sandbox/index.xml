@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Sandbox on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/tags/sandbox/</link>
+    <description>Recent content in Sandbox on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Sun, 23 Aug 2026 13:57:14 +0000</lastBuildDate>
+    <atom:link href="/tags/sandbox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker Rebuilt Itself for AI Agents – What Went Right and What Went Wrong</title>
+      <link>/scrapped/docker-rebuilt-itself-for-ai-agents-mistake/</link>
+      <pubDate>Sun, 23 Aug 2026 13:57:14 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/docker-rebuilt-itself-for-ai-agents-mistake/</guid>
+      <description>&lt;p&gt;Docker has quietly spent the last year re‑architecting its platform to serve the exploding market of AI agents.  From a native &lt;strong&gt;Model Runner&lt;/strong&gt; that treats LLMs as OCI artifacts, to a &lt;strong&gt;Micro‑Container Proxy (MCP)&lt;/strong&gt; gateway, micro‑VM sandboxes, and a library of hardened distroless images, Docker is positioning itself as the &amp;ldquo;Docker for AI&amp;rdquo;.  Cloud Codes walks through each launch, highlights the engineering trade‑offs, and points out a critical security misstep that could erode developer trust.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Docker has quietly spent the last year re‑architecting its platform to serve the exploding market of AI agents.  From a native <strong>Model Runner</strong> that treats LLMs as OCI artifacts, to a <strong>Micro‑Container Proxy (MCP)</strong> gateway, micro‑VM sandboxes, and a library of hardened distroless images, Docker is positioning itself as the &ldquo;Docker for AI&rdquo;.  Cloud Codes walks through each launch, highlights the engineering trade‑offs, and points out a critical security misstep that could erode developer trust.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/WMqD6nyF_0k?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h2 id="executive-summary--key-takeaways">Executive Summary &amp; Key Takeaways</h2>
+<ul>
+<li>Docker’s AI stack consists of four major components: Model Runner, MCP gateway, sbx micro‑VM sandboxes, and 1,000+ hardened images.</li>
+<li>Model Runner integrates with Docker Compose via a <strong>models block</strong>, allowing LLMs to be versioned and deployed like any container.</li>
+<li>The MCP gateway introduced a powerful tool‑gateway pattern but suffered a CVSS‑10 vulnerability (Ruflo) that allowed unauthenticated shell execution.</li>
+<li>Docker’s custom VMM replaces Firecracker on macOS/Windows, solving cross‑platform limitations but adding maintenance overhead.</li>
+<li>While Docker’s offering is technically impressive, community adoption still favors Ollama due to simplicity, star count, and a more mature ecosystem.</li>
+<li>The price‑increase controversy and the security scandal have created a trust deficit that Docker must address to win back developers.</li>
+</ul>
+<h2 id="timestamped-chapter-breakdown--key-moments">Timestamped Chapter Breakdown / Key Moments</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Timestamp</th>
+					<th>Topic</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>00:00</td>
+					<td>Docker&rsquo;s Quiet AI Transformation</td>
+			</tr>
+			<tr>
+					<td>00:23</td>
+					<td>Launch #1 – Docker Model Runner (<code>docker model run</code>)</td>
+			</tr>
+			<tr>
+					<td>02:22</td>
+					<td>Native Docker Compose Integration (models block)</td>
+			</tr>
+			<tr>
+					<td>03:11</td>
+					<td>Ollama vs Docker – why Solomon Hykes backs Ollama</td>
+			</tr>
+			<tr>
+					<td>03:37</td>
+					<td>Launch #2 – MCP Gateway &amp; Ruflo CVSS 10.0 scandal</td>
+			</tr>
+			<tr>
+					<td>05:54</td>
+					<td>Launch #3 – sbx MicroVM Sandboxes &amp; YOLO mode</td>
+			</tr>
+			<tr>
+					<td>07:08</td>
+					<td>Why Firecracker failed on macOS/Windows – Docker’s custom VMM</td>
+			</tr>
+			<tr>
+					<td>08:00</td>
+					<td>Launch #4 – 1,000+ Hardened Distroless Images (free)</td>
+			</tr>
+			<tr>
+					<td>08:46</td>
+					<td>Price increase controversy &amp; trust deficit</td>
+			</tr>
+			<tr>
+					<td>09:27</td>
+					<td>Final Verdict – What to use vs what to skip</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="detailed-topic-deepdive">Detailed Topic Deep‑Dive</h2>
+<h3 id="1-docker-model-runner">1. Docker Model Runner</h3>
+<p>Docker Model Runner treats an LLM as an OCI image under the <code>docker.io/ai</code> namespace.  The command syntax mirrors standard container execution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Pull a model OCI artifact</span>
+</span></span><span style="display:flex;"><span>docker pull docker.io/ai/llama-2:7b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run the model locally</span>
+</span></span><span style="display:flex;"><span>docker model run llama-2:7b --port <span style="color:#ae81ff">8080</span>
+</span></span></code></pre></div><p>The <strong>models block</strong> in a <code>docker-compose.yml</code> file enables multi‑model orchestration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">agent</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">my/agent:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">models</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">llama-2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/ai/llama-2:7b</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">embedding</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">docker.io/ai/text-embedding:3.0</span>
+</span></span></code></pre></div><p>This design gives developers the same declarative workflow they already use for containers, simplifying version control, CI/CD, and scaling.</p>
+<h3 id="2-mcp-gateway--ruflo-vulnerability">2. MCP Gateway &amp; Ruflo Vulnerability</h3>
+<p>The <strong>Micro‑Container Proxy (MCP)</strong> acts as a side‑car that forwards API calls from an agent to external services.  Docker released a tool‑gateway pattern that abstracts credential handling and request routing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Start the MCP server (default namespace: ruflo)</span>
+</span></span><span style="display:flex;"><span>docker mcp start --namespace ruflo
+</span></span></code></pre></div><p>Unfortunately, the initial release exposed the MCP HTTP endpoint without authentication.  The <strong>Ruflo CVSS 10.0</strong> vulnerability allowed any unauthenticated caller to execute arbitrary shell commands on the host, a severe breach of the isolation model.</p>
+<p>Docker patched the issue within days, but the incident highlighted the risk of exposing internal gateways without proper auth layers.</p>
+<h3 id="3-sbx-microvm-sandboxes--yolo-mode">3. sbx MicroVM Sandboxes &amp; YOLO Mode</h3>
+<p>Docker’s <strong>sbx</strong> CLI launches a lightweight micro‑VM sandbox using a custom VMM that works across Apple Hypervisor, Windows Hypervisor Platform, and KVM.  It replaces the soft permission prompts of traditional containers with hard kernel boundaries.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Run Claude in a sandbox (YOLO mode skips interactive prompts)</span>
+</span></span><span style="display:flex;"><span>docker sbx run claude --yolo
+</span></span></code></pre></div><p>The custom VMM was built because <strong>Firecracker</strong> does not support macOS/Windows natively.  By writing their own monitor, Docker achieved cross‑platform parity but introduced a new code‑base to maintain.</p>
+<h3 id="4-hardened-distroless-images">4. Hardened Distroless Images</h3>
+<p>Docker open‑sourced <strong>1,000+ hardened distroless images</strong> that strip unnecessary binaries, reduce attack surface, and are signed with Notary v2.  They are free to pull from Docker Hub, providing a secure baseline for AI workloads.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Example of a hardened image for a Python inference service</span>
+</span></span><span style="display:flex;"><span>docker pull docker.io/ai/hardened-python:3.11-slim
+</span></span></code></pre></div><p>These images complement the Model Runner approach, ensuring that even custom model containers start from a minimal, vetted base.</p>
+<h2 id="code-snippets--examples">Code Snippets &amp; Examples</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Full workflow: pull model, start MCP, run sandbox, expose via Compose</span>
+</span></span><span style="display:flex;"><span>docker pull docker.io/ai/llama-2:7b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker mcp start --namespace ruflo &amp;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker sbx run llama-2 --yolo --port <span style="color:#ae81ff">8080</span> &amp;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># docker-compose.yml</span>
+</span></span><span style="display:flex;"><span>services:
+</span></span><span style="display:flex;"><span>  ai-agent:
+</span></span><span style="display:flex;"><span>    image: my/agent:latest
+</span></span><span style="display:flex;"><span>    depends_on:
+</span></span><span style="display:flex;"><span>      - mcp
+</span></span><span style="display:flex;"><span>    ports:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8080:8080&#34;</span>
+</span></span><span style="display:flex;"><span>    environment:
+</span></span><span style="display:flex;"><span>      MCP_ENDPOINT: http://mcp:5000
+</span></span><span style="display:flex;"><span>  mcp:
+</span></span><span style="display:flex;"><span>    image: docker.io/ai/mcp:latest
+</span></span><span style="display:flex;"><span>    command: start --namespace ruflo
+</span></span></code></pre></div><h2 id="key-quotes--speaker-insights">Key Quotes &amp; Speaker Insights</h2>
+<ul>
+<li><strong>&ldquo;Docker’s Model Runner is a game‑changer for reproducible AI, but you still need to trust the supply chain.&rdquo;</strong> – Cloud Codes</li>
+<li><strong>&ldquo;The Ruflo incident shows that convenience can’t trump security; a gateway without auth is a backdoor waiting to be exploited.&rdquo;</strong> – Cloud Codes</li>
+<li><strong>&ldquo;Ollama’s simplicity and massive star count keep it ahead in community adoption, despite Docker’s richer feature set.&rdquo;</strong> – Cloud Codes</li>
+</ul>
+<h2 id="conclusion--related-resources">Conclusion &amp; Related Resources</h2>
+<p>Docker’s AI stack is technically sophisticated and brings container‑native ergonomics to LLM deployment.  However, the security misstep with MCP and the price‑increase backlash have created a trust gap.  For teams that prioritize reproducibility and cross‑platform sandboxing, Docker’s offering is compelling; for rapid prototyping and community support, Ollama remains the go‑to solution.</p>
+<p><strong>Further Reading</strong></p>
+<ul>
+<li>Docker Model Runner Docs: <a class="link" href="https://docs.docker.com/ai/model-runner/"  target="_blank" rel="noopener"
+    >https://docs.docker.com/ai/model-runner/</a></li>
+<li>Docker Sandbox Repository: <a class="link" href="https://github.com/docker/sandbox"  target="_blank" rel="noopener"
+    >https://github.com/docker/sandbox</a></li>
+<li>Ollama GitHub: <a class="link" href="https://github.com/ollama/ollama"  target="_blank" rel="noopener"
+    >https://github.com/ollama/ollama</a></li>
+<li>Wiz MCP Security Audit: <a class="link" href="https://www.wiz.io/blog"  target="_blank" rel="noopener"
+    >https://www.wiz.io/blog</a></li>
+<li>Ruflo Agent Framework: <a class="link" href="https://github.com/ruflo-ai/ruflo"  target="_blank" rel="noopener"
+    >https://github.com/ruflo-ai/ruflo</a></li>
+</ul>
+<p>Stay tuned for more deep‑dives into emerging infrastructure patterns.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

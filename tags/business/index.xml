@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Business on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/tags/business/</link>
+    <description>Recent content in Business on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Wed, 09 Sep 2026 13:53:53 +0000</lastBuildDate>
+    <atom:link href="/tags/business/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Automatisez votre activité avec l&#39;IA : Sommet Virtuel Jour 3 / Automate Your Business with AI: Virtual Summit Day 3</title>
+      <link>/scrapped/automatisez-votre-activite-ia-sommet-virtuel-jour-3/</link>
+      <pubDate>Wed, 09 Sep 2026 13:53:53 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/automatisez-votre-activite-ia-sommet-virtuel-jour-3/</guid>
+      <description>&lt;h2 id=&#34;-version-française&#34;&gt;🇫🇷 Version Française&lt;/h2&gt;&#xA;&lt;p&gt;Dans cette troisième session de notre Sommet Virtuel, Alegria Group vous accompagne pour transformer votre manière de travailler grâce aux agents IA. L&amp;rsquo;objectif est clair : passer d&amp;rsquo;un mode de gestion chronophage à un système automatisé capable de gérer vos opérations quotidiennes.&lt;/p&gt;&#xA;&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;&#xA;&#x9;&#x9;&#x9;&lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/HB-UFR3PpBo?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;&#xA;&#x9;&#x9;&lt;/div&gt;&#xA;&#xA;&lt;h3 id=&#34;résumé-et-points-clés&#34;&gt;Résumé et points clés&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Libération du temps :&lt;/strong&gt; Apprenez à déléguer vos tâches répétitives à des agents IA.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Monétisation :&lt;/strong&gt; Identifiez les problèmes clients à forte valeur ajoutée pour maximiser vos revenus.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Exécution :&lt;/strong&gt; Mise en place concrète d&amp;rsquo;une infrastructure IA sans avoir besoin de compétences en développement complexe.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;deep-dive--larchitecture-de-votre-système-ia&#34;&gt;Deep-Dive : L&amp;rsquo;architecture de votre système IA&lt;/h3&gt;&#xA;&lt;p&gt;Pour automatiser une activité, il est crucial de structurer vos processus en trois couches :&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="-version-française">🇫🇷 Version Française</h2>
+<p>Dans cette troisième session de notre Sommet Virtuel, Alegria Group vous accompagne pour transformer votre manière de travailler grâce aux agents IA. L&rsquo;objectif est clair : passer d&rsquo;un mode de gestion chronophage à un système automatisé capable de gérer vos opérations quotidiennes.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/HB-UFR3PpBo?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h3 id="résumé-et-points-clés">Résumé et points clés</h3>
+<ul>
+<li><strong>Libération du temps :</strong> Apprenez à déléguer vos tâches répétitives à des agents IA.</li>
+<li><strong>Monétisation :</strong> Identifiez les problèmes clients à forte valeur ajoutée pour maximiser vos revenus.</li>
+<li><strong>Exécution :</strong> Mise en place concrète d&rsquo;une infrastructure IA sans avoir besoin de compétences en développement complexe.</li>
+</ul>
+<h3 id="deep-dive--larchitecture-de-votre-système-ia">Deep-Dive : L&rsquo;architecture de votre système IA</h3>
+<p>Pour automatiser une activité, il est crucial de structurer vos processus en trois couches :</p>
+<ol>
+<li><strong>Capture :</strong> Collecte automatisée des demandes (leads, emails, requêtes clients).</li>
+<li><strong>Traitement (Le Cœur IA) :</strong> Analyse, classification et rédaction de réponses par des agents spécialisés.</li>
+<li><strong>Action :</strong> Exécution automatisée dans votre CRM ou outils de gestion via des connecteurs NoCode.</li>
+</ol>
+<h2 id="-english-version">🇬🇧 English Version</h2>
+<p>In this third session of our Virtual Summit, Alegria Group guides you through transforming your workflow using AI agents. The goal is clear: transition from time-consuming management to an automated system capable of handling your daily operations.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/HB-UFR3PpBo?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h3 id="executive-summary--key-takeaways">Executive Summary &amp; Key Takeaways</h3>
+<ul>
+<li><strong>Time Liberation:</strong> Learn how to delegate repetitive tasks to AI agents effectively.</li>
+<li><strong>Monetization:</strong> Identify high-value customer problems to maximize your business revenue.</li>
+<li><strong>Execution:</strong> Set up a concrete AI infrastructure without needing complex development skills.</li>
+</ul>
+<h3 id="deep-dive-architecture-of-your-ai-system">Deep-Dive: Architecture of Your AI System</h3>
+<p>To automate your business, it is essential to structure your processes into three layers:</p>
+<ol>
+<li><strong>Capture:</strong> Automated collection of incoming requests (leads, emails, customer queries).</li>
+<li><strong>Processing (AI Core):</strong> Analysis, classification, and drafting of responses by specialized AI agents.</li>
+<li><strong>Action:</strong> Automated execution within your CRM or management tools via NoCode connectors.</li>
+</ol>
+<h3 id="conclusion">Conclusion</h3>
+<p>Le passage à l&rsquo;automatisation IA n&rsquo;est plus une option, mais une nécessité pour rester compétitif. / Moving to AI automation is no longer an option, but a necessity to remain competitive.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

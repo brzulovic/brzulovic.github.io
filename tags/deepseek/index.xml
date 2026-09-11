@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>DeepSeek on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <link>/tags/deepseek/</link>
+    <description>Recent content in DeepSeek on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Sun, 23 Aug 2026 13:21:39 +0000</lastBuildDate>
+    <atom:link href="/tags/deepseek/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DeepSeek Harness: The Overpowered Open‑Source Tool for LLM Plugins</title>
+      <link>/scrapped/deepseek-harness-overpowered/</link>
+      <pubDate>Sun, 23 Aug 2026 13:21:39 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/deepseek-harness-overpowered/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;DeepSeek has just released &lt;strong&gt;Harness&lt;/strong&gt;, a lightweight, open‑source framework that lets you run Claude Code and Codex as if they were native plugins.  The video by Meydeey | Automatisation IA walks through the architecture, installation, and real‑world demos— from a 3‑D Rubik’s Cube renderer to a minimal landing page powered by the LLM.&lt;/p&gt;&#xA;&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;&#xA;&#x9;&#x9;&#x9;&lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/ZLDThmGVuC0?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;&#xA;&#x9;&#x9;&lt;/div&gt;&#xA;&#xA;&lt;h2 id=&#34;executive-summary--key-takeaways&#34;&gt;Executive Summary &amp;amp; Key Takeaways&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Plug‑and‑Play LLMs&lt;/strong&gt; – Harness abstracts the complexity of Claude Code/Codex behind a simple CLI and API.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;13‑Layer Architecture&lt;/strong&gt; – From the user interface down to the inference engine, each layer is modular and replaceable.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;One‑Line Installer&lt;/strong&gt; – &lt;code&gt;curl -fsSL https://raw.githubusercontent.com/deepseek-ai/harness/main/install.sh | bash&lt;/code&gt; installs everything in seconds.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Zero‑Cost, Unlimited Usage&lt;/strong&gt; – The open‑source core removes token limits; only the underlying model API may incur costs.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Extensible Modes&lt;/strong&gt; – Four modes (CLI, API, Web UI, and Agent) let you choose the right interface for your workflow.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Real‑Time Demo&lt;/strong&gt; – Live 3‑D Rubik’s Cube and a minimal landing page showcase the power of the framework.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Community‑Driven&lt;/strong&gt; – The project is actively maintained on GitHub, with a growing ecosystem of plugins.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;timestamped-chapter-breakdown--key-moments&#34;&gt;Timestamped Chapter Breakdown / Key Moments&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Time&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Topic&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;0:00&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;What DeepSeek Harness changes&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;2:17&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;The 13 layers of a harness&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;5:15&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Cordis and the 1‑line installer&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;6:53&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;The 4 modes and the creator&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;8:05&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;It deleted my file (edge‑case handling)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;9:55&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;API key and cost model&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;12:04&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Live 3‑D Rubik’s Cube demo&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;14:58&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Connecting Opus 5 or HuggingFace&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;19:03&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Raw result live (debug view)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;22:11&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Landing page in minimal mode&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;24:23&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;One model per specialty&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;26:05&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Verdict on the seismic event&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;h2 id=&#34;detailed-topic-deepdive&#34;&gt;Detailed Topic Deep‑Dive&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-13layer-architecture&#34;&gt;1. 13‑Layer Architecture&lt;/h3&gt;&#xA;&lt;p&gt;The harness is built on a stack that mirrors a typical web application but is tailored for LLM workloads.  Below is a simplified diagram:&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="introduction">Introduction</h2>
+<p>DeepSeek has just released <strong>Harness</strong>, a lightweight, open‑source framework that lets you run Claude Code and Codex as if they were native plugins.  The video by Meydeey | Automatisation IA walks through the architecture, installation, and real‑world demos— from a 3‑D Rubik’s Cube renderer to a minimal landing page powered by the LLM.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/ZLDThmGVuC0?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h2 id="executive-summary--key-takeaways">Executive Summary &amp; Key Takeaways</h2>
+<ul>
+<li><strong>Plug‑and‑Play LLMs</strong> – Harness abstracts the complexity of Claude Code/Codex behind a simple CLI and API.</li>
+<li><strong>13‑Layer Architecture</strong> – From the user interface down to the inference engine, each layer is modular and replaceable.</li>
+<li><strong>One‑Line Installer</strong> – <code>curl -fsSL https://raw.githubusercontent.com/deepseek-ai/harness/main/install.sh | bash</code> installs everything in seconds.</li>
+<li><strong>Zero‑Cost, Unlimited Usage</strong> – The open‑source core removes token limits; only the underlying model API may incur costs.</li>
+<li><strong>Extensible Modes</strong> – Four modes (CLI, API, Web UI, and Agent) let you choose the right interface for your workflow.</li>
+<li><strong>Real‑Time Demo</strong> – Live 3‑D Rubik’s Cube and a minimal landing page showcase the power of the framework.</li>
+<li><strong>Community‑Driven</strong> – The project is actively maintained on GitHub, with a growing ecosystem of plugins.</li>
+</ul>
+<h2 id="timestamped-chapter-breakdown--key-moments">Timestamped Chapter Breakdown / Key Moments</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Time</th>
+					<th>Topic</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>0:00</td>
+					<td>What DeepSeek Harness changes</td>
+			</tr>
+			<tr>
+					<td>2:17</td>
+					<td>The 13 layers of a harness</td>
+			</tr>
+			<tr>
+					<td>5:15</td>
+					<td>Cordis and the 1‑line installer</td>
+			</tr>
+			<tr>
+					<td>6:53</td>
+					<td>The 4 modes and the creator</td>
+			</tr>
+			<tr>
+					<td>8:05</td>
+					<td>It deleted my file (edge‑case handling)</td>
+			</tr>
+			<tr>
+					<td>9:55</td>
+					<td>API key and cost model</td>
+			</tr>
+			<tr>
+					<td>12:04</td>
+					<td>Live 3‑D Rubik’s Cube demo</td>
+			</tr>
+			<tr>
+					<td>14:58</td>
+					<td>Connecting Opus 5 or HuggingFace</td>
+			</tr>
+			<tr>
+					<td>19:03</td>
+					<td>Raw result live (debug view)</td>
+			</tr>
+			<tr>
+					<td>22:11</td>
+					<td>Landing page in minimal mode</td>
+			</tr>
+			<tr>
+					<td>24:23</td>
+					<td>One model per specialty</td>
+			</tr>
+			<tr>
+					<td>26:05</td>
+					<td>Verdict on the seismic event</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="detailed-topic-deepdive">Detailed Topic Deep‑Dive</h2>
+<h3 id="1-13layer-architecture">1. 13‑Layer Architecture</h3>
+<p>The harness is built on a stack that mirrors a typical web application but is tailored for LLM workloads.  Below is a simplified diagram:</p>
+<pre tabindex="0"><code>┌───────────────────────┐
+│ 1. User Interface     │  ← CLI, Web UI, API, Agent
+├───────────────────────┤
+│ 2. Request Router     │  ← Routes commands to layers
+├───────────────────────┤
+│ 3. Prompt Builder     │  ← Formats user input for the model
+├───────────────────────┤
+│ 4. Model Selector     │  ← Chooses Claude Code / Codex
+├───────────────────────┤
+│ 5. Tokenizer          │  ← Handles tokenization
+├───────────────────────┤
+│ 6. Inference Engine   │  ← Calls the LLM API
+├───────────────────────┤
+│ 7. Post‑Processor     │  ← Cleans output, handles errors
+├───────────────────────┤
+│ 8. Caching Layer      │  ← Stores recent responses
+├───────────────────────┤
+│ 9. Metrics Collector  │  ← Tracks usage, latency
+├───────────────────────┤
+│10. Logging            │  ← Structured logs
+├───────────────────────┤
+│11. Security Layer     │  ← API key validation
+├───────────────────────┤
+│12. Deployment Config  │  ← Docker, Kubernetes manifests
+├───────────────────────┤
+│13. Monitoring         │  ← Prometheus, Grafana
+└───────────────────────┘
+</code></pre><h3 id="2-installation--setup">2. Installation &amp; Setup</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># One‑line installer (works on Linux/macOS)</span>
+</span></span><span style="display:flex;"><span>curl -fsSL https://raw.githubusercontent.com/deepseek-ai/harness/main/install.sh | bash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify installation</span>
+</span></span><span style="display:flex;"><span>harness --version
+</span></span></code></pre></div><p>After installation, configure your API key:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export DEEPSEEK_API_KEY<span style="color:#f92672">=</span>sk‑YOUR‑KEY
+</span></span></code></pre></div><h3 id="3-running-a-simple-prompt">3. Running a Simple Prompt</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>harness run <span style="color:#e6db74">&#34;What is the capital of France?&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Output:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Paris</span>
+</span></span></code></pre></div><h3 id="4-using-the-web-ui">4. Using the Web UI</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>harness ui
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Opens http://localhost:8000 where you can type prompts and view responses in real time.</span>
+</span></span></code></pre></div><h3 id="5-agent-mode">5. Agent Mode</h3>
+<p>Harness can act as an autonomous agent that chains prompts:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>harness agent --task <span style="color:#e6db74">&#34;Summarise the latest DeepSeek release notes&#34;</span>
+</span></span></code></pre></div><h2 id="code-snippets--examples">Code Snippets &amp; Examples</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Python wrapper for Harness API</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>API_URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://localhost:8000/api/v1/run&#34;</span>
+</span></span><span style="display:flex;"><span>headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Bearer </span><span style="color:#e6db74">{</span>os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#39;DEEPSEEK_API_KEY&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;prompt&#34;</span>: <span style="color:#e6db74">&#34;Explain the 13 layers of DeepSeek Harness.&#34;</span>}
+</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(API_URL, json<span style="color:#f92672">=</span>payload, headers<span style="color:#f92672">=</span>headers)
+</span></span><span style="display:flex;"><span>print(response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#34;output&#34;</span>])
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Docker Compose example</span>
+</span></span><span style="display:flex;"><span>version: <span style="color:#e6db74">&#34;3.8&#34;</span>
+</span></span><span style="display:flex;"><span>services:
+</span></span><span style="display:flex;"><span>  harness:
+</span></span><span style="display:flex;"><span>    image: deepseek/harness:latest
+</span></span><span style="display:flex;"><span>    ports:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8000:8000&#34;</span>
+</span></span><span style="display:flex;"><span>    environment:
+</span></span><span style="display:flex;"><span>      - DEEPSEEK_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>DEEPSEEK_API_KEY<span style="color:#e6db74">}</span>
+</span></span></code></pre></div><h2 id="key-quotes--speaker-insights">Key Quotes &amp; Speaker Insights</h2>
+<ul>
+<li><em>&ldquo;DeepSeek Harness changes everything I do with LLMs.&rdquo;</em> – Meydeey</li>
+<li><em>&ldquo;The 13 layers give you granular control while keeping the interface simple.&rdquo;</em> – Presenter</li>
+<li><em>&ldquo;You can run Claude Code and Codex side‑by‑side without hitting token limits.&rdquo;</em> – Meydeey</li>
+<li><em>&ldquo;The one‑line installer is a game‑changer for rapid prototyping.&rdquo;</em> – Meydeey</li>
+</ul>
+<h2 id="conclusion--related-resources">Conclusion &amp; Related Resources</h2>
+<p>DeepSeek Harness democratizes access to powerful LLMs by packaging them into a modular, open‑source framework.  Whether you’re building a chatbot, a code generator, or a real‑time 3‑D renderer, Harness gives you the flexibility to choose the right model, interface, and deployment strategy—all while keeping costs under control.</p>
+<p><strong>Related Resources</strong></p>
+<ul>
+<li><a class="link" href="https://github.com/deepseek-ai/harness"  target="_blank" rel="noopener"
+    >DeepSeek GitHub Repository</a></li>
+<li><a class="link" href="https://docs.deepseek.com"  target="_blank" rel="noopener"
+    >DeepSeek Documentation</a></li>
+<li><a class="link" href="https://claude.ai"  target="_blank" rel="noopener"
+    >Claude Code Official Site</a></li>
+<li><a class="link" href="https://openai.com/api"  target="_blank" rel="noopener"
+    >OpenAI Codex API</a></li>
+<li><a class="link" href="https://huggingface.co/transformers"  target="_blank" rel="noopener"
+    >HuggingFace Transformers</a></li>
+</ul>
+<hr>
+<p><em>If you found this post helpful, consider subscribing to Meydeey | Automatisation IA for more AI automation tutorials.</em></p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Benchmarking Qwen3.8 27B and DeepSeek Harness Against Claude Opus in Claude Code</title>
+      <link>/scrapped/qwen38-27b-deepseek-harness-beats-opus-claude-code/</link>
+      <pubDate>Sun, 23 Aug 2026 00:10:07 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/qwen38-27b-deepseek-harness-beats-opus-claude-code/</guid>
+      <description>&lt;p&gt;The landscape of autonomous coding agents is shifting at an unprecedented pace. While proprietary frontier models from Anthropic and OpenAI have traditionally dominated developer workflows, modern open-weight architectures paired with specialized execution harnesses are flipping the script on raw model capability.&lt;/p&gt;&#xA;&lt;p&gt;In this breakdown, James Layne demonstrates how configuring Qwen3.8 27B within a customized DeepSeek harness delivers superior task completion rates, lower latency, and dramatically reduced token costs compared to flagship proprietary alternatives within the Claude Code developer CLI.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>The landscape of autonomous coding agents is shifting at an unprecedented pace. While proprietary frontier models from Anthropic and OpenAI have traditionally dominated developer workflows, modern open-weight architectures paired with specialized execution harnesses are flipping the script on raw model capability.</p>
+<p>In this breakdown, James Layne demonstrates how configuring Qwen3.8 27B within a customized DeepSeek harness delivers superior task completion rates, lower latency, and dramatically reduced token costs compared to flagship proprietary alternatives within the Claude Code developer CLI.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/cLqtxkYrMDI?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h2 id="executive-summary--key-takeaways">Executive Summary &amp; Key Takeaways</h2>
+<ul>
+<li><strong>Scaffolding Multiplies Capability:</strong> Raw parameter size is no longer the sole determinant of coding performance. A well-engineered harness structure combined with recursive verification loops enables smaller models like Qwen 27B to out-resolve frontier giants.</li>
+<li><strong>Unmatched Cost-to-Performance:</strong> Running a quantized or locally hosted 27B parameter model drastically reduces API token expenditure without sacrificing code quality.</li>
+<li><strong>Claude Code Extensibility:</strong> By redirecting provider endpoints and standardizing tool calling schemas, developers can slot open-weight models directly into modern agentic CLI tools.</li>
+<li><strong>Deterministic Grounding:</strong> DeepSeek&rsquo;s test-harness evaluation framework grounds code changes through real-time feedback loops, preventing the conversational hallucination traps often seen in large frontier models.</li>
+</ul>
+<h2 id="key-timestamps--video-breakdown">Key Timestamps &amp; Video Breakdown</h2>
+<ul>
+<li><strong>[00:00] - Overview &amp; Architectural Thesis:</strong> Introduction to the performance parity gap between open models and Claude Opus.</li>
+<li><strong>[02:15] - The DeepSeek Harness Architecture:</strong> How recursive reflection and execution feedback empower mid-sized parameter models.</li>
+<li><strong>[05:40] - Setting Up Qwen3.8 27B Locally &amp; Remotely:</strong> Configuration options using vLLM and Ollama alongside Claude Code.</li>
+<li><strong>[08:50] - Live Benchmark Suite:</strong> Running complex refactor tasks, dependency conflict resolutions, and automated test migrations.</li>
+<li><strong>[12:30] - Claude Code Integration Guide:</strong> Step-by-step custom proxy routing and tool declaration mapping.</li>
+<li><strong>[15:10] - Cost and Accuracy Analysis:</strong> Breakdown of token throughput, cost efficiency, and final verdict.</li>
+</ul>
+<h2 id="detailed-topic-deep-dive-agent-harness-scaffolding">Detailed Topic Deep-Dive: Agent Harness Scaffolding</h2>
+<h3 id="the-architecture-behind-the-leap">The Architecture Behind the Leap</h3>
+<p>When frontier models fail on multi-file code refactoring, failure is rarely caused by syntax ignorance; it stems from context drift and brittle tool execution. DeepSeek&rsquo;s harness patterns enforce a rigorous three-tier execution loop:</p>
+<ol>
+<li><strong>Planning &amp; Context Pruning:</strong> Identifying the minimum necessary AST slice before generating diffs.</li>
+<li><strong>Targeted Code Generation:</strong> Qwen3.8 produces clean, unified diffs formatted strictly for programmatic patch applications.</li>
+<li><strong>Automated Verification:</strong> The harness runs local test suites and linters, feeding failures back into the prompt window before marking tasks as complete.</li>
+</ol>
+<table>
+	<thead>
+			<tr>
+					<th style="text-align: left">Attribute</th>
+					<th style="text-align: left">Vanilla Frontier Model</th>
+					<th style="text-align: left">Qwen3.8 27B + DeepSeek Harness</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>Model Size</strong></td>
+					<td style="text-align: left">Massive Closed MoE</td>
+					<td style="text-align: left">27B Open-Weights</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Execution Pattern</strong></td>
+					<td style="text-align: left">Linear Chain-of-Thought</td>
+					<td style="text-align: left">Cyclic Scaffolding &amp; Verification</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Cost per 1M Tokens</strong></td>
+					<td style="text-align: left">~$15.00 - $75.00</td>
+					<td style="text-align: left">Local ($0.00) or ~$0.20 API</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>Context Drift Resistance</strong></td>
+					<td style="text-align: left">Moderate</td>
+					<td style="text-align: left">High (Isolated Context Buffers)</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="step-by-step-configuration--implementation">Step-by-Step Configuration &amp; Implementation</h2>
+<p>To route Claude Code or similar terminal agent CLIs to a custom Qwen3.8 27B endpoint wrapped in an agentic harness, you can proxy the API calls through an OpenAI-compatible interface using vLLM:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Launch Qwen3.8 27B with high-throughput vLLM backend</span>
+</span></span><span style="display:flex;"><span>python3 -m vllm.entrypoints.openai.api_server <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --model Qwen/Qwen3.8-27B-Instruct <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --tensor-parallel-size <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --max-model-len <span style="color:#ae81ff">32768</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --port <span style="color:#ae81ff">8000</span>
+</span></span></code></pre></div><p>Next, configure your environment variables to point Claude Code toward the local harness bridge:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Redirect Claude Code endpoint to local agent proxy</span>
+</span></span><span style="display:flex;"><span>export ANTHROPIC_BASE_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://localhost:8000/v1&#34;</span>
+</span></span><span style="display:flex;"><span>export ANTHROPIC_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;custom-local-key&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run Claude Code CLI</span>
+</span></span><span style="display:flex;"><span>claude
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-typescript" data-lang="typescript"><span style="display:flex;"><span><span style="color:#75715e">// Example: Custom Tool Schema for DeepSeek Scaffolding Verification
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">HarnessToolCall</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tool_name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;execute_bash_command&#34;</span> <span style="color:#f92672">|</span> <span style="color:#e6db74">&#34;apply_diff&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">parameters</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">command?</span>: <span style="color:#66d9ef">string</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">patch?</span>: <span style="color:#66d9ef">string</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">target_file?</span>: <span style="color:#66d9ef">string</span>;
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">feedback_loop</span>: <span style="color:#66d9ef">boolean</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="key-quotes--insights-from-james-layne">Key Quotes &amp; Insights from James Layne</h2>
+<blockquote>
+<p><em>&ldquo;The biggest revelation of this benchmark is that a 27-billion parameter model with strict verification loops routinely catches subtle regressions that massive 1-trillion parameter closed models glide right past.&rdquo;</em></p>
+</blockquote>
+<blockquote>
+<p><em>&ldquo;Developers often default to closed APIs assuming higher cost equals higher intelligence. In software engineering tasks, deterministic tooling and grounded feedback beat parameter count every day of the week.&rdquo;</em></p>
+</blockquote>
+<h2 id="conclusion--next-steps">Conclusion &amp; Next Steps</h2>
+<p>Combining lean, highly capable open-weight models like Qwen3.8 27B with robust execution scaffolding represents the future of autonomous development environments. By reclaiming ownership of the model pipeline, engineering teams gain privacy, cut operating costs, and achieve faster execution loops.</p>
+<p>To replicate these benchmarks, review the official Qwen documentation and integrate custom endpoint proxies into your favorite CLI agent tools today.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>
