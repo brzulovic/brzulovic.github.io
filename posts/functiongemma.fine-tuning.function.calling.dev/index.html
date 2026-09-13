@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mišel Brzulović - Senior QA DevOps Engineer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">functiongemma.un.slm.specialise.dans.le.function.calling</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>September 17, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>6 min read</span>
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <p>Oui. Là, on tient un <strong>cas d’usage beaucoup plus parlant pour des développeurs</strong> : au lieu de faire un énième assistant météo/domotique, on fine-tune FunctionGemma pour devenir un <strong>mini-agent de bibliothèque de snippets/templates de code</strong>.</p>
+<p>L&rsquo;idée : le développeur écrit naturellement ce qu&rsquo;il cherche, et le SLM sélectionne une fonction structurée dans notre bibliothèque.</p>
+<h2 id="-projet--snippetgemma">🎯 Projet : <code>SnippetGemma</code></h2>
+<p>On construit une petite bibliothèque de templates :</p>
+<pre tabindex="0"><code>snippetgemma/
+├── templates/
+│   ├── python/
+│   │   ├── requests.py
+│   │   ├── fastapi.py
+│   │   └── pytest.py
+│   ├── javascript/
+│   │   ├── fetch.js
+│   │   └── express.js
+│   └── docker/
+│       └── dockerfile
+│
+├── dataset/
+│   ├── train.jsonl
+│   └── test.jsonl
+│
+├── evaluate.py
+└── app.py
+</code></pre><p>Le développeur peut demander :</p>
+<blockquote>
+<p>&ldquo;Donne-moi un endpoint FastAPI avec validation Pydantic.&rdquo;</p>
+</blockquote>
+<p>Le modèle ne génère <strong>pas directement le code</strong>.</p>
+<p>Il appelle :</p>
+<pre tabindex="0"><code>{
+  &#34;name&#34;: &#34;find_snippet&#34;,
+  &#34;arguments&#34;: {
+    &#34;language&#34;: &#34;python&#34;,
+    &#34;framework&#34;: &#34;fastapi&#34;,
+    &#34;topic&#34;: &#34;validation_pydantic&#34;
+  }
+}
+</code></pre><p>Notre application récupère alors le template.</p>
+<hr>
+<h1 id="pourquoi-utiliser-functiongemma-">Pourquoi utiliser FunctionGemma ?</h1>
+<p>Parce qu&rsquo;on réduit énormément le problème.</p>
+<p>Un LLM classique doit potentiellement :</p>
+<pre tabindex="0"><code>comprendre
++
+chercher
++
+générer
++
+formater
+</code></pre><p>Notre FunctionGemma fait essentiellement :</p>
+<pre tabindex="0"><code>          demande développeur
+                  ↓
+          FunctionGemma 270M
+                  ↓
+             TOOL CALL
+                  ↓
+         snippet registry
+                  ↓
+            template/code
+</code></pre><p>Le modèle devient donc une <strong>interface NLP ultra-légère au-dessus d&rsquo;une bibliothèque déterministe</strong>.</p>
+<p>Et c&rsquo;est exactement le genre de tâche où un SLM spécialisé devient intéressant.</p>
+<hr>
+<h1 id="-notre-api-de-snippets">🧩 Notre API de snippets</h1>
+<p>On pourrait définir seulement 5 fonctions au départ.</p>
+<pre tabindex="0"><code>TOOLS = [
+    {
+        &#34;name&#34;: &#34;find_snippet&#34;,
+        &#34;description&#34;: &#34;Find a code snippet matching the developer request&#34;,
+        &#34;parameters&#34;: {
+            &#34;language&#34;: &#34;string&#34;,
+            &#34;topic&#34;: &#34;string&#34;,
+            &#34;framework&#34;: &#34;string&#34;
+        }
+    },
+    {
+        &#34;name&#34;: &#34;list_snippets&#34;,
+        &#34;description&#34;: &#34;List available snippets&#34;,
+        &#34;parameters&#34;: {
+            &#34;language&#34;: &#34;string&#34;
+        }
+    },
+    {
+        &#34;name&#34;: &#34;get_snippet&#34;,
+        &#34;description&#34;: &#34;Get a specific snippet by identifier&#34;,
+        &#34;parameters&#34;: {
+            &#34;id&#34;: &#34;string&#34;
+        }
+    },
+    {
+        &#34;name&#34;: &#34;search_snippets&#34;,
+        &#34;description&#34;: &#34;Search snippets by keywords&#34;,
+        &#34;parameters&#34;: {
+            &#34;query&#34;: &#34;string&#34;
+        }
+    },
+    {
+        &#34;name&#34;: &#34;explain_snippet&#34;,
+        &#34;description&#34;: &#34;Explain how a snippet works&#34;,
+        &#34;parameters&#34;: {
+            &#34;id&#34;: &#34;string&#34;
+        }
+    }
+]
+</code></pre><p>Et là, on obtient quelque chose de très intéressant :</p>
+<blockquote>
+<p><strong>FunctionGemma devient le routeur intelligent de notre CLI développeur.</strong></p>
+</blockquote>
+<hr>
+<h1 id="-exemple-réel">💻 Exemple réel</h1>
+<p>Le développeur tape :</p>
+<pre tabindex="0"><code>snippet &#34;pytest mock une requête HTTP&#34;
+</code></pre><p>FunctionGemma produit :</p>
+<pre tabindex="0"><code>{
+  &#34;name&#34;: &#34;find_snippet&#34;,
+  &#34;arguments&#34;: {
+    &#34;language&#34;: &#34;python&#34;,
+    &#34;topic&#34;: &#34;mock_http_request&#34;,
+    &#34;framework&#34;: &#34;pytest&#34;
+  }
+}
+</code></pre><p>Notre registry renvoie :</p>
+<pre tabindex="0"><code>from unittest.mock import patch
+
+@patch(&#34;requests.get&#34;)
+def test_api(mock_get):
+    mock_get.return_value.status_code = 200
+
+    response = requests.get(
+        &#34;https://api.example.com/users&#34;
+    )
+
+    assert response.status_code == 200
+</code></pre><p>Le SLM n&rsquo;a pas besoin de connaître tout le code.</p>
+<p><strong>Il doit savoir trouver le bon template.</strong></p>
+<hr>
+<h1 id="-et-cest-là-que-le-fine-tuning-devient-amusant">🔥 Et c&rsquo;est là que le fine-tuning devient amusant</h1>
+<p>On crée notre propre dataset.</p>
+<p>Par exemple :</p>
+<pre tabindex="0"><code>{
+  &#34;prompt&#34;: &#34;Comment mocker requests.get avec pytest ?&#34;,
+  &#34;tool&#34;: &#34;find_snippet&#34;,
+  &#34;arguments&#34;: {
+    &#34;language&#34;: &#34;python&#34;,
+    &#34;framework&#34;: &#34;pytest&#34;,
+    &#34;topic&#34;: &#34;mock_http_request&#34;
+  }
+}
+</code></pre><p>Mais on génère plusieurs formulations :</p>
+<pre tabindex="0"><code>&#34;pytest mock requests&#34;
+
+&#34;Comment tester une API sans faire réellement la requête ?&#34;
+
+&#34;Mocker un GET HTTP dans un test Python&#34;
+
+&#34;Je veux remplacer requests.get pendant mes tests&#34;
+
+&#34;Comment faire un mock HTTP avec pytest ?&#34;
+</code></pre><p>Toutes doivent converger vers :</p>
+<pre tabindex="0"><code>find_snippet(...)
+</code></pre><hr>
+<h1 id="-et-on-peut-créer-des-catégories">🧪 Et on peut créer des catégories</h1>
+<h3 id="python">Python</h3>
+<pre tabindex="0"><code>FastAPI
+pytest
+asyncio
+requests
+pandas
+SQLAlchemy
+logging
+typing
+</code></pre><h3 id="javascript">JavaScript</h3>
+<pre tabindex="0"><code>fetch
+Express
+React
+Node
+Vitest
+Jest
+TypeScript
+</code></pre><h3 id="devops">DevOps</h3>
+<pre tabindex="0"><code>Dockerfile
+docker-compose
+GitHub Actions
+Kubernetes
+</code></pre><h3 id="git">Git</h3>
+<pre tabindex="0"><code>rebase
+cherry-pick
+reset
+branch
+bisect
+</code></pre><hr>
+<h1 id="-là-où-le-dataset-devient-vraiment-intéressant">🧠 Là où le dataset devient vraiment intéressant</h1>
+<p>On peut volontairement créer des exemples où <strong>plusieurs snippets sont proches</strong>.</p>
+<p>Par exemple :</p>
+<pre tabindex="0"><code>pytest_mock_http
+pytest_mock_database
+pytest_mock_function
+</code></pre><p>Prompt :</p>
+<blockquote>
+<p>&ldquo;Je veux mocker une fonction.&rdquo;</p>
+</blockquote>
+<p>→</p>
+<pre tabindex="0"><code>pytest_mock_function
+</code></pre><p>Prompt :</p>
+<blockquote>
+<p>&ldquo;Je veux mocker une requête HTTP.&rdquo;</p>
+</blockquote>
+<p>→</p>
+<pre tabindex="0"><code>pytest_mock_http
+</code></pre><p>Prompt :</p>
+<blockquote>
+<p>&ldquo;Je veux éviter d&rsquo;interroger ma DB pendant mon test.&rdquo;</p>
+</blockquote>
+<p>→</p>
+<pre tabindex="0"><code>pytest_mock_database
+</code></pre><p>On teste alors la capacité du modèle à <strong>faire la distinction entre des outils sémantiquement proches</strong>.</p>
+<hr>
+<h1 id="-et-surtout--les-tests-négatifs">🧨 Et surtout : les tests négatifs</h1>
+<p>On pourrait mettre :</p>
+<pre tabindex="0"><code>&#34;Explique-moi comment fonctionne pytest.&#34;
+</code></pre><p>Résultat attendu :</p>
+<pre tabindex="0"><code>NO TOOL
+</code></pre><p>ou :</p>
+<pre tabindex="0"><code>&#34;Écris-moi une application complète en React.&#34;
+</code></pre><p>Résultat :</p>
+<pre tabindex="0"><code>NO TOOL
+</code></pre><p>Parce que notre outil est une <strong>bibliothèque de snippets</strong>, pas un générateur de logiciels complets.</p>
+<hr>
+<h1 id="-notre-benchmark-devient-très-concret">🧪 Notre benchmark devient très concret</h1>
+<p>On pourrait fabriquer automatiquement 500 requêtes :</p>
+<pre tabindex="0"><code>100 recherche Python
+100 recherche JavaScript
+100 recherche DevOps
+100 requêtes ambiguës
+100 requêtes hors domaine
+</code></pre><p>Puis :</p>
+<pre tabindex="0"><code>FunctionGemma base
+        │
+        ├── 500 tests
+        │
+        ▼
+      score
+</code></pre><p>puis :</p>
+<pre tabindex="0"><code>FunctionGemma fine-tuned
+        │
+        ├── mêmes 500 tests
+        │
+        ▼
+      score
+</code></pre><p>Et comparer :</p>
+<table>
+	<thead>
+			<tr>
+					<th>Test</th>
+					<th>Base</th>
+					<th>Fine-tuned</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Tool selection</td>
+					<td>—</td>
+					<td>—</td>
+			</tr>
+			<tr>
+					<td>Language detection</td>
+					<td>—</td>
+					<td>—</td>
+			</tr>
+			<tr>
+					<td>Framework detection</td>
+					<td>—</td>
+					<td>—</td>
+			</tr>
+			<tr>
+					<td>Topic extraction</td>
+					<td>—</td>
+					<td>—</td>
+			</tr>
+			<tr>
+					<td>No-tool</td>
+					<td>—</td>
+					<td>—</td>
+			</tr>
+			<tr>
+					<td>Ambiguous</td>
+					<td>—</td>
+					<td>—</td>
+			</tr>
+			<tr>
+					<td>JSON validity</td>
+					<td>—</td>
+					<td>—</td>
+			</tr>
+	</tbody>
+</table>
+<p>Les cellules restent volontairement vides jusqu&rsquo;à ce qu&rsquo;on fasse tourner le benchmark : <strong>on mesure, plutôt que d&rsquo;inventer un gain.</strong></p>
+<hr>
+<h1 id="-et-on-peut-en-faire-une-vraie-cli">🚀 Et on peut en faire une vraie CLI</h1>
+<p>Quelque chose comme :</p>
+<pre tabindex="0"><code>$ snip &#34;fastapi endpoint avec pydantic&#34;
+</code></pre><pre tabindex="0"><code>🔎 Searching snippets...
+
+python / fastapi / pydantic
+
+┌───────────────────────────────────┐
+│ fastapi_pydantic_endpoint         │
+│ Python · FastAPI · Pydantic       │
+└───────────────────────────────────┘
+
+@app.post(&#34;/users&#34;)
+async def create_user(
+    user: User
+):
+    return user
+</code></pre><p>Ou :</p>
+<pre tabindex="0"><code>$ snip &#34;dockeriser une app python&#34;
+</code></pre><p>→</p>
+<pre tabindex="0"><code>docker/python_basic
+</code></pre><p>Ou :</p>
+<pre tabindex="0"><code>$ snip &#34;github action pour lancer pytest&#34;
+</code></pre><p>→</p>
+<pre tabindex="0"><code>github_actions_pytest
+</code></pre><hr>
+<h1 id="-et-là-je-pousserais-le-concept-un-cran-plus-loin">💡 Et là, je pousserais le concept un cran plus loin</h1>
+<p>La bibliothèque pourrait avoir des <strong>metadata structurées</strong> :</p>
+<pre tabindex="0"><code>id: fastapi_pydantic_endpoint
+language: python
+framework: fastapi
+tags:
+  - api
+  - rest
+  - pydantic
+  - validation
+difficulty: beginner
+version:
+  python: &#34;3.12&#34;
+  fastapi: &#34;0.115&#34;
+</code></pre><p>Le SLM ne sélectionne donc pas seulement :</p>
+<pre tabindex="0"><code>&#34;du code&#34;
+</code></pre><p>mais :</p>
+<pre tabindex="0"><code>intent
++
+language
++
+framework
++
+topic
++
+constraints
+</code></pre><hr>
+<h1 id="-et-ça-nous-donne-un-excellent-sujet-dexpérimentation">🔬 Et ça nous donne un excellent sujet d&rsquo;expérimentation</h1>
+<p>On peut faire <strong>4 versions du dataset</strong>.</p>
+<h3 id="dataset-v1--minimal">Dataset V1 — minimal</h3>
+<pre tabindex="0"><code>prompt → tool
+</code></pre><h3 id="dataset-v2--paramètres">Dataset V2 — paramètres</h3>
+<pre tabindex="0"><code>prompt → tool + arguments
+</code></pre><h3 id="dataset-v3--variantes-linguistiques">Dataset V3 — variantes linguistiques</h3>
+<pre tabindex="0"><code>10 formulations → même tool
+</code></pre><h3 id="dataset-v4--adversarial">Dataset V4 — adversarial</h3>
+<pre tabindex="0"><code>ambiguïtés
+négations
+hors domaine
+outils concurrents
+paramètres manquants
+</code></pre><p>Puis fine-tuner successivement :</p>
+<pre tabindex="0"><code>FunctionGemma
+       │
+       ├── V1
+       ├── V2
+       ├── V3
+       └── V4
+</code></pre><p>Et regarder <strong>ce que chaque ajout au dataset change réellement</strong>.</p>
+<hr>
+<h1 id="-architecture-finale">🏗️ Architecture finale</h1>
+<pre tabindex="0"><code>                     ┌──────────────────────┐
+                     │   Developer / CLI    │
+                     └──────────┬───────────┘
+                                │
+                   &#34;mock requests avec pytest&#34;
+                                │
+                                ▼
+                     ┌──────────────────────┐
+                     │ FunctionGemma 270M   │
+                     │     fine-tuned       │
+                     └──────────┬───────────┘
+                                │
+                                ▼
+                         Function Call
+                                │
+                                ▼
+                     ┌──────────────────────┐
+                     │   Snippet Registry   │
+                     ├──────────────────────┤
+                     │ Python               │
+                     │ JavaScript           │
+                     │ Docker               │
+                     │ GitHub Actions       │
+                     │ Git                  │
+                     └──────────┬───────────┘
+                                │
+                                ▼
+                         Code Template
+</code></pre><p>Et le truc particulièrement sympa : <strong>la bibliothèque peut être open source</strong>, tandis que le modèle reste un composant minuscule que chacun peut faire tourner localement.</p>
+<p>Pour le Colab, je partirais donc sur ce projet plutôt que Mobile Actions : <strong><code>FunctionGemma 270M → fine-tuning → Developer Snippet Router → benchmark automatique</code></strong>.</p>
+<p>C&rsquo;est beaucoup plus facile à comprendre pour un développeur, tout en permettant de démontrer concrètement <strong>dataset → fine-tuning → function calling → évaluation → découverte des limites du SLM</strong>.</p>
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Mišel Brzulović | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

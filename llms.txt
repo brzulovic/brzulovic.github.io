@@ -1,10 +1,62 @@
-# Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure & Automation into Engineering at Scale
+# Mišel Brzulović - Senior QA DevOps Engineer
 
 Base URL: /
 
-> - under construction - under construction - under construction - under construction -
+> Senior QA DevOps Engineer specializing in QA automation, CI/CD, infrastructure, cybersecurity and AI-assisted engineering.
 
 # SECTION: CONTENT_INDEX
+
+## functiongemma.fine-tuning.function.calling
+
+[URL](/posts/functiongemma.un.slm.specialise.dans.le.function.calling/)  
+Date: 2026-09-17
+
+Summary:
+FunctionGemma 270M : comment tester, comprendre et dompter un SLM spécialisé dans le Function Calling Les grands modèles de langage savent faire beaucoup de choses.
+Mais pour certaines applications, beaucoup de choses est justement le problème.
+Si mon besoin est simplement de transformer :
+« Allume la lampe de mon téléphone »
+en :
+call:turn_on_flashlight{} je n&rsquo;ai peut-être pas besoin d&rsquo;un modèle de plusieurs dizaines de milliards de paramètres.
+C&rsquo;est précisément là que les Small Language Models (SLM) deviennent intéressants.
+
+
+## functiongemma.fine-tuning.function.calling
+
+[URL](/posts/functiongemma.fine-tuning.function.calling/)  
+Date: 2026-09-17
+
+Summary:
+Le projet que je te propose 🎯 Objectif Fine-tuner :
+google/functiongemma-270m-it
+pour lui apprendre un mini-système de domotique :
+turn_on_light(room) turn_off_light(room) set_light_brightness(room, brightness) set_temperature(room, temperature) Puis comparer :
+FunctionGemma base VS FunctionGemma fine-tuné sur des prompts qu&rsquo;il n&rsquo;a jamais vus.
+L&rsquo;intérêt pédagogique est énorme : on peut montrer concrètement que le fine-tuning ne sert pas seulement à &ldquo;rendre le modèle plus intelligent&rdquo;, mais à ancrer un comportement spécialisé.
+Google explique justement que le fine-tuning de FunctionGemma peut servir à résoudre les ambiguïtés de sélection d&rsquo;outils, gérer des schémas non standards et transférer des workflows spécifiques vers un petit modèle. Google AI for Developers
+
+
+## functiongemma.un.slm.specialise.dans.le.function.calling
+
+[URL](/posts/functiongemma.fine-tuning.function.calling.dev/)  
+Date: 2026-09-17
+
+Summary:
+Oui. Là, on tient un cas d’usage beaucoup plus parlant pour des développeurs : au lieu de faire un énième assistant météo/domotique, on fine-tune FunctionGemma pour devenir un mini-agent de bibliothèque de snippets/templates de code.
+L&rsquo;idée : le développeur écrit naturellement ce qu&rsquo;il cherche, et le SLM sélectionne une fonction structurée dans notre bibliothèque.
+🎯 Projet : SnippetGemma On construit une petite bibliothèque de templates :
+snippetgemma/ ├── templates/ │ ├── python/ │ │ ├── requests.py │ │ ├── fastapi.py │ │ └── pytest.py │ ├── javascript/ │ │ ├── fetch.js │ │ └── express.js │ └── docker/ │ └── dockerfile │ ├── dataset/ │ ├── train.jsonl │ └── test.jsonl │ ├── evaluate.py └── app.py Le développeur peut demander :
+
+
+## Maîtriser les Super-Agents IA : Session de Questions-Réponses / Mastering AI Super-Agents: Q&A Session
+
+[URL](/scrapped/maitriser-super-agents-ia-session-qa/)  
+Date: 2026-09-11
+
+Summary:
+🇫🇷 Version Française Bienvenue dans cette dernière étape de notre sommet virtuel. Cette session de Q&amp;R clôture cinq jours intensifs consacrés à l&rsquo;exploitation des Super-Agents IA pour transformer votre business et maximiser vos revenus.
+Résumé Exécutif &amp; Points Clés Monétisation : Comment transformer des problèmes complexes en services IA rentables. Stratégie : Dépasser 99% des utilisateurs en adoptant une approche structurée des agents autonomes. Implémentation : Réponses techniques sur la mise en œuvre des flux de travail automatisés. Chronologie des Temps Forts [00:00] Introduction à la session finale. [05:20] Stratégies de sélection des cas d&rsquo;usage à haute valeur ajoutée. [15:45] Session interactive : Répondre aux questions de la communauté. Analyse Technique : L&rsquo;IA au Service de la Productivité L&rsquo;écosystème Alegria repose sur l&rsquo;idée que l&rsquo;IA ne doit pas seulement être un outil de génération de contenu, mais un moteur d&rsquo;exécution. Les super-agents, contrairement aux chatbots simples, disposent d&rsquo;une capacité de décision et d&rsquo;interaction avec vos outils métiers (CRM, Notion, Email).
+
 
 ## Le Plan Étape par Étape pour Vous Lancer dans l'IA / The Step-by-Step Plan to Launch Your AI Journey
 

@@ -64,7 +64,11 @@ randomBackgroundColor();
 setInterval(randomBackgroundColor, 1000*60);
 
 
+function elevenLabTheme(){
 
+    //background-color: #4169e11c;
+    //color: white;
+}
 
 
 const text = "- under construction - under construction - under construction - under construction -";
@@ -73,7 +77,7 @@ const el = document.getElementsByTagName('p')[0]; //document.getElementById("con
 // Start with the full text repeated a couple times so it looks continuous
 //let content = text + text;
 let content = text ;
-el.textContent = content;
+//el.textContent = content;
 let offset = 0;
 let i = 0;
 let visible = true;
@@ -99,6 +103,6 @@ function textFX(){
   // el.style.opacity = visible ? 1 : 0.3;
   // el.style.color = visible ? "#ffcc00" : "#ff6600";
 }
-setInterval(textFX, 100);
+//setInterval(textFX, 100);
 
 

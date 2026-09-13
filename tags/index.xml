@@ -1,20 +1,52 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Tags on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <title>Tags on Mišel Brzulović - Senior QA DevOps Engineer</title>
     <link>/tags/</link>
-    <description>Recent content in Tags on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <description>Recent content in Tags on Mišel Brzulović - Senior QA DevOps Engineer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr</language>
     <managingEditor>brzulovic@gmail.com</managingEditor>
     <webMaster>brzulovic@gmail.com</webMaster>
-    <lastBuildDate>Thu, 10 Sep 2026 01:31:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 Sep 2026 15:35:15 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI</title>
+      <link>/tags/ai/</link>
+      <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/ai/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
     <item>
       <title>AlegriaGroup</title>
       <link>/tags/alegriagroup/</link>
-      <pubDate>Thu, 10 Sep 2026 01:31:36 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/tags/alegriagroup/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Automation</title>
+      <link>/tags/automation/</link>
+      <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/automation/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Productivity</title>
+      <link>/tags/productivity/</link>
+      <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/productivity/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Super-Agents</title>
+      <link>/tags/super-agents/</link>
+      <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/super-agents/</guid>
       <description></description>
       <content:encoded><![CDATA[]]></content:encoded>
     </item>
@@ -111,22 +143,6 @@
       <link>/tags/alegria-group/</link>
       <pubDate>Tue, 08 Sep 2026 18:33:53 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/tags/alegria-group/</guid>
-      <description></description>
-      <content:encoded><![CDATA[]]></content:encoded>
-    </item>
-    <item>
-      <title>Automation</title>
-      <link>/tags/automation/</link>
-      <pubDate>Tue, 08 Sep 2026 18:33:53 +0000</pubDate><author>brzulovic@gmail.com</author>
-      <guid>/tags/automation/</guid>
-      <description></description>
-      <content:encoded><![CDATA[]]></content:encoded>
-    </item>
-    <item>
-      <title>Productivity</title>
-      <link>/tags/productivity/</link>
-      <pubDate>Tue, 08 Sep 2026 18:33:53 +0000</pubDate><author>brzulovic@gmail.com</author>
-      <guid>/tags/productivity/</guid>
       <description></description>
       <content:encoded><![CDATA[]]></content:encoded>
     </item>
@@ -351,14 +367,6 @@
       <link>/tags/vllm/</link>
       <pubDate>Sun, 23 Aug 2026 00:02:43 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/tags/vllm/</guid>
-      <description></description>
-      <content:encoded><![CDATA[]]></content:encoded>
-    </item>
-    <item>
-      <title>Ai</title>
-      <link>/tags/ai/</link>
-      <pubDate>Sat, 04 Jul 2026 18:22:29 +0000</pubDate><author>brzulovic@gmail.com</author>
-      <guid>/tags/ai/</guid>
       <description></description>
       <content:encoded><![CDATA[]]></content:encoded>
     </item>

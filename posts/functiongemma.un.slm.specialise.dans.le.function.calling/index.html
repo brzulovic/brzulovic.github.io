@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mišel Brzulović - Senior QA DevOps Engineer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">functiongemma.fine-tuning.function.calling</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>September 17, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>13 min read</span>
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <h1 id="functiongemma-270m--comment-tester-comprendre-et-dompter-un-slm-spécialisé-dans-le-function-calling">FunctionGemma 270M : comment tester, comprendre et dompter un SLM spécialisé dans le Function Calling</h1>
+<p>Les grands modèles de langage savent faire beaucoup de choses.</p>
+<p>Mais pour certaines applications, <strong>beaucoup de choses est justement le problème</strong>.</p>
+<p>Si mon besoin est simplement de transformer :</p>
+<blockquote>
+<p>« Allume la lampe de mon téléphone »</p>
+</blockquote>
+<p>en :</p>
+<pre tabindex="0"><code>call:turn_on_flashlight{}
+</code></pre><p>je n&rsquo;ai peut-être pas besoin d&rsquo;un modèle de plusieurs dizaines de milliards de paramètres.</p>
+<p>C&rsquo;est précisément là que les <strong>Small Language Models (SLM)</strong> deviennent intéressants.</p>
+<p>Et un cas particulièrement intéressant est <strong>FunctionGemma 270M</strong>, le modèle de Google DeepMind spécialisé dans le <em>function calling</em>. Il est construit à partir de Gemma 3 270M et conçu pour transformer des instructions en appels de fonctions, notamment dans des environnements contraints ou <em>on-device</em>.  Hugging Face</p>
+<p>L&rsquo;idée de cet article est donc simple :</p>
+<p><strong>ne pas seulement tester FunctionGemma… mais chercher à comprendre comment il fonctionne, où il échoue, quelles sont ses &ldquo;astuces&rdquo; et comment construire une véritable batterie de tests à partir des datasets disponibles sur Hugging Face.</strong></p>
+<hr>
+<h2 id="1-functiongemma-270m--ce-nest-pas-un-petit-chatgpt">1. FunctionGemma 270M : ce n&rsquo;est pas un &ldquo;petit ChatGPT&rdquo;</h2>
+<p>C&rsquo;est probablement le premier point à comprendre.</p>
+<p>La fiche officielle du modèle indique explicitement que FunctionGemma n&rsquo;est <strong>pas destiné à être utilisé comme modèle de dialogue généraliste</strong>.</p>
+<p>Son objectif est plutôt de servir de base à des modèles spécialisés dans le <em>function calling</em>.  Hugging Face</p>
+<p>Son fonctionnement peut être résumé ainsi :</p>
+<pre tabindex="0"><code>Utilisateur
+    │
+    ▼
+&#34;Réserve-moi un taxi pour 18h&#34;
+    │
+    ▼
+FunctionGemma
+    │
+    ├── choisir l&#39;outil
+    ├── identifier les paramètres
+    └── générer l&#39;appel
+    │
+    ▼
+book_taxi(
+    time=&#34;18:00&#34;
+)
+    │
+    ▼
+Application
+</code></pre><p>C&rsquo;est donc moins :</p>
+<blockquote>
+<p>&ldquo;Que dois-je répondre ?&rdquo;</p>
+</blockquote>
+<p>que :</p>
+<blockquote>
+<p><strong>&ldquo;Quelle action dois-je déclencher et avec quels paramètres ?&rdquo;</strong></p>
+</blockquote>
+<p>Et cette nuance change complètement la manière de tester le modèle.</p>
+<hr>
+<h1 id="2-ce-que-270m-paramètres-peut-réellement-faire">2. Ce que 270M paramètres peut réellement faire</h1>
+<p>Il serait tentant de demander à FunctionGemma :</p>
+<blockquote>
+<p>&ldquo;Explique-moi la théorie de la relativité.&rdquo;</p>
+</blockquote>
+<p>Ce n&rsquo;est pas le meilleur test.</p>
+<p>En revanche, on peut lui donner des outils comme :</p>
+<pre tabindex="0"><code>[
+  {
+    &#34;name&#34;: &#34;get_weather&#34;,
+    &#34;description&#34;: &#34;Get current weather&#34;,
+    &#34;parameters&#34;: {
+      &#34;location&#34;: &#34;string&#34;
+    }
+  },
+  {
+    &#34;name&#34;: &#34;send_email&#34;,
+    &#34;description&#34;: &#34;Send an email&#34;,
+    &#34;parameters&#34;: {
+      &#34;to&#34;: &#34;string&#34;,
+      &#34;subject&#34;: &#34;string&#34;,
+      &#34;body&#34;: &#34;string&#34;
+    }
+  }
+]
+</code></pre><p>et tester :</p>
+<pre tabindex="0"><code>&#34;Quel temps fait-il à Rennes ?&#34;
+</code></pre><p>pour obtenir quelque chose du genre :</p>
+<pre tabindex="0"><code>get_weather(location=&#34;Rennes&#34;)
+</code></pre><p>La documentation officielle montre justement ce mécanisme avec un schéma JSON, un message <code>developer</code> indiquant que le modèle peut appeler des fonctions, puis une génération de l&rsquo;appel correspondant.  Hugging Face</p>
+<p>Cela permet d&rsquo;imaginer beaucoup de micro-agents :</p>
+<ul>
+<li>assistant domotique ;</li>
+<li>contrôle d&rsquo;un smartphone ;</li>
+<li>automatisation locale ;</li>
+<li>recherche dans une base documentaire ;</li>
+<li>API internes d&rsquo;entreprise ;</li>
+<li>commandes d&rsquo;une application ;</li>
+<li>agent embarqué dans un véhicule ;</li>
+<li>assistants offline ;</li>
+<li>automatisation industrielle ;</li>
+<li>jeux et interfaces interactives.</li>
+</ul>
+<p>Google présente notamment <strong>Mobile Actions</strong>, où le modèle traduit des instructions naturelles en appels à des fonctions Android, ainsi que <strong>Tiny Garden</strong>, où il pilote les actions d&rsquo;un petit jeu.  Hugging Face+1</p>
+<hr>
+<h1 id="3-le-vrai-sujet--comment-tester-un-slm-">3. Le vrai sujet : comment tester un SLM ?</h1>
+<p>Pour moi, il faut éviter le classique :</p>
+<pre tabindex="0"><code>Prompt A → réponse
+Prompt B → réponse
+Prompt C → réponse
+</code></pre><p>et passer à une logique de <strong>laboratoire expérimental</strong>.</p>
+<p>Je proposerais 7 familles de tests.</p>
+<h3 id="test-1--tool-selection">Test 1 — Tool selection</h3>
+<p>Le modèle choisit-il le bon outil ?</p>
+<pre tabindex="0"><code>&#34;Quel est le temps à Paris ?&#34;
+</code></pre><p>avec :</p>
+<pre tabindex="0"><code>get_weather()
+search_web()
+send_email()
+</code></pre><p>On mesure :</p>
+<pre tabindex="0"><code>✓ bon outil
+✗ mauvais outil
+✗ aucune fonction
+✗ hallucination
+</code></pre><hr>
+<h3 id="test-2--argument-extraction">Test 2 — Argument extraction</h3>
+<p>Le bon outil est-il sélectionné <strong>avec les bons paramètres</strong> ?</p>
+<pre tabindex="0"><code>&#34;Envoie un mail à paul@example.com
+avec comme sujet &#39;Réunion&#39;
+et dis-lui que je serai en retard.&#34;
+</code></pre><p>On vérifie :</p>
+<pre tabindex="0"><code>{
+  &#34;to&#34;: &#34;paul@example.com&#34;,
+  &#34;subject&#34;: &#34;Réunion&#34;,
+  &#34;body&#34;: &#34;Je serai en retard.&#34;
+}
+</code></pre><p>Ici, il faut séparer :</p>
+<p><strong>tool accuracy</strong></p>
+<p>et</p>
+<p><strong>argument accuracy</strong>.</p>
+<p>Un modèle peut parfaitement choisir <code>send_email</code> tout en remplissant mal les arguments.</p>
+<hr>
+<h1 id="4-le-test-qui-devient-vraiment-intéressant--lambiguïté">4. Le test qui devient vraiment intéressant : l&rsquo;ambiguïté</h1>
+<p>C&rsquo;est probablement l&rsquo;une des meilleures façons de comprendre un SLM.</p>
+<p>Imaginons :</p>
+<pre tabindex="0"><code>search_internal_docs()
+search_web()
+</code></pre><p>Prompt :</p>
+<blockquote>
+<p>&ldquo;Quelle est notre politique de remboursement des repas ?&rdquo;</p>
+</blockquote>
+<p>Le modèle doit comprendre que la bonne source est probablement la documentation interne.</p>
+<p>Mais :</p>
+<blockquote>
+<p>&ldquo;Quelle est la politique de remboursement des repas chez Air France ?&rdquo;</p>
+</blockquote>
+<p>change complètement le contexte.</p>
+<p>C&rsquo;est exactement le type de problème étudié dans le guide officiel de fine-tuning de FunctionGemma : apprendre au modèle à distinguer des outils proches selon le contexte métier.  Google Developers Blog</p>
+<p>On découvre alors quelque chose d&rsquo;important :</p>
+<p><strong>un petit modèle peut être extrêmement efficace lorsqu&rsquo;on réduit son espace de décision.</strong></p>
+<hr>
+<h1 id="5-le-test-le-plus-révélateur--no-tool">5. Le test le plus révélateur : &ldquo;No Tool&rdquo;</h1>
+<p>Il ne faut surtout pas tester uniquement les cas où une fonction doit être appelée.</p>
+<p>Il faut également tester :</p>
+<blockquote>
+<p><strong>&ldquo;Est-ce que le modèle sait ne rien appeler ?&rdquo;</strong></p>
+</blockquote>
+<p>Exemple :</p>
+<pre tabindex="0"><code>Tools:
+- get_weather()
+- send_email()
+- create_calendar_event()
+</code></pre><p>Prompt :</p>
+<blockquote>
+<p>&ldquo;Explique-moi ce qu&rsquo;est Python.&rdquo;</p>
+</blockquote>
+<p>Le résultat attendu :</p>
+<pre tabindex="0"><code>NO TOOL
+</code></pre><p>et surtout pas :</p>
+<pre tabindex="0"><code>search_web()
+</code></pre><p>ou une fonction inventée.</p>
+<p>C&rsquo;est un excellent test de <strong>relevance / irrelevance</strong>.</p>
+<p>Le benchmark publié avec FunctionGemma contient justement des catégories BFCL de relevance et d&rsquo;irrelevance, en plus des scénarios de function calling simple, multiple et parallèle.  Hugging Face</p>
+<hr>
+<h1 id="6-tester-les-limites--les-prompts-pièges">6. Tester les limites : les prompts &ldquo;pièges&rdquo;</h1>
+<p>C&rsquo;est ici que l&rsquo;on commence réellement à découvrir les caractéristiques du modèle.</p>
+<p>Je créerais volontairement des prompts comme :</p>
+<pre tabindex="0"><code>&#34;Allume la lumière... enfin non, laisse tomber.&#34;
+</code></pre><p>ou :</p>
+<pre tabindex="0"><code>&#34;Envoie un email à Paul si tu trouves son adresse.&#34;
+</code></pre><p>ou :</p>
+<pre tabindex="0"><code>&#34;Réserve-moi quelque chose demain.&#34;
+</code></pre><p>ou :</p>
+<pre tabindex="0"><code>&#34;Supprime le fichier rapport.pdf&#34;
+</code></pre><p>avec deux outils :</p>
+<pre tabindex="0"><code>delete_file()
+archive_file()
+</code></pre><p>L&rsquo;objectif n&rsquo;est pas seulement de mesurer la réussite.</p>
+<p>Il faut identifier <strong>les frontières comportementales du modèle</strong>.</p>
+<hr>
+<h1 id="7-construire-une-matrice-de-tests">7. Construire une matrice de tests</h1>
+<p>Une approche très efficace consiste à transformer chaque fonction en matrice.</p>
+<p>Par exemple :</p>
+<table>
+	<thead>
+			<tr>
+					<th>Catégorie</th>
+					<th>Exemple</th>
+					<th>Résultat attendu</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Happy path</td>
+					<td>&ldquo;Allume la lumière&rdquo;</td>
+					<td><code>turn_on_light</code></td>
+			</tr>
+			<tr>
+					<td>Paramètre simple</td>
+					<td>&ldquo;Lumière du salon&rdquo;</td>
+					<td><code>room=salon</code></td>
+			</tr>
+			<tr>
+					<td>Paramètre absent</td>
+					<td>&ldquo;Allume la lumière&rdquo;</td>
+					<td>demander précision</td>
+			</tr>
+			<tr>
+					<td>Ambiguïté</td>
+					<td>&ldquo;Allume celle du salon&rdquo;</td>
+					<td>clarification</td>
+			</tr>
+			<tr>
+					<td>Négation</td>
+					<td>&ldquo;N&rsquo;allume pas la lumière&rdquo;</td>
+					<td>aucun appel</td>
+			</tr>
+			<tr>
+					<td>Hors sujet</td>
+					<td>&ldquo;Quel temps fait-il ?&rdquo;</td>
+					<td>aucun appel</td>
+			</tr>
+			<tr>
+					<td>Outil similaire</td>
+					<td><code>turn_on</code> vs <code>set_brightness</code></td>
+					<td>bon outil</td>
+			</tr>
+			<tr>
+					<td>Valeur invalide</td>
+					<td>luminosité 200%</td>
+					<td>rejet/correction</td>
+			</tr>
+			<tr>
+					<td>Multi-tool</td>
+					<td>lumière + chauffage</td>
+					<td>deux appels</td>
+			</tr>
+			<tr>
+					<td>Séquence</td>
+					<td>ouvrir → modifier → fermer</td>
+					<td>ordre correct</td>
+			</tr>
+	</tbody>
+</table>
+<p>On passe ainsi d&rsquo;un simple test de LLM à un <strong>test fonctionnel d&rsquo;agent</strong>.</p>
+<hr>
+<h1 id="8-hugging-face-devient-alors-notre-laboratoire">8. Hugging Face devient alors notre laboratoire</h1>
+<p>Et c&rsquo;est là que cela devient particulièrement intéressant.</p>
+<p>Le dataset officiel <strong>Google Mobile Actions</strong> est disponible sur Hugging Face. Il contient environ <strong>9 650 exemples</strong>, avec des conversations et des définitions d&rsquo;outils, et est spécifiquement destiné à l&rsquo;entraînement de modèles légers comme FunctionGemma pour le function calling on-device.  Hugging Face</p>
+<p>Dataset Google Mobile Actions sur Hugging Face</p>
+<p>On peut donc commencer par :</p>
+<pre tabindex="0"><code>from datasets import load_dataset
+
+dataset = load_dataset(
+    &#34;google/mobile-actions&#34;,
+    split=&#34;train&#34;
+)
+
+print(dataset)
+print(dataset[0])
+</code></pre><p>Puis observer :</p>
+<pre tabindex="0"><code>sample = dataset[0]
+
+print(sample.keys())
+print(sample[&#34;messages&#34;])
+print(sample[&#34;tools&#34;])
+</code></pre><p>Et surtout :</p>
+<p><strong>ne pas simplement utiliser le dataset pour entraîner.</strong></p>
+<p>Utilisons-le pour comprendre <strong>comment les données enseignent au modèle à agir</strong>.</p>
+<hr>
+<h1 id="9-transformer-un-dataset-en-générateur-de-tests">9. Transformer un dataset en générateur de tests</h1>
+<p>C&rsquo;est probablement l&rsquo;une des idées les plus intéressantes de cette approche.</p>
+<p>Prenons un exemple du dataset :</p>
+<pre tabindex="0"><code>User:
+&#34;Turn on the flashlight&#34;
+
+Expected:
+turn_on_flashlight()
+</code></pre><p>On peut automatiquement générer plusieurs variantes :</p>
+<pre tabindex="0"><code>&#34;Allume la lampe torche&#34;
+
+&#34;Tu peux activer le flash ?&#34;
+
+&#34;Active la flashlight&#34;
+
+&#34;J&#39;ai besoin de lumière&#34;
+
+&#34;Peux-tu allumer le flash du téléphone ?&#34;
+</code></pre><p>Puis comparer les résultats.</p>
+<p>On passe alors de :</p>
+<pre tabindex="0"><code>1 exemple → 1 test
+</code></pre><p>à :</p>
+<pre tabindex="0"><code>1 exemple
+   ↓
+20 variantes
+   ↓
+20 tests
+</code></pre><p>Et là, on commence à construire un <strong>fuzzing sémantique pour LLM</strong>.</p>
+<hr>
+<h1 id="10-encore-mieux--créer-des-tests-négatifs">10. Encore mieux : créer des tests négatifs</h1>
+<p>Le dataset contient ce que le modèle <strong>doit faire</strong>.</p>
+<p>Nous pouvons créer artificiellement ce qu&rsquo;il <strong>ne doit pas faire</strong>.</p>
+<p>Exemple :</p>
+<pre tabindex="0"><code>TRAIN
+
+&#34;Turn on flashlight&#34;
+→ turn_on_flashlight()
+</code></pre><p>Créer :</p>
+<pre tabindex="0"><code>NEGATIVE TEST
+
+&#34;Do not turn on the flashlight&#34;
+→ NO TOOL
+</code></pre><p>Puis :</p>
+<pre tabindex="0"><code>&#34;Is the flashlight currently on?&#34;
+→ get_flashlight_status()
+</code></pre><p>Puis :</p>
+<pre tabindex="0"><code>&#34;Turn on the flashlight and set brightness to 50%&#34;
+→ turn_on_flashlight()
+→ set_brightness(50)
+</code></pre><p>Puis :</p>
+<pre tabindex="0"><code>&#34;Turn on the flashlight if the battery is above 30%&#34;
+</code></pre><p>On commence à tester :</p>
+<ul>
+<li>négation ;</li>
+<li>condition ;</li>
+<li>dépendance ;</li>
+<li>multi-tool ;</li>
+<li>paramètres ;</li>
+<li>ambiguïté ;</li>
+<li>contexte.</li>
+</ul>
+<hr>
+<h1 id="11-et-maintenant--découvrir-les-astuces-de-functiongemma">11. Et maintenant : découvrir les &ldquo;astuces&rdquo; de FunctionGemma</h1>
+<p>C&rsquo;est là que l&rsquo;expérimentation devient vraiment intéressante.</p>
+<p>Au lieu de demander :</p>
+<blockquote>
+<p>&ldquo;Quel prompt marche le mieux ?&rdquo;</p>
+</blockquote>
+<p>je construirais une <strong>Prompt Mutation Matrix</strong>.</p>
+<p>Par exemple :</p>
+<h3 id="variante-a">Variante A</h3>
+<pre tabindex="0"><code>You can call functions.
+</code></pre><h3 id="variante-b">Variante B</h3>
+<pre tabindex="0"><code>You are an assistant capable of calling tools.
+</code></pre><h3 id="variante-c">Variante C</h3>
+<pre tabindex="0"><code>Use the available functions whenever appropriate.
+</code></pre><h3 id="variante-d">Variante D</h3>
+<p>Le format attendu est explicitement décrit.</p>
+<p>Puis :</p>
+<pre tabindex="0"><code>100 prompts
+×
+4 system prompts
+×
+5 températures
+</code></pre><p>On obtient :</p>
+<pre tabindex="0"><code>2 000 expériences
+</code></pre><p>et on mesure :</p>
+<pre tabindex="0"><code>tool_accuracy
+argument_accuracy
+no_tool_accuracy
+format_accuracy
+latency
+tokens
+</code></pre><p>On commence alors à construire une véritable <strong>carte comportementale du SLM</strong>.</p>
+<hr>
+<h1 id="12-une-métrique-très-importante--exact-match-vs-semantic-match">12. Une métrique très importante : exact match vs semantic match</h1>
+<p>Attention ici.</p>
+<p>Si le modèle produit :</p>
+<pre tabindex="0"><code>{
+  &#34;location&#34;: &#34;Rennes&#34;
+}
+</code></pre><p>et que la vérité est :</p>
+<pre tabindex="0"><code>{
+  &#34;location&#34;: &#34;Rennes, France&#34;
+}
+</code></pre><p>un simple <code>exact_match</code> dira :</p>
+<pre tabindex="0"><code>FAIL
+</code></pre><p>alors que fonctionnellement le résultat peut être acceptable.</p>
+<p>Il faut donc plusieurs métriques :</p>
+<pre tabindex="0"><code>Exact Match
+   ↓
+JSON validity
+   ↓
+Tool correctness
+   ↓
+Argument correctness
+   ↓
+Semantic correctness
+</code></pre><p>Exemple :</p>
+<pre tabindex="0"><code>def evaluate(prediction, expected):
+    return {
+        &#34;tool_ok&#34;: ...,
+        &#34;arguments_ok&#34;: ...,
+        &#34;json_valid&#34;: ...,
+        &#34;semantic_ok&#34;: ...
+    }
+</code></pre><p>C&rsquo;est beaucoup plus intéressant qu&rsquo;un unique score.</p>
+<hr>
+<h1 id="13-le-dataset-officiel-donne-aussi-une-piste-essentielle">13. Le dataset officiel donne aussi une piste essentielle</h1>
+<p>Le modèle de base obtient des résultats sensiblement différents selon le type de function calling évalué.</p>
+<p>Dans les résultats publiés par Google, FunctionGemma 270M obtient notamment :</p>
+<ul>
+<li>BFCL Simple : 61,6</li>
+<li>BFCL Multiple : 63,5</li>
+<li>BFCL Parallel : 39</li>
+<li>BFCL Parallel Multiple : 29,5</li>
+<li>BFCL Relevance : 61,1</li>
+<li>BFCL Irrelevance : 73,7</li>
+</ul>
+<p>Ces chiffres sont ceux rapportés par la model card et doivent être lus comme des résultats de benchmark, pas comme une garantie de performance sur votre propre application.  Hugging Face</p>
+<p>Cela donne une indication intéressante :</p>
+<p><strong>&ldquo;faire un function call&rdquo; et &ldquo;orchestrer plusieurs function calls&rdquo; sont deux problèmes très différents.</strong></p>
+<hr>
+<h1 id="14-le-vrai-potentiel-apparaît-avec-le-fine-tuning">14. Le vrai potentiel apparaît avec le fine-tuning</h1>
+<p>Google montre justement l&rsquo;intérêt de spécialiser FunctionGemma.</p>
+<p>Sur son cas d&rsquo;usage <strong>Mobile Actions</strong>, l&rsquo;évaluation publiée passe de <strong>58 % pour le modèle de base à 85 % après fine-tuning</strong> sur ce workflow spécifique.  Hugging Face</p>
+<p>Le message est important :</p>
+<blockquote>
+<p><strong>270M paramètres ne signifie pas nécessairement &ldquo;faible capacité&rdquo;.</strong></p>
+</blockquote>
+<p>Cela peut signifier :</p>
+<blockquote>
+<p><strong>capacité concentrée sur un problème bien défini.</strong></p>
+</blockquote>
+<p>C&rsquo;est une philosophie très différente du :</p>
+<blockquote>
+<p>&ldquo;prenons le plus gros modèle possible.&rdquo;</p>
+</blockquote>
+<hr>
+<h1 id="15-et-si-on-construisait-notre-propre-dataset-">15. Et si on construisait notre propre dataset ?</h1>
+<p>Imaginons une entreprise qui possède :</p>
+<pre tabindex="0"><code>create_ticket()
+update_ticket()
+close_ticket()
+search_ticket()
+assign_ticket()
+</code></pre><p>On peut créer :</p>
+<pre tabindex="0"><code>{
+  &#34;user&#34;: &#34;Ferme le ticket 1234&#34;,
+  &#34;expected_tool&#34;: &#34;close_ticket&#34;,
+  &#34;arguments&#34;: {
+    &#34;ticket_id&#34;: &#34;1234&#34;
+  }
+}
+</code></pre><p>Puis générer :</p>
+<pre tabindex="0"><code>&#34;Tu peux clôturer le ticket 1234 ?&#34;
+
+&#34;Ferme-moi le ticket numéro 1234&#34;
+
+&#34;Le ticket 1234 peut être clôturé&#34;
+
+&#34;Je veux clôturer 1234&#34;
+</code></pre><p>Mais surtout :</p>
+<pre tabindex="0"><code>&#34;Montre-moi le ticket 1234&#34;
+</code></pre><p>→ <code>search_ticket</code></p>
+<p>et :</p>
+<pre tabindex="0"><code>&#34;Ferme le ticket 1234&#34;
+</code></pre><p>→ <code>close_ticket</code></p>
+<p>Le dataset devient alors une <strong>spécification comportementale</strong>.</p>
+<hr>
+<h1 id="16-attention-au-piège-du-traintest-split">16. Attention au piège du train/test split</h1>
+<p>C&rsquo;est un détail qui peut complètement fausser les résultats.</p>
+<p>Le guide Google consacré au fine-tuning de FunctionGemma montre justement l&rsquo;importance de la distribution des données lors du découpage train/test. Si les exemples sont organisés par catégorie et que l&rsquo;on découpe sans mélanger, on peut finir avec une catégorie presque exclusivement dans le train et une autre dans le test.  Google Developers Blog</p>
+<p>Donc :</p>
+<pre tabindex="0"><code>dataset.train_test_split(
+    test_size=0.2,
+    shuffle=True
+)
+</code></pre><p>est souvent préférable lorsque l&rsquo;ordre initial du dataset n&rsquo;est pas garanti comme étant correctement mélangé.</p>
+<p>Mais surtout :</p>
+<p><strong>il faut penser au split en fonction du problème.</strong></p>
+<p>Pour un agent réel, je testerais également :</p>
+<pre tabindex="0"><code>Train :
+    formulations connues
+
+Test :
+    formulations inédites
+</code></pre><p>et même :</p>
+<pre tabindex="0"><code>Test OOD :
+    nouveaux outils
+    nouveaux paramètres
+    nouvelles formulations
+</code></pre><p>C&rsquo;est beaucoup plus révélateur de la capacité de généralisation.</p>
+<hr>
+<h1 id="17-une-architecture-de-test-que-jutiliserais">17. Une architecture de test que j&rsquo;utiliserais</h1>
+<p>Je construirais un petit framework :</p>
+<pre tabindex="0"><code>                 ┌─────────────────┐
+                 │ Hugging Face    │
+                 │ datasets        │
+                 └────────┬────────┘
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │ Test Generator  │
+                 └────────┬────────┘
+                          │
+             ┌────────────┼────────────┐
+             ▼            ▼            ▼
+          Normal       Ambiguous     Negative
+             │            │            │
+             └────────────┼────────────┘
+                          ▼
+                 ┌─────────────────┐
+                 │ FunctionGemma   │
+                 │      270M       │
+                 └────────┬────────┘
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │ Evaluator       │
+                 └────────┬────────┘
+                          │
+          ┌───────────────┼────────────────┐
+          ▼               ▼                ▼
+      Tool Acc.      Arg Acc.        No-Tool Acc.
+</code></pre><p>Et conserver chaque expérience :</p>
+<pre tabindex="0"><code>{
+  &#34;prompt&#34;: &#34;...&#34;,
+  &#34;tools&#34;: [...],
+  &#34;expected&#34;: {...},
+  &#34;actual&#34;: {...},
+  &#34;tool_accuracy&#34;: true,
+  &#34;argument_accuracy&#34;: false,
+  &#34;latency_ms&#34;: 37,
+  &#34;tokens&#34;: 18
+}
+</code></pre><hr>
+<h1 id="18-le-graal--tester-le-slm-comme-du-logiciel">18. Le graal : tester le SLM comme du logiciel</h1>
+<p>C&rsquo;est probablement la conclusion la plus importante.</p>
+<p>On ne devrait plus traiter un SLM uniquement comme :</p>
+<pre tabindex="0"><code>prompt → réponse
+</code></pre><p>mais comme un composant logiciel :</p>
+<pre tabindex="0"><code>INPUT
+  ↓
+MODEL
+  ↓
+STRUCTURED OUTPUT
+  ↓
+VALIDATOR
+  ↓
+ACTION
+</code></pre><p>Avec des tests automatisés :</p>
+<pre tabindex="0"><code>assert result.tool == &#34;get_weather&#34;
+
+assert result.arguments[&#34;location&#34;] == &#34;Rennes&#34;
+
+assert result.is_valid_json
+
+assert result.confidence_policy_ok
+</code></pre><p>Et surtout :</p>
+<pre tabindex="0"><code>CI/CD
+ ↓
+1000 prompts
+ ↓
+FunctionGemma
+ ↓
+Evaluation
+ ↓
+Regression detected
+</code></pre><p>On peut alors détecter qu&rsquo;un fine-tuning ou une modification du prompt a fait passer :</p>
+<pre tabindex="0"><code>Tool accuracy
+92% → 88%
+</code></pre><p>avant de déployer le modèle.</p>
+<hr>
+<h1 id="19-ce-que-je-testerais-en-premier-avec-functiongemma-270m">19. Ce que je testerais en premier avec FunctionGemma 270M</h1>
+<p>Mon parcours expérimental serait :</p>
+<h3 id="étape-1--baseline">Étape 1 — Baseline</h3>
+<p>Tester le modèle officiel sans modification.</p>
+<h3 id="étape-2--single-tool">Étape 2 — Single tool</h3>
+<pre tabindex="0"><code>1 prompt
+1 tool
+</code></pre><h3 id="étape-3--multiple-tools">Étape 3 — Multiple tools</h3>
+<pre tabindex="0"><code>1 prompt
+5 tools
+</code></pre><h3 id="étape-4--similar-tools">Étape 4 — Similar tools</h3>
+<pre tabindex="0"><code>search_web()
+search_docs()
+search_database()
+</code></pre><h3 id="étape-5--no-tool">Étape 5 — No-tool</h3>
+<p>Tester explicitement les requêtes qui ne doivent déclencher aucune action.</p>
+<h3 id="étape-6--ambiguity">Étape 6 — Ambiguity</h3>
+<p>Créer volontairement des cas ambigus.</p>
+<h3 id="étape-7--multi-turn">Étape 7 — Multi-turn</h3>
+<pre tabindex="0"><code>User → demande
+Model → clarification
+User → précision
+Model → function call
+</code></pre><h3 id="étape-8--dataset-hugging-face">Étape 8 — Dataset Hugging Face</h3>
+<p>Utiliser <code>google/mobile-actions</code> comme matière première pour construire les tests.  Hugging Face</p>
+<h3 id="étape-9--mutation">Étape 9 — Mutation</h3>
+<p>Générer automatiquement des variantes linguistiques.</p>
+<h3 id="étape-10--fine-tuning">Étape 10 — Fine-tuning</h3>
+<p>Spécialiser le modèle sur son propre domaine.</p>
+<h3 id="étape-11--regression-suite">Étape 11 — Regression suite</h3>
+<p>Conserver tous les cas qui ont déjà cassé le modèle.</p>
+<hr>
+<h1 id="20-le-changement-de-perspective">20. Le changement de perspective</h1>
+<p>C&rsquo;est finalement ce que je trouve le plus intéressant avec FunctionGemma.</p>
+<p>Le sujet n&rsquo;est pas seulement :</p>
+<blockquote>
+<p><strong>&ldquo;Que peut faire un modèle de 270M ?&rdquo;</strong></p>
+</blockquote>
+<p>La vraie question est :</p>
+<blockquote>
+<p><strong>&ldquo;Que peut-on obtenir lorsqu&rsquo;on transforme un petit modèle généraliste en composant extrêmement spécialisé, puis qu&rsquo;on mesure précisément son comportement ?&rdquo;</strong></p>
+</blockquote>
+<p>Avec les grands modèles, on a tendance à chercher toujours plus de capacités.</p>
+<p>Avec les SLM, on peut chercher autre chose :</p>
+<p><strong>moins de paramètres, moins de latence, moins de coût, plus de contrôle et une spécialisation beaucoup plus forte.</strong></p>
+<p>FunctionGemma est particulièrement intéressant pour explorer cette approche parce que Google fournit à la fois le modèle, des exemples de <em>function calling</em>, le dataset <strong>Mobile Actions</strong>, des recettes de fine-tuning et même un <strong>FunctionGemma Tuning Lab</strong>.  Google Developers Blog+1</p>
+<p>FunctionGemma 270M sur Hugging Face</p>
+<p>FunctionGemma Tuning Lab</p>
+<hr>
+<h2 id="en-résumé">En résumé</h2>
+<p>Pour explorer sérieusement un SLM comme FunctionGemma, je partirais de cette boucle :</p>
+<pre tabindex="0"><code>                 DATASETS
+                    ↓
+              OBSERVATION
+                    ↓
+              TEST GENERATION
+                    ↓
+               FUNCTIONGEMMA
+                    ↓
+                EVALUATION
+                    ↓
+              ERROR ANALYSIS
+                    ↓
+             DATASET AMÉLIORÉ
+                    ↓
+              FINE-TUNING
+                    ↓
+             REGRESSION TESTS
+                    ↺
+</code></pre><p><strong>Le dataset devient le laboratoire.<br>
+Le prompt devient une variable expérimentale.<br>
+Le modèle devient un composant testable.<br>
+Et les erreurs deviennent de nouvelles données d&rsquo;apprentissage.</strong></p>
+<p>C&rsquo;est peut-être là que les SLM deviennent vraiment intéressants : non pas lorsqu&rsquo;on essaie de leur faire faire tout ce qu&rsquo;un LLM sait faire, mais lorsqu&rsquo;on leur donne <strong>une mission très précise et qu&rsquo;on apprend à mesurer, comprendre et maîtriser leurs frontières.</strong></p>
+<p>#AI #SLM #FunctionCalling #FunctionGemma #GoogleDeepMind #HuggingFace #LLM #GenAI #EdgeAI #OnDeviceAI #MachineLearning #AIEngineering #AgenticAI #MLOps #Testing #FineTuning</p>
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Mišel Brzulović | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

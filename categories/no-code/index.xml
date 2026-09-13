@@ -1,15 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>No-Code on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <title>No-Code on Mišel Brzulović - Senior QA DevOps Engineer</title>
     <link>/categories/no-code/</link>
-    <description>Recent content in No-Code on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <description>Recent content in No-Code on Mišel Brzulović - Senior QA DevOps Engineer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr</language>
     <managingEditor>brzulovic@gmail.com</managingEditor>
     <webMaster>brzulovic@gmail.com</webMaster>
-    <lastBuildDate>Tue, 08 Sep 2026 19:00:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 Sep 2026 15:35:15 +0000</lastBuildDate>
     <atom:link href="/categories/no-code/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Maîtriser les Super-Agents IA : Session de Questions-Réponses / Mastering AI Super-Agents: Q&amp;A Session</title>
+      <link>/scrapped/maitriser-super-agents-ia-session-qa/</link>
+      <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/maitriser-super-agents-ia-session-qa/</guid>
+      <description>&lt;h2 id=&#34;-version-française&#34;&gt;🇫🇷 Version Française&lt;/h2&gt;&#xA;&lt;p&gt;Bienvenue dans cette dernière étape de notre sommet virtuel. Cette session de Q&amp;amp;R clôture cinq jours intensifs consacrés à l&amp;rsquo;exploitation des Super-Agents IA pour transformer votre business et maximiser vos revenus.&lt;/p&gt;&#xA;&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;&#xA;&#x9;&#x9;&#x9;&lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/_MsSc9OHn4o?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;&#xA;&#x9;&#x9;&lt;/div&gt;&#xA;&#xA;&lt;h3 id=&#34;résumé-exécutif--points-clés&#34;&gt;Résumé Exécutif &amp;amp; Points Clés&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Monétisation :&lt;/strong&gt; Comment transformer des problèmes complexes en services IA rentables.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Stratégie :&lt;/strong&gt; Dépasser 99% des utilisateurs en adoptant une approche structurée des agents autonomes.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Implémentation :&lt;/strong&gt; Réponses techniques sur la mise en œuvre des flux de travail automatisés.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;chronologie-des-temps-forts&#34;&gt;Chronologie des Temps Forts&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;[00:00] Introduction à la session finale.&lt;/li&gt;&#xA;&lt;li&gt;[05:20] Stratégies de sélection des cas d&amp;rsquo;usage à haute valeur ajoutée.&lt;/li&gt;&#xA;&lt;li&gt;[15:45] Session interactive : Répondre aux questions de la communauté.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;analyse-technique--lia-au-service-de-la-productivité&#34;&gt;Analyse Technique : L&amp;rsquo;IA au Service de la Productivité&lt;/h3&gt;&#xA;&lt;p&gt;L&amp;rsquo;écosystème Alegria repose sur l&amp;rsquo;idée que l&amp;rsquo;IA ne doit pas seulement être un outil de génération de contenu, mais un moteur d&amp;rsquo;exécution. Les super-agents, contrairement aux chatbots simples, disposent d&amp;rsquo;une capacité de décision et d&amp;rsquo;interaction avec vos outils métiers (CRM, Notion, Email).&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="-version-française">🇫🇷 Version Française</h2>
+<p>Bienvenue dans cette dernière étape de notre sommet virtuel. Cette session de Q&amp;R clôture cinq jours intensifs consacrés à l&rsquo;exploitation des Super-Agents IA pour transformer votre business et maximiser vos revenus.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/_MsSc9OHn4o?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h3 id="résumé-exécutif--points-clés">Résumé Exécutif &amp; Points Clés</h3>
+<ul>
+<li><strong>Monétisation :</strong> Comment transformer des problèmes complexes en services IA rentables.</li>
+<li><strong>Stratégie :</strong> Dépasser 99% des utilisateurs en adoptant une approche structurée des agents autonomes.</li>
+<li><strong>Implémentation :</strong> Réponses techniques sur la mise en œuvre des flux de travail automatisés.</li>
+</ul>
+<h3 id="chronologie-des-temps-forts">Chronologie des Temps Forts</h3>
+<ul>
+<li>[00:00] Introduction à la session finale.</li>
+<li>[05:20] Stratégies de sélection des cas d&rsquo;usage à haute valeur ajoutée.</li>
+<li>[15:45] Session interactive : Répondre aux questions de la communauté.</li>
+</ul>
+<h3 id="analyse-technique--lia-au-service-de-la-productivité">Analyse Technique : L&rsquo;IA au Service de la Productivité</h3>
+<p>L&rsquo;écosystème Alegria repose sur l&rsquo;idée que l&rsquo;IA ne doit pas seulement être un outil de génération de contenu, mais un moteur d&rsquo;exécution. Les super-agents, contrairement aux chatbots simples, disposent d&rsquo;une capacité de décision et d&rsquo;interaction avec vos outils métiers (CRM, Notion, Email).</p>
+<h2 id="-english-version">🇬🇧 English Version</h2>
+<p>Welcome to the final session of our virtual summit. This Q&amp;A session concludes five intensive days dedicated to leveraging AI Super-Agents to transform your business and maximize your revenue.</p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+			<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/_MsSc9OHn4o?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+		</div>
+
+<h3 id="executive-summary--key-takeaways">Executive Summary &amp; Key Takeaways</h3>
+<ul>
+<li><strong>Monetization:</strong> How to turn complex problems into profitable AI services.</li>
+<li><strong>Strategy:</strong> Outperforming 99% of people by adopting a structured approach to autonomous agents.</li>
+<li><strong>Implementation:</strong> Technical insights on deploying automated workflows.</li>
+</ul>
+<h3 id="timestamped-chapter-breakdown">Timestamped Chapter Breakdown</h3>
+<ul>
+<li>[00:00] Introduction to the final Q&amp;A session.</li>
+<li>[05:20] High-value use case selection strategies.</li>
+<li>[15:45] Community Q&amp;A session.</li>
+</ul>
+<h3 id="deep-dive-ai-for-productivity">Deep-Dive: AI for Productivity</h3>
+<p>The Alegria ecosystem is built on the premise that AI should not just be a content generation tool, but an execution engine. Unlike simple chatbots, super-agents have the capacity to make decisions and interact with your business stack (CRM, Notion, Email).</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>Comment Sélectionner &amp; Monétiser des Problèmes qui Coûtent Cher / Selecting &amp; Monetizing High-Value Problems</title>
       <link>/scrapped/selectionner-monetiser-problemes-rentables/</link>

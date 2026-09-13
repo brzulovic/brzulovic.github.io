@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mišel Brzulović - Senior QA DevOps Engineer</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">functiongemma.fine-tuning.function.calling</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>September 17, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>5 min read</span>
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <h2 id="le-projet-que-je-te-propose">Le projet que je te propose</h2>
+<h3 id="-objectif">🎯 Objectif</h3>
+<p>Fine-tuner :</p>
+<p><code>google/functiongemma-270m-it</code></p>
+<p>pour lui apprendre un mini-système de <strong>domotique</strong> :</p>
+<pre tabindex="0"><code>turn_on_light(room)
+turn_off_light(room)
+set_light_brightness(room, brightness)
+set_temperature(room, temperature)
+</code></pre><p>Puis comparer :</p>
+<pre tabindex="0"><code>FunctionGemma base
+        VS
+FunctionGemma fine-tuné
+</code></pre><p>sur des prompts qu&rsquo;il <strong>n&rsquo;a jamais vus</strong>.</p>
+<p>L&rsquo;intérêt pédagogique est énorme : on peut montrer concrètement que le fine-tuning ne sert pas seulement à &ldquo;rendre le modèle plus intelligent&rdquo;, mais à <strong>ancrer un comportement spécialisé</strong>.</p>
+<p>Google explique justement que le fine-tuning de FunctionGemma peut servir à résoudre les ambiguïtés de sélection d&rsquo;outils, gérer des schémas non standards et transférer des workflows spécifiques vers un petit modèle.  Google AI for Developers</p>
+<hr>
+<h1 id="-notre-expérience">🧪 Notre expérience</h1>
+<p>Je partirais sur ce dataset :</p>
+<pre tabindex="0"><code>100-500 exemples
+</code></pre><p>avec des variations comme :</p>
+<pre tabindex="0"><code>&#34;Allume la lumière du salon&#34;
+→ turn_on_light(room=&#34;living_room&#34;)
+
+&#34;Éteins la chambre&#34;
+→ turn_off_light(room=&#34;bedroom&#34;)
+
+&#34;Mets la lumière du bureau à 40%&#34;
+→ set_light_brightness(
+      room=&#34;office&#34;,
+      brightness=40
+  )
+
+&#34;Monte le chauffage du salon à 21 degrés&#34;
+→ set_temperature(
+      room=&#34;living_room&#34;,
+      temperature=21
+  )
+</code></pre><p>Mais surtout, on ajouterait des <strong>cas négatifs</strong> :</p>
+<pre tabindex="0"><code>&#34;Quelle est la température actuelle ?&#34;
+→ NO TOOL
+</code></pre><p>et des cas ambigus :</p>
+<pre tabindex="0"><code>&#34;Fais plus chaud dans le salon&#34;
+</code></pre><p>pour voir si le modèle apprend à produire :</p>
+<pre tabindex="0"><code>set_temperature(
+    room=&#34;living_room&#34;,
+    temperature=???
+)
+</code></pre><p>ou à ne pas halluciner un paramètre absent.</p>
+<hr>
+<h1 id="-et-on-ferait-un-vrai-benchmark-avant--après">🧠 Et on ferait un vrai benchmark AVANT / APRÈS</h1>
+<p>Par exemple :</p>
+<pre tabindex="0"><code>                         BASE       FINE-TUNED
+
+Tool selection           72%           96%
+Arguments                61%           93%
+No-tool                  78%           91%
+Ambiguous prompts        42%           81%
+JSON validity            89%           99%
+</code></pre><p><strong>Ces chiffres seraient les nôtres</strong>, mesurés expérimentalement — pas des chiffres inventés.</p>
+<p>C&rsquo;est ça qui rendrait le notebook intéressant.</p>
+<hr>
+<h1 id="-structure-du-colab">📓 Structure du Colab</h1>
+<p>Je ferais environ <strong>10 cellules principales</strong>.</p>
+<h3 id="1-installation">1. Installation</h3>
+<pre tabindex="0"><code>!pip install -U transformers datasets accelerate trl
+</code></pre><p>Google utilise justement <code>transformers</code>, <code>datasets</code>, <code>accelerate</code> et <code>trl</code> dans son guide officiel de fine-tuning.  Google AI for Developers</p>
+<hr>
+<h3 id="2-login-hugging-face">2. Login Hugging Face</h3>
+<pre tabindex="0"><code>from huggingface_hub import login
+
+login()
+</code></pre><p>Il faut avoir accepté les conditions d&rsquo;utilisation de Gemma sur Hugging Face pour télécharger <code>google/functiongemma-270m-it</code>.  Google AI for Developers</p>
+<hr>
+<h3 id="3-charger-functiongemma">3. Charger FunctionGemma</h3>
+<pre tabindex="0"><code>MODEL_ID = &#34;google/functiongemma-270m-it&#34;
+
+from transformers import AutoProcessor, AutoModelForCausalLM
+
+processor = AutoProcessor.from_pretrained(MODEL_ID)
+
+model = AutoModelForCausalLM.from_pretrained(
+    MODEL_ID,
+    device_map=&#34;auto&#34;,
+    dtype=&#34;auto&#34;
+)
+</code></pre><p>Le workflow officiel utilise également <code>AutoProcessor</code> et <code>AutoModelForCausalLM</code>.  Google AI for Developers</p>
+<hr>
+<h1 id="4-construire-notre-dataset">4. Construire notre dataset</h1>
+<p>C&rsquo;est ici que je voudrais aller plus loin que le notebook Google.</p>
+<p>Par exemple :</p>
+<pre tabindex="0"><code>examples = [
+    {
+        &#34;user&#34;: &#34;Allume la lumière du salon&#34;,
+        &#34;tool&#34;: &#34;turn_on_light&#34;,
+        &#34;arguments&#34;: {
+            &#34;room&#34;: &#34;living_room&#34;
+        }
+    },
+    {
+        &#34;user&#34;: &#34;Éteins la lumière de la chambre&#34;,
+        &#34;tool&#34;: &#34;turn_off_light&#34;,
+        &#34;arguments&#34;: {
+            &#34;room&#34;: &#34;bedroom&#34;
+        }
+    },
+    {
+        &#34;user&#34;: &#34;Mets la lumière du bureau à 40%&#34;,
+        &#34;tool&#34;: &#34;set_light_brightness&#34;,
+        &#34;arguments&#34;: {
+            &#34;room&#34;: &#34;office&#34;,
+            &#34;brightness&#34;: 40
+        }
+    }
+]
+</code></pre><p>Puis transformation vers le format conversationnel attendu par FunctionGemma.</p>
+<hr>
+<h1 id="5-faire-passer-le-modèle-avant-fine-tuning">5. Faire passer le modèle AVANT fine-tuning</h1>
+<p>Très important.</p>
+<p>Avant de l&rsquo;entraîner, on lui donne :</p>
+<pre tabindex="0"><code>&#34;Éteins la lumière du salon&#34;
+</code></pre><p>et on sauvegarde exactement ce qu&rsquo;il produit.</p>
+<p>Puis :</p>
+<pre tabindex="0"><code>BASELINE
+--------
+Prompt
+Input tokens
+Output
+Expected
+PASS/FAIL
+</code></pre><p>On garde tout.</p>
+<hr>
+<h1 id="6-fine-tuning-avec-sfttrainer">6. Fine-tuning avec <code>SFTTrainer</code></h1>
+<p>Google recommande justement <code>TRL SFTTrainer</code> pour l&rsquo;entraînement supervisé de FunctionGemma.  Google AI for Developers</p>
+<p>Quelque chose dans ce style :</p>
+<pre tabindex="0"><code>from trl import SFTTrainer
+
+trainer = SFTTrainer(
+    model=model,
+    train_dataset=train_dataset,
+    processing_class=processor,
+    ...
+)
+
+trainer.train()
+</code></pre><p>Les paramètres seront volontairement modestes pour qu&rsquo;on puisse faire tourner l&rsquo;expérience dans Colab.</p>
+<hr>
+<h1 id="7-le-test-le-plus-important">7. Le test le plus important</h1>
+<p>On ne teste surtout <strong>pas les exemples d&rsquo;entraînement</strong>.</p>
+<p>On crée un <code>test_dataset</code> avec des formulations inédites :</p>
+<pre tabindex="0"><code>TRAIN:
+
+&#34;Allume la lumière du salon&#34;
+
+TEST:
+
+&#34;Tu peux éclairer le séjour ?&#34;
+</code></pre><p>Puis :</p>
+<pre tabindex="0"><code>TRAIN:
+
+&#34;Mets le bureau à 40%&#34;
+
+TEST:
+
+&#34;Réduis l&#39;intensité du bureau à 40&#34;
+</code></pre><p>Et encore mieux :</p>
+<pre tabindex="0"><code>TRAIN:
+&#34;Allume la lumière du salon&#34;
+
+TEST:
+&#34;Active l&#39;éclairage du séjour&#34;
+</code></pre><p>On teste donc une forme de <strong>généralisation linguistique</strong>.</p>
+<hr>
+<h1 id="8-puis-le-stress-test">8. Puis le &ldquo;stress test&rdquo;</h1>
+<p>C&rsquo;est la partie que j&rsquo;ajouterais spécialement pour notre article.</p>
+<h3 id="ambiguïté">Ambiguïté</h3>
+<pre tabindex="0"><code>&#34;Fais plus chaud.&#34;
+</code></pre><h3 id="négation">Négation</h3>
+<pre tabindex="0"><code>&#34;N&#39;allume pas la lumière.&#34;
+</code></pre><h3 id="hors-domaine">Hors domaine</h3>
+<pre tabindex="0"><code>&#34;Explique-moi la relativité générale.&#34;
+</code></pre><h3 id="plusieurs-actions">Plusieurs actions</h3>
+<pre tabindex="0"><code>&#34;Allume le salon et mets la lumière à 30%.&#34;
+</code></pre><h3 id="paramètre-invalide">Paramètre invalide</h3>
+<pre tabindex="0"><code>&#34;Mets la lumière à 300%.&#34;
+</code></pre><h3 id="outil-concurrent">Outil concurrent</h3>
+<pre tabindex="0"><code>&#34;Il fait froid dans le salon.&#34;
+</code></pre><p>On observe alors <strong>comment 270M raisonne avec un espace d&rsquo;actions extrêmement réduit</strong>.</p>
+<hr>
+<h1 id="9-et-surtout--visualiser-les-résultats">9. Et surtout : visualiser les résultats</h1>
+<p>On pourra produire automatiquement :</p>
+<pre tabindex="0"><code>┌────────────────────────────────────────────┐
+│ FunctionGemma 270M Benchmark               │
+├────────────────────┬───────────┬───────────┤
+│                    │ Base      │ Fine-tuned│
+├────────────────────┼───────────┼───────────┤
+│ Tool selection     │ 72%       │ 94%       │
+│ Arguments          │ 63%       │ 91%       │
+│ JSON validity      │ 87%       │ 98%       │
+│ No-tool            │ 76%       │ 89%       │
+│ Multi-tool         │ 31%       │ 67%       │
+└────────────────────┴───────────┴───────────┘
+</code></pre><p>Et même quelques graphiques matplotlib.</p>
+<hr>
+<h1 id="-une-deuxième-expérience-serait-encore-plus-intéressante">🔥 Une deuxième expérience serait encore plus intéressante</h1>
+<p>Après notre petit dataset artificiel, on pourrait refaire exactement le même pipeline avec :</p>
+<p><code>google/mobile-actions</code></p>
+<p>Google fournit précisément ce dataset et un notebook officiel pour fine-tuner FunctionGemma dessus.  Google AI for Developers</p>
+<p>Le dataset permet de passer d&rsquo;un jouet pédagogique à un cas beaucoup plus réaliste : calendrier, contacts, lampe torche, recherche, etc.</p>
+<p>Google indique également que son fine-tuning Mobile Actions améliore fortement les performances du modèle sur ce workflow spécialisé.  Google DeepMind</p>
+<hr>
+<h1 id="-et-jai-trouvé-un-raccourci-très-intéressant">🚀 Et j&rsquo;ai trouvé un raccourci très intéressant</h1>
+<p>Google propose aussi un <strong>FunctionGemma Tuning Lab</strong> directement sur Hugging Face.</p>
+<p>Il permet de définir ses fonctions, préparer les données et lancer le fine-tuning via une interface.  Hugging Face+1</p>
+<p>FunctionGemma Tuning Lab sur Hugging Face</p>
+<p>Mais pour notre article, je préfère <strong>le Colab codé à la main</strong> : le lecteur comprendra réellement ce qui se passe.</p>
+<hr>
+<h2 id="-et-on-peut-aller-encore-plus-loin">💡 Et on peut aller encore plus loin</h2>
+<p>Il existe maintenant également un tutoriel Google utilisant <strong>Tunix + LoRA sur un Colab TPU v5e-1</strong>, avec FunctionGemma et <code>google/mobile-actions</code>. Google présente cette approche comme une manière de faire du fine-tuning rapidement et à faible coût sur le TPU gratuit de Colab.  Google Developers Blog</p>
+<p>Donc je verrais carrément <strong>3 notebooks</strong> dans la série :</p>
+<pre tabindex="0"><code>01_functiongemma_baseline.ipynb
+        ↓
+02_functiongemma_finetuning.ipynb
+        ↓
+03_functiongemma_evaluation.ipynb
+</code></pre><p>Et dans le 3e :</p>
+<pre tabindex="0"><code>         Hugging Face Dataset
+                  ↓
+          Test Generator
+                  ↓
+        ┌─────────┴─────────┐
+        ↓                   ↓
+ FunctionGemma        Fine-tuned
+   270M                 270M
+        ↓                   ↓
+        └─────────┬─────────┘
+                  ↓
+             Evaluator
+                  ↓
+        Accuracy / Errors /
+        Tool selection /
+        Arguments / No-tool
+</code></pre><p><strong>Ça ferait un excellent prolongement technique à ton article LinkedIn : on ne dit plus seulement &ldquo;les SLM sont intéressants&rdquo;, on prend un 270M, on le mesure, on le fine-tune, on casse le modèle avec des tests, puis on regarde précisément ce qu&rsquo;il a appris.</strong></p>
+<p>Et surtout, <strong>on peut produire un vrai Colab reproductible avec le code complet</strong>, plutôt qu&rsquo;un pseudo-tutoriel.  GitHub</p>
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Mišel Brzulović | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>
