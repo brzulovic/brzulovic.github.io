@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    
+    <url>
+        <loc>/</loc>
+        <lastmod>2026-08-04T11:55:01+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/5-essential-claude-code-skills/</loc>
+        <lastmod>2026-08-04T11:55:01+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/</loc>
+        <lastmod>2026-08-04T11:55:01+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/tags/ai/</loc>
+        <lastmod>2026-07-04T18:22:29+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/categories/</loc>
+        <lastmod>2026-07-04T18:22:29+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/post-linkedin-homelab-coding-agents/</loc>
+        <lastmod>2026-07-04T18:22:29+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/categories/projects/</loc>
+        <lastmod>2026-07-04T18:22:29+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/tags/</loc>
+        <lastmod>2026-07-04T18:22:29+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/tags/tech/</loc>
+        <lastmod>2026-07-04T18:22:29+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/litellmexample/</loc>
+        <lastmod>2026-06-24T13:42:35+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/free-harness-use-with-litellm/</loc>
+        <lastmod>2026-06-24T13:32:55+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/free-agent-harness-use-with-litellm/</loc>
+        <lastmod>2026-06-24T13:31:38+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/conditions-d-utilisation/</loc>
+        <lastmod>2026-03-26T17:10:00+01:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/politique-de-confidentialite/</loc>
+        <lastmod>2026-03-26T17:10:00+01:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/backuping-purging-space/</loc>
+        <lastmod>2026-03-08T17:33:07+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/free-llm-api-resources/</loc>
+        <lastmod>2026-03-08T17:33:07+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/hugo-theme-scrap/</loc>
+        <lastmod>2026-03-08T17:33:07+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/test/</loc>
+        <lastmod>2026-02-19T17:52:08+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/foo-fighters-openrouter-/</loc>
+        <lastmod>2026-02-04T18:22:29+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/moltworker-vs-openclawd-use-h-heading-/</loc>
+        <lastmod>2026-02-04T16:32:19+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/moltworker-vs-openclawd-/</loc>
+        <lastmod>2026-02-04T16:28:38+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/install-bmad-crewai/</loc>
+        <lastmod>2026-02-04T15:05:26+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/admin/</loc>
+        <lastmod>2026-01-31T14:54:06+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/api/</loc>
+        <lastmod>2026-01-31T14:54:06+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/todo/</loc>
+        <lastmod>2026-01-31T14:54:06+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/www/</loc>
+        <lastmod>2026-01-31T14:54:06+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/my-first-post/</loc>
+        <lastmod>2026-01-31T09:45:24+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/posts/welcome/</loc>
+        <lastmod>2026-01-31T09:27:19+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/showcase/</loc>
+        <lastmod>2026-01-31T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+        <loc>/miselbrzulovic-dct-en/</loc>
+    </url>
+    
+    <url>
+        <loc>/miselbrzulovic-dct-fr/</loc>
+    </url>
+    
+    <url>
+        <loc>/posts/chat_cretealinkedinarticledevopscodecenteredaboutbackupingandpurgingdatasavespace/</loc>
+    </url>
+    
+</urlset>

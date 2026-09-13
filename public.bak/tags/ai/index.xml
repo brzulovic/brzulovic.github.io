@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Ai on BrzulovicAi</title>
+    <link>/tags/ai/</link>
+    <description>Recent content in Ai on BrzulovicAi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Sat, 04 Jul 2026 18:22:29 +0000</lastBuildDate>
+    <atom:link href="/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>homelab-coding-agents</title>
+      <link>/posts/post-linkedin-homelab-coding-agents/</link>
+      <pubDate>Sat, 04 Jul 2026 18:22:29 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/post-linkedin-homelab-coding-agents/</guid>
+      <description>&lt;p&gt;🏠⚡ J&amp;rsquo;ai 4 machines, 512 Mo de RAM sur les plus petites, et pourtant je fais tourner 5 coding agents différents en parallèle. Voici comment.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Le contexte&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Depuis quelques mois je fais tourner un homelab de 4 nœuds sur mon réseau local (192.168.1.20/24) :&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;2x Raspberry Pi Zero 2 (edge, ressources très contraintes)&lt;/li&gt;&#xA;&lt;li&gt;2x serveurs (un Optiplex et un Inspiron reconditionnés, rôle compute)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;L&amp;rsquo;objectif : arrêter de dépendre d&amp;rsquo;un seul agent IA, d&amp;rsquo;un seul fournisseur de modèle, ou d&amp;rsquo;une seule machine. Un vrai mesh où chaque nœud a un rôle défini, où les harnesss de coding agents (Claude Code, Codex, OpenCode, Vibe) coexistent avec mon propre harness maison (Oh-My-PI, alias &lt;code&gt;omp&lt;/code&gt;), et où les Pi Zero ne sont pas juste des porte-clés USB glorifiés.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>🏠⚡ J&rsquo;ai 4 machines, 512 Mo de RAM sur les plus petites, et pourtant je fais tourner 5 coding agents différents en parallèle. Voici comment.</p>
+<p><strong>Le contexte</strong></p>
+<p>Depuis quelques mois je fais tourner un homelab de 4 nœuds sur mon réseau local (192.168.1.20/24) :</p>
+<ul>
+<li>2x Raspberry Pi Zero 2 (edge, ressources très contraintes)</li>
+<li>2x serveurs (un Optiplex et un Inspiron reconditionnés, rôle compute)</li>
+</ul>
+<p>L&rsquo;objectif : arrêter de dépendre d&rsquo;un seul agent IA, d&rsquo;un seul fournisseur de modèle, ou d&rsquo;une seule machine. Un vrai mesh où chaque nœud a un rôle défini, où les harnesss de coding agents (Claude Code, Codex, OpenCode, Vibe) coexistent avec mon propre harness maison (Oh-My-PI, alias <code>omp</code>), et où les Pi Zero ne sont pas juste des porte-clés USB glorifiés.</p>
+<p>Ce post en 4 parties :</p>
+<ul>
+<li>1️⃣ Le schéma d&rsquo;architecture</li>
+<li>2️⃣ Comparatif technique des harnesss</li>
+<li>3️⃣ Qui parle à l&rsquo;extérieur, et comment</li>
+<li>4️⃣ Le mesh entre les 4 machines</li>
+</ul>
+<hr>
+<p><strong>1️⃣ Architecture</strong></p>
+<pre tabindex="0"><code>     RÉSEAU 192.168.1.0/24
+┌───────────────────────────┐
+│                           │
+│  [Pi Zero 2 #1]  .21      │
+│   role : edge             │
+│   harness : omp           │
+│                           │
+│  [Pi Zero 2 #2]  .22      │
+│   role : edge             │
+│   harness : omp           │
+│                           │
+│  [Optiplex]      .23      │
+│   role : compute          │
+│   harness : omp,          │
+│    Claude Code, Codex,    │
+│    OpenCode, Vibe         │
+│                           │
+│  [Inspiron]      .24      │
+│   role : compute          │
+│   harness : omp,          │
+│    Claude Code, Codex,    │
+│    OpenCode, Vibe         │
+│                           │
+└───────────────────────────┘
+</code></pre><p>Les Pi Zero 2 ne font tourner qu&rsquo;<code>omp</code> : c&rsquo;est mon harness perso, taillé pour de l&rsquo;ARM Cortex-A53 avec 512 Mo de RAM, sans prétention. Il gère les tâches edge : polling de capteurs, petits scripts, relais vers le reste du mesh. Les deux serveurs, eux, encaissent tout le reste : c&rsquo;est là que je fais tourner les gros harnesss commerciaux ou open source.</p>
+<hr>
+<p><strong>2️⃣ Comparatif des harnesss</strong></p>
+<p>Petite précision importante avant le tableau : Claude Code, Codex CLI, OpenCode et Vibe ne font (quasiment) jamais tourner de modèle en local. Ce sont des clients CLI qui appellent une API distante ; le &ldquo;footprint&rdquo; qui compte, c&rsquo;est celui du runtime (Node.js ou Python) et de l&rsquo;orchestration, pas des poids du modèle.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Harness</th>
+					<th>Modèle(s)</th>
+					<th>Footprint RAM/CPU</th>
+					<th>Exécution</th>
+					<th>Tool-use</th>
+					<th>Extensibilité</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>omp</strong></td>
+					<td>agnostique, léger, taillé maison</td>
+					<td>Très faible — conçu pour ARM 512 Mo</td>
+					<td>Local (calls API légers)</td>
+					<td>Basique, ciblé edge</td>
+					<td>Scripts custom</td>
+			</tr>
+			<tr>
+					<td><strong>Claude Code</strong></td>
+					<td>Claude (Sonnet/Opus) via API Anthropic</td>
+					<td>Runtime Node.js, modéré</td>
+					<td>Hybride (agent local, inférence distante)</td>
+					<td>Natif, riche (bash, fichiers, web)</td>
+					<td>MCP, hooks, plugins, subagents</td>
+			</tr>
+			<tr>
+					<td><strong>Codex CLI</strong></td>
+					<td>GPT (via ChatGPT ou API OpenAI)</td>
+					<td>Runtime Python/Node, modéré, sandbox OS-level</td>
+					<td>Hybride + cloud tasks async</td>
+					<td>Natif, sandbox à 3 niveaux</td>
+					<td>MCP natif, hooks, subagents</td>
+			</tr>
+			<tr>
+					<td><strong>OpenCode</strong></td>
+					<td>75+ providers (Anthropic, OpenAI, Google, local via Ollama…)</td>
+					<td>Runtime léger, TUI terminal</td>
+					<td>Hybride, provider-agnostique</td>
+					<td>Natif + LSP (diagnostics compilateur)</td>
+					<td>MCP, plugins</td>
+			</tr>
+			<tr>
+					<td><strong>Vibe (Mistral)</strong></td>
+					<td>Modèles Mistral (Devstral…)</td>
+					<td>Runtime Python, léger à modéré</td>
+					<td>Hybride</td>
+					<td>Natif (bash, fichiers, grep)</td>
+					<td>MCP (stdio/http), hooks, subagents</td>
+			</tr>
+	</tbody>
+</table>
+<p>Sur le papier, tous ces harnesss <em>pourraient</em> tourner sur un Pi Zero 2 puisque l&rsquo;inférence est déportée. En pratique, le confort de dev (TUI riche, plusieurs sessions parallèles, LSP) demande plus de RAM/CPU que ce que 512 Mo permettent sereinement — d&rsquo;où le choix de les réserver aux deux serveurs, et de garder <code>omp</code> sur les Pi comme client ultra-léger.</p>
+<hr>
+<p><strong>3️⃣ Communication avec l&rsquo;extérieur</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th>Harness</th>
+					<th>Capacité native</th>
+					<th>Alternative si limitée</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>omp</strong></td>
+					<td>Appels API HTTP simples</td>
+					<td>MCP server maison si besoin d&rsquo;outils riches</td>
+			</tr>
+			<tr>
+					<td><strong>Claude Code</strong></td>
+					<td>MCP, web search, bash, filesystem</td>
+					<td>— (déjà natif)</td>
+			</tr>
+			<tr>
+					<td><strong>Codex CLI</strong></td>
+					<td>MCP natif, web search mid-task, cloud tasks</td>
+					<td>— (déjà natif)</td>
+			</tr>
+			<tr>
+					<td><strong>OpenCode</strong></td>
+					<td>MCP local/remote, LSP</td>
+					<td>Proxy HTTP si le serveur MCP distant est instable</td>
+			</tr>
+			<tr>
+					<td><strong>Vibe</strong></td>
+					<td>MCP (stdio/http/streamable-http), Connectors Mistral</td>
+					<td>Tunnel SSH si le serveur MCP est derrière un NAT</td>
+			</tr>
+	</tbody>
+</table>
+<p>Le point commun : tous parlent MCP nativement aujourd&rsquo;hui, ce qui simplifie énormément le mesh — un même serveur MCP (accès filesystem partagé, base de données, ou passerelle vers <code>omp</code>) peut être branché indifféremment sur Claude Code, Codex, OpenCode ou Vibe sans réécrire de glue code.</p>
+<hr>
+<p><strong>4️⃣ Le mesh entre les 4 machines</strong></p>
+<pre tabindex="0"><code>        ┌────────────────┐
+        │  Optiplex .23  │
+        │ orchestrateur  │
+        │  Claude Code   │
+        └───────┬────────┘
+          MCP over TCP / SSH
+      ┌──────────┼──────────┐
+      │          │          │
+┌─────┴────┐ ┌───┴────┐ ┌───┴────┐
+│Inspiron  │ │Pi Zero1│ │Pi Zero2│
+│  .24     │ │  .21   │ │  .22   │
+│ worker   │ │ edge   │ │ edge   │
+│Codex/Vibe│ │  omp   │ │  omp   │
+└──────────┘ └────────┘ └────────┘
+</code></pre><p>Stratégie concrète :</p>
+<ul>
+<li><strong>Optiplex</strong> joue l&rsquo;orchestrateur : Claude Code y tourne avec un serveur MCP maison exposé sur le réseau local, qui relaie les commandes vers les 3 autres nœuds.</li>
+<li><strong>Inspiron</strong> est le worker de compute : Codex CLI ou Vibe y exécutent les tâches lourdes (build, tests, génération de code) déléguées par l&rsquo;orchestrateur, via SSH ou MCP over TCP selon le besoin de statefulness.</li>
+<li><strong>Les 2 Pi Zero 2</strong> ne reçoivent que des tâches courtes et atomiques via <code>omp</code> — lecture de capteur, exécution d&rsquo;un script, remontée d&rsquo;un statut. Ils ne participent jamais à l&rsquo;inférence ni à l&rsquo;orchestration : ça évite qu&rsquo;ils deviennent le goulot d&rsquo;étranglement du mesh.</li>
+</ul>
+<p>Le protocole : MCP over TCP pour tout ce qui est appel d&rsquo;outil structuré, SSH pour les commandes ad hoc et le déploiement, HTTP simple pour les webhooks entre <code>omp</code> et le reste.</p>
+<p>Le bénéfice concret pour un DevOps IA : un seul cerveau (l&rsquo;orchestrateur) peut répartir intelligemment le travail entre 4 machines hétérogènes, sans dépendre d&rsquo;un seul fournisseur de modèle ni d&rsquo;un seul harness — et sans cramer les Pi Zero qui restent sur ce qu&rsquo;ils savent faire.</p>
+<p>Vous avez un setup multi-nœuds similaire ? Quel protocole vous utilisez pour le mesh entre vos agents ? Curieux de voir vos retours en commentaire 👇</p>
+<p>#DevOps #AI #LLM #Homelab #CodingAgent</p>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+	    Transparence IA
+Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d intelligence artificielle, puis relu, corrigé et complété par l auteur avant publication.
+    </div>
+</div>
+
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Backup and Purging Space</title>
+      <link>/posts/backuping-purging-space/</link>
+      <pubDate>Sun, 08 Mar 2026 17:33:07 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/backuping-purging-space/</guid>
+      <description>&lt;h2 id=&#34;optimiser-le-stockage-stratégies-de-backup-et-de-purge-pour-les-équipes-devops&#34;&gt;Optimiser le stockage: Stratégies de backup et de purge pour les équipes DevOps&lt;/h2&gt;&#xA;&lt;h3 id=&#34;pourquoi-parler-de-backup-et-purge-&#34;&gt;Pourquoi parler de backup et purge ?&lt;/h3&gt;&#xA;&lt;p&gt;Dans un environnement DevOps, le volume de données générées (logs, artefacts, snapshots, bases de données …) explose rapidement.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;Coûts inutiles&lt;/strong&gt; (cloud / on‑prem)&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;&lt;strong&gt;Dégradation des performances&lt;/strong&gt; (plus de I/O, temps de récupération)&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;ol start=&#34;3&#34;&gt;&#xA;&lt;li&gt;&lt;strong&gt;Risques de conformité&lt;/strong&gt; (rétention excessive ou insuffisante)&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;1-sauvegarde-fiable-le-golden-copy-automatisé&#34;&gt;1. Sauvegarde fiable: le golden copy automatisé&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Étape&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Outils / Exemple&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Bonnes pratiques&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Planification&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;cron&lt;/code&gt; / &lt;strong&gt;GitHub Actions&lt;/strong&gt; / &lt;strong&gt;GitLab CI&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Utiliser des jobs déclenchés à chaque merge ou chaque version stable.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Création d’image&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;docker commit&lt;/code&gt;, &lt;code&gt;kubectl snapshot&lt;/code&gt;, &lt;strong&gt;Velero&lt;/strong&gt; (K8s)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Capturer l’état complet du conteneur/cluster, incluant les volumes persistants.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Compression&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;gzip&lt;/code&gt;, &lt;code&gt;zstd&lt;/code&gt;, &lt;strong&gt;restic&lt;/strong&gt; (&lt;code&gt;--compression=auto&lt;/code&gt;)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;GZIP : +70 % de gain, ZSTD : meilleur ratio + vitesse.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Chiffrement&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;gpg&lt;/code&gt;, &lt;strong&gt;AWS KMS&lt;/strong&gt;, &lt;strong&gt;Azure Key Vault&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Stocker les clés hors du même bucket que les backups.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Stockage distant&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;S3&lt;/strong&gt; (Life‑cycle), &lt;strong&gt;Azure Blob&lt;/strong&gt;, &lt;strong&gt;Google Cloud Storage&lt;/strong&gt;, &lt;strong&gt;MinIO&lt;/strong&gt; (on‑prem)&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Activer le &lt;em&gt;object‑versioning&lt;/em&gt; et la replication multi‑région.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;strong&gt;Verification&lt;/strong&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&lt;code&gt;restic snapshots&lt;/code&gt;, &lt;strong&gt;Velero&lt;/strong&gt; &lt;code&gt;restore --dry-run&lt;/code&gt;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Test régulier de la restaurabilité : au moins un backup par mois.&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/usr/bin/env bash&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set -euo pipefail&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Variables&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;BACKUP_DIR&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/var/www/myapp&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;REPO&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;s3:s3.amazonaws.com/mybucket/backups&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;PASSWORD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;superSecretPass&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;export RESTIC_PASSWORD&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;$PASSWORD&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 1️⃣ Init repository (à faire une fois)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# restic init -r $REPO&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 2️⃣ Snapshot&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;restic -r $REPO backup $BACKUP_DIR &lt;span style=&#34;color:#ae81ff&#34;&gt;\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --exclude&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;*.log&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --exclude&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;cache/**&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --exclude&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;node_modules/**&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 3️⃣ Forget + prune (conserver 7 derniers quotidiens, 4 hebdos, 12 mensuels)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;restic -r $REPO forget &lt;span style=&#34;color:#ae81ff&#34;&gt;\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --keep-daily &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --keep-weekly &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --keep-monthly &lt;span style=&#34;color:#ae81ff&#34;&gt;12&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  --prune&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Astuce&lt;/strong&gt; : intégrez ce script dans votre pipeline CI pour que chaque version tagged déclenche un backup automatisé.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="optimiser-le-stockage-stratégies-de-backup-et-de-purge-pour-les-équipes-devops">Optimiser le stockage: Stratégies de backup et de purge pour les équipes DevOps</h2>
+<h3 id="pourquoi-parler-de-backup-et-purge-">Pourquoi parler de backup et purge ?</h3>
+<p>Dans un environnement DevOps, le volume de données générées (logs, artefacts, snapshots, bases de données …) explose rapidement.</p>
+<ul>
+<li>
+<ol>
+<li><strong>Coûts inutiles</strong> (cloud / on‑prem)</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li><strong>Dégradation des performances</strong> (plus de I/O, temps de récupération)</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li><strong>Risques de conformité</strong> (rétention excessive ou insuffisante)</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="1-sauvegarde-fiable-le-golden-copy-automatisé">1. Sauvegarde fiable: le golden copy automatisé</h2>
+<table>
+	<thead>
+			<tr>
+					<th>Étape</th>
+					<th>Outils / Exemple</th>
+					<th>Bonnes pratiques</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Planification</strong></td>
+					<td><code>cron</code> / <strong>GitHub Actions</strong> / <strong>GitLab CI</strong></td>
+					<td>Utiliser des jobs déclenchés à chaque merge ou chaque version stable.</td>
+			</tr>
+			<tr>
+					<td><strong>Création d’image</strong></td>
+					<td><code>docker commit</code>, <code>kubectl snapshot</code>, <strong>Velero</strong> (K8s)</td>
+					<td>Capturer l’état complet du conteneur/cluster, incluant les volumes persistants.</td>
+			</tr>
+			<tr>
+					<td><strong>Compression</strong></td>
+					<td><code>gzip</code>, <code>zstd</code>, <strong>restic</strong> (<code>--compression=auto</code>)</td>
+					<td>GZIP : +70 % de gain, ZSTD : meilleur ratio + vitesse.</td>
+			</tr>
+			<tr>
+					<td><strong>Chiffrement</strong></td>
+					<td><code>gpg</code>, <strong>AWS KMS</strong>, <strong>Azure Key Vault</strong></td>
+					<td>Stocker les clés hors du même bucket que les backups.</td>
+			</tr>
+			<tr>
+					<td><strong>Stockage distant</strong></td>
+					<td><strong>S3</strong> (Life‑cycle), <strong>Azure Blob</strong>, <strong>Google Cloud Storage</strong>, <strong>MinIO</strong> (on‑prem)</td>
+					<td>Activer le <em>object‑versioning</em> et la replication multi‑région.</td>
+			</tr>
+			<tr>
+					<td><strong>Verification</strong></td>
+					<td><code>restic snapshots</code>, <strong>Velero</strong> <code>restore --dry-run</code></td>
+					<td>Test régulier de la restaurabilité : au moins un backup par mois.</td>
+			</tr>
+	</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span>set -euo pipefail
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Variables</span>
+</span></span><span style="display:flex;"><span>BACKUP_DIR<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/var/www/myapp&#34;</span>
+</span></span><span style="display:flex;"><span>REPO<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;s3:s3.amazonaws.com/mybucket/backups&#34;</span>
+</span></span><span style="display:flex;"><span>PASSWORD<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;superSecretPass&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>export RESTIC_PASSWORD<span style="color:#f92672">=</span>$PASSWORD
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1️⃣ Init repository (à faire une fois)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># restic init -r $REPO</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2️⃣ Snapshot</span>
+</span></span><span style="display:flex;"><span>restic -r $REPO backup $BACKUP_DIR <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --exclude<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;*.log&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --exclude<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cache/**&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --exclude<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;node_modules/**&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3️⃣ Forget + prune (conserver 7 derniers quotidiens, 4 hebdos, 12 mensuels)</span>
+</span></span><span style="display:flex;"><span>restic -r $REPO forget <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --keep-daily <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --keep-weekly <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --keep-monthly <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span>  --prune
+</span></span></code></pre></div><blockquote>
+<p><strong>Astuce</strong> : intégrez ce script dans votre pipeline CI pour que chaque version tagged déclenche un backup automatisé.</p>
+</blockquote>
+<hr>
+<h2 id="2-purge-intelligente-libérer-de-lespace-sans-perdre-dinformation">2. Purge intelligente: libérer de l&rsquo;espace sans perdre d&rsquo;information</h2>
+<h3 id="21-lifecycle-policies-s3-azure-gcs">2.1. Lifecycle policies (S3, Azure, GCS)</h3>
+<table>
+	<thead>
+			<tr>
+					<th>Policy</th>
+					<th>Action</th>
+					<th>Exemple de règle</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Transition</strong></td>
+					<td>Déplacer les objets vers des classes froides (Glacier, Archive)</td>
+					<td><code>Transition to GLACIER after 30 days</code></td>
+			</tr>
+			<tr>
+					<td><strong>Expiration</strong></td>
+					<td>Supprimer définitivement</td>
+					<td><code>Delete after 365 days</code></td>
+			</tr>
+			<tr>
+					<td><strong>Non‑current version expiration</strong></td>
+					<td>Nettoyer les anciennes versions</td>
+					<td><code>Delete non‑current versions after 90 days</code></td>
+			</tr>
+	</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;Rules&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;ID&#34;</span>: <span style="color:#e6db74">&#34;ArchiveOldBackups&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Status&#34;</span>: <span style="color:#e6db74">&#34;Enabled&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Filter&#34;</span>: { <span style="color:#f92672">&#34;Prefix&#34;</span>: <span style="color:#e6db74">&#34;backups/&#34;</span> },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Transitions&#34;</span>: [{ <span style="color:#f92672">&#34;Days&#34;</span>: <span style="color:#ae81ff">30</span>, <span style="color:#f92672">&#34;StorageClass&#34;</span>: <span style="color:#e6db74">&#34;GLACIER&#34;</span> }],
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;Expiration&#34;</span>: { <span style="color:#f92672">&#34;Days&#34;</span>: <span style="color:#ae81ff">365</span> }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h3 id="22-logs--métriques">2.2. Logs &amp; métriques</h3>
+<ul>
+<li>
+<p><strong>Rotations log</strong> : <code>logrotate</code> avec <code>compress</code> + <code>maxage 30</code>.</p>
+</li>
+<li>
+<p><strong>Metrics retention</strong> : garder les métriques détaillées 30 jours, puis agrégées 90 jours (Prometheus <code>--storage.tsdb.retention.time=90d</code>).</p>
+</li>
+<li>
+<p><strong>Nettoyage des images Docker</strong> : <code>docker image prune -a --filter &quot;until=720h&quot;</code> (30 jours).</p>
+</li>
+<li>
+<p><strong>Artifacts</strong> : GitLab CI <code>expire_in: 1 week</code>, GitHub Actions <code>retain-days: 30</code>.</p>
+</li>
+</ul>
+<hr>
+<h3 id="23-base-de-données">2.3. Base de données</h3>
+<ul>
+<li><strong>TTL</strong> sur les collections TTL (MongoDB) ou <code>DROP PARTITION</code> sur les tables temporelles (PostgreSQL).</li>
+<li><strong>Vacuum</strong> automatisé pour PostgreSQL : <code>VACUUM (FULL, ANALYZE)</code> une fois par semaine.</li>
+</ul>
+<table>
+	<thead>
+			<tr>
+					<th>Outil</th>
+					<th>Métrique clé</th>
+					<th>Alert</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>Prometheus</strong></td>
+					<td><code>backup_success_total</code>, <code>backup_duration_seconds</code></td>
+					<td>Alerte si <code>backup_success_total</code> = 0 sur 24 h</td>
+			</tr>
+			<tr>
+					<td><strong>Grafana</strong></td>
+					<td>Disk usage %</td>
+					<td>Warning at 70 %, Critical at 85 %</td>
+			</tr>
+			<tr>
+					<td><strong>PagerDuty / Opsgenie</strong></td>
+					<td><code>purge_job_failed</code></td>
+					<td>Escalade immédiate</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h4 id="dashboard-example-grafana">Dashboard example (Grafana)</h4>
+<ul>
+<li>Graphique : espace disque (GB) vs. seuil (80 %).</li>
+<li>Table : dernières sauvegardes, statut, taille.</li>
+</ul>
+<ol>
+<li><strong>Choisir un backend</strong> : S3 bucket + IAM read/write.</li>
+<li><strong>Déployer Restic</strong> : <code>docker run -v $(pwd):/data -e RESTIC_PASSWORD=… restic/restic backup /data</code>.</li>
+<li><strong>Créer une policy de cycle de vie</strong> sur le bucket (transition → archive, expiration).</li>
+<li><strong>Automatiser la purge des logs</strong> avec <code>logrotate</code>.</li>
+<li><strong>Configurer Grafana</strong> avec le datasource Prometheus pour surveiller <code>node_filesystem_avail_bytes</code>.</li>
+</ol>
+<hr>
+<h2 id="5-checklist-finale">5. Checklist finale</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Sauvegardes chiffrées et testées (restore dry‑run).</li>
+<li><input disabled="" type="checkbox"> Policies de lifecycle appliquées sur le stockage objet.</li>
+<li><input disabled="" type="checkbox"> Logs, artefacts et images Docker purgeés régulièrement.</li>
+<li><input disabled="" type="checkbox"> Alerting en place pour les échecs de backup et dépassements de quota.</li>
+<li><input disabled="" type="checkbox"> Documentation versionnée dans votre repo (exemple : <code>docs/backup-purge.md</code>).</li>
+</ul>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>Un <strong>pipeline de backup + purge</strong> intégré au workflow DevOps transforme le &ldquo;stockage illimité&rdquo; en <strong>coût maîtrisé</strong> et <strong>résilience</strong>.
+En codifiant ces bonnes pratiques (scripts, policies, dashboards) vous offrez à votre équipe la <strong>tranquillité d&rsquo;esprit</strong> : les données critiques sont toujours récupérables, le reste est automatiquement nettoyé.</p>
+<blockquote>
+<p><strong>À vous de jouer</strong> ! Implémentez ces recommandations dès aujourd’hui, partagez votre expérience dans les commentaires, et inspirons la communauté DevOps à garder leurs environnements <strong>légers</strong> et <strong>fiables</strong>. 🙌</p>
+</blockquote>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+	    Transparence IA
+Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d intelligence artificielle, puis relu, corrigé et complété par l auteur avant publication.
+    </div>
+</div>
+
+]]></content:encoded>
+    </item>
+    <item>
+      <title>admin.brzulovicai.ip-ddns.com</title>
+      <link>/posts/admin/</link>
+      <pubDate>Sat, 31 Jan 2026 14:54:06 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/admin/</guid>
+      <description>&lt;h3 id=&#34;adminbrzulovicaiip-ddnscom&#34;&gt;admin.brzulovicai.ip-ddns.com;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/n8n/veille&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/n8n/veille&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/n8n/prompts&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/n8n/prompts&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/n8n/log/ai&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/n8n/log/ai&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/n8n/log/errors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/n8n/log/errors&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/n8n/cache&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/n8n/cache&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/n8n/%28&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/n8n/(&lt;/a&gt;.*)&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://admin.brzulovicai.ip-ddns.com/.well-known/acme-challenge/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://admin.brzulovicai.ip-ddns.com/.well-known/acme-challenge/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+      <content:encoded><![CDATA[<h3 id="adminbrzulovicaiip-ddnscom">admin.brzulovicai.ip-ddns.com;</h3>
+<ul>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/</a></li>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/n8n/veille"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/n8n/veille</a></li>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/n8n/prompts"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/n8n/prompts</a></li>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/n8n/log/ai"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/n8n/log/ai</a></li>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/n8n/log/errors"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/n8n/log/errors</a></li>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/n8n/cache"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/n8n/cache</a></li>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/n8n/%28"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/n8n/(</a>.*)</li>
+<li><a class="link" href="https://admin.brzulovicai.ip-ddns.com/.well-known/acme-challenge/"  target="_blank" rel="noopener"
+    >https://admin.brzulovicai.ip-ddns.com/.well-known/acme-challenge/</a></li>
+</ul>
+<hr>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>api.brzulovicai.ip-ddns.com</title>
+      <link>/posts/api/</link>
+      <pubDate>Sat, 31 Jan 2026 14:54:06 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/api/</guid>
+      <description>&lt;h2 id=&#34;apibrzulovicaiip-ddnscom&#34;&gt;api.brzulovicai.ip-ddns.com;&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com/@api_error&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com/@api_error&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//baserow&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//baserow&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//fabric/%28&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//fabric/(&lt;/a&gt;.*)&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//n8n/veille&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//n8n/veille&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//n8n/prompts&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//n8n/prompts&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//n8n/log/ai&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//n8n/log/ai&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//n8n/log/errors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//n8n/log/errors&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//n8n/cache&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//n8n/cache&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://api.brzulovicai.ip-ddns.com//.well-known/acme-challenge/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://api.brzulovicai.ip-ddns.com//.well-known/acme-challenge/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+      <content:encoded><![CDATA[<h2 id="apibrzulovicaiip-ddnscom">api.brzulovicai.ip-ddns.com;</h2>
+<ul>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com/@api_error"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com/@api_error</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//baserow"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//baserow</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//fabric/%28"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//fabric/(</a>.*)</li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//n8n/veille"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//n8n/veille</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//n8n/prompts"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//n8n/prompts</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//n8n/log/ai"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//n8n/log/ai</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//n8n/log/errors"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//n8n/log/errors</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//n8n/cache"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//n8n/cache</a></li>
+<li><a class="link" href="https://api.brzulovicai.ip-ddns.com//.well-known/acme-challenge/"  target="_blank" rel="noopener"
+    >https://api.brzulovicai.ip-ddns.com//.well-known/acme-challenge/</a></li>
+</ul>
+<hr>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>app, inpiron, optiplex</title>
+      <link>/posts/todo/</link>
+      <pubDate>Sat, 31 Jan 2026 14:54:06 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/todo/</guid>
+      <description>&lt;h2 id=&#34;appbrzulovicaiip-ddnscom&#34;&gt;app.brzulovicai.ip-ddns.com;&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com/&lt;/a&gt;~ ^/(form|app)&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//.well-known/acme-challenge/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//.well-known/acme-challenge/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//hugo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//hugo/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//opencode/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//opencode/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//www&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//www&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//rpimonitor&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//rpimonitor&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//rpimonitor/zero2&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//rpimonitor/zero2&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//rpimonitor/dietpi&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//rpimonitor/dietpi&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//haproxy/dietpi&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//haproxy/dietpi&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//haproxy/zero2&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//haproxy/zero2&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//openwebui&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//openwebui&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//veille&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//veille&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//perplexity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//perplexity&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com/&lt;/a&gt;~ /form-.*/&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//fabric&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//fabric&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//app&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//app&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//whisper&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//whisper&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//scrap&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//scrap&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.brzulovicai.ip-ddns.com//prompts&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://app.brzulovicai.ip-ddns.com//prompts&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+      <content:encoded><![CDATA[<h2 id="appbrzulovicaiip-ddnscom">app.brzulovicai.ip-ddns.com;</h2>
+<ul>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com/"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com/</a>~ ^/(form|app)</li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//.well-known/acme-challenge/"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//.well-known/acme-challenge/</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//hugo/"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//hugo/</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//opencode/"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//opencode/</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//www"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//www</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//rpimonitor"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//rpimonitor</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//rpimonitor/zero2"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//rpimonitor/zero2</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//rpimonitor/dietpi"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//rpimonitor/dietpi</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//haproxy/dietpi"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//haproxy/dietpi</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//haproxy/zero2"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//haproxy/zero2</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//openwebui"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//openwebui</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//veille"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//veille</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//perplexity"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//perplexity</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com/"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com/</a>~ /form-.*/</li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//fabric"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//fabric</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//app"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//app</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//whisper"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//whisper</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//scrap"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//scrap</a></li>
+<li><a class="link" href="https://app.brzulovicai.ip-ddns.com//prompts"  target="_blank" rel="noopener"
+    >https://app.brzulovicai.ip-ddns.com//prompts</a></li>
+</ul>
+<hr>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>www.brzulovicai.ip-ddns.com</title>
+      <link>/posts/www/</link>
+      <pubDate>Sat, 31 Jan 2026 14:54:06 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/www/</guid>
+      <description>&lt;h2&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;www.brzulovicai.ip-ddns.com&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com/@notfound&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://www.brzulovicai.ip-ddns.com/@notfound&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com//&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://www.brzulovicai.ip-ddns.com//&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com//opencode/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://www.brzulovicai.ip-ddns.com//opencode/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com//fabric/%28&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://www.brzulovicai.ip-ddns.com//fabric/(&lt;/a&gt;.*)&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com//openwebui&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://www.brzulovicai.ip-ddns.com//openwebui&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com//notebook&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://www.brzulovicai.ip-ddns.com//notebook&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.brzulovicai.ip-ddns.com//.well-known/acme-challenge/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;https://www.brzulovicai.ip-ddns.com//.well-known/acme-challenge/&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+      <content:encoded><![CDATA[<h2><a class="link" href="https://www.brzulovicai.ip-ddns.com"  target="_blank" rel="noopener"
+    >www.brzulovicai.ip-ddns.com</a></h2>
+<ul>
+<li><a class="link" href="https://www.brzulovicai.ip-ddns.com/@notfound"  target="_blank" rel="noopener"
+    >https://www.brzulovicai.ip-ddns.com/@notfound</a></li>
+<li><a class="link" href="https://www.brzulovicai.ip-ddns.com//"  target="_blank" rel="noopener"
+    >https://www.brzulovicai.ip-ddns.com//</a></li>
+<li><a class="link" href="https://www.brzulovicai.ip-ddns.com//opencode/"  target="_blank" rel="noopener"
+    >https://www.brzulovicai.ip-ddns.com//opencode/</a></li>
+<li><a class="link" href="https://www.brzulovicai.ip-ddns.com//fabric/%28"  target="_blank" rel="noopener"
+    >https://www.brzulovicai.ip-ddns.com//fabric/(</a>.*)</li>
+<li><a class="link" href="https://www.brzulovicai.ip-ddns.com//openwebui"  target="_blank" rel="noopener"
+    >https://www.brzulovicai.ip-ddns.com//openwebui</a></li>
+<li><a class="link" href="https://www.brzulovicai.ip-ddns.com//notebook"  target="_blank" rel="noopener"
+    >https://www.brzulovicai.ip-ddns.com//notebook</a></li>
+<li><a class="link" href="https://www.brzulovicai.ip-ddns.com//.well-known/acme-challenge/"  target="_blank" rel="noopener"
+    >https://www.brzulovicai.ip-ddns.com//.well-known/acme-challenge/</a></li>
+</ul>
+<hr>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>My First Post</title>
+      <link>/posts/my-first-post/</link>
+      <pubDate>Sat, 31 Jan 2026 09:45:24 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/my-first-post/</guid>
+      <description>&lt;h1 id=&#34;feature-showcase&#34;&gt;Feature Showcase&lt;/h1&gt;&#xA;&lt;p&gt;Welcome to the comprehensive demonstration of our custom Hugo shortcodes. These elements are designed to maintain the sleek, glassmorphism aesthetic of your site while providing rich content formatting options.&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-interaction-alerts&#34;&gt;1. Interaction Alerts&lt;/h2&gt;&#xA;&lt;p&gt;Use these to highlight important information or warnings within your documentation or blog posts.&lt;/p&gt;&#xA;&lt;div class=&#34;my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start&#34;&gt;&#xA;    &lt;div class=&#34;mr-4 text-blue-400&#34;&gt;&#xA;        &lt;i class=&#34;fas fa-info-circle text-xl&#34;&gt;&lt;/i&gt;&#xA;    &lt;/div&gt;&#xA;    &lt;div class=&#34;text-sm opacity-90 text-blue-100&#34;&gt;&#xA;        &lt;strong&gt;Pro Tip:&lt;/strong&gt; You can use standard Markdown inside these shortcodes, including &lt;strong&gt;bold&lt;/strong&gt;, &lt;em&gt;italics&lt;/em&gt;, and &lt;a class=&#34;link&#34; href=&#34;https://google.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;links&lt;/a&gt;.&#xA;    &lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;div class=&#34;my-6 p-4 rounded-xl border border-yellow-400 bg-yellow-400 bg-opacity-10 flex items-start&#34;&gt;&#xA;    &lt;div class=&#34;mr-4 text-yellow-400&#34;&gt;&#xA;        &lt;i class=&#34;fas fa-exclamation-triangle text-xl&#34;&gt;&lt;/i&gt;&#xA;    &lt;/div&gt;&#xA;    &lt;div class=&#34;text-sm opacity-90 text-yellow-100&#34;&gt;&#xA;        &lt;strong&gt;Attention:&lt;/strong&gt; Ensure your &lt;code&gt;config.toml&lt;/code&gt; structure matches the expected parameters for the partials to render correctly.&#xA;    &lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;2-dynamic-grids--icons&#34;&gt;2. Dynamic Grids &amp;amp; Icons&lt;/h2&gt;&#xA;&lt;p&gt;The grid shortcode allows you to create responsive layouts. It&amp;rsquo;s perfect for listing features, services, or project milestones.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h1 id="feature-showcase">Feature Showcase</h1>
+<p>Welcome to the comprehensive demonstration of our custom Hugo shortcodes. These elements are designed to maintain the sleek, glassmorphism aesthetic of your site while providing rich content formatting options.</p>
+<h2 id="1-interaction-alerts">1. Interaction Alerts</h2>
+<p>Use these to highlight important information or warnings within your documentation or blog posts.</p>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+        <strong>Pro Tip:</strong> You can use standard Markdown inside these shortcodes, including <strong>bold</strong>, <em>italics</em>, and <a class="link" href="https://google.com"  target="_blank" rel="noopener"
+    >links</a>.
+    </div>
+</div>
+<div class="my-6 p-4 rounded-xl border border-yellow-400 bg-yellow-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-yellow-400">
+        <i class="fas fa-exclamation-triangle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-yellow-100">
+        <strong>Attention:</strong> Ensure your <code>config.toml</code> structure matches the expected parameters for the partials to render correctly.
+    </div>
+</div>
+<hr>
+<h2 id="2-dynamic-grids--icons">2. Dynamic Grids &amp; Icons</h2>
+<p>The grid shortcode allows you to create responsive layouts. It&rsquo;s perfect for listing features, services, or project milestones.</p>
+<div class="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+    
+    <div
+    class="p-4 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 flex flex-col items-center text-center">
+    <div class="w-12 h-12 flex items-center justify-center bg-white bg-opacity-10 rounded-full mb-3 text-2xl">
+        <i class="fas fa-bolt"></i>
+    </div>
+    <h4 class="font-bold mb-1">Lightning Fast</h4>
+    <p class="text-xs opacity-60"><pre><code>Optimized static generation ensures your links load instantly for every user.
+</code></pre>
+</p>
+</div>
+    
+    <div
+    class="p-4 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 flex flex-col items-center text-center">
+    <div class="w-12 h-12 flex items-center justify-center bg-white bg-opacity-10 rounded-full mb-3 text-2xl">
+        <i class="fas fa-icons"></i>
+    </div>
+    <h4 class="font-bold mb-1">Custom Icons</h4>
+    <p class="text-xs opacity-60"><pre><code>Supports the full Font Awesome library. Just pass the class name as a parameter.
+</code></pre>
+</p>
+</div>
+
+    <div
+    class="p-4 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 flex flex-col items-center text-center">
+    <div class="w-12 h-12 flex items-center justify-center bg-white bg-opacity-10 rounded-full mb-3 text-2xl">
+        <i class="fas fa-mobile-alt"></i>
+    </div>
+    <h4 class="font-bold mb-1">Responsive</h4>
+    <p class="text-xs opacity-60"><pre><code>Seamlessly transitions from desktop to mobile views with Tailwind CSS.
+</code></pre>
+</p>
+</div>
+
+    <div
+    class="p-4 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 flex flex-col items-center text-center">
+    <div class="w-12 h-12 flex items-center justify-center bg-white bg-opacity-10 rounded-full mb-3 text-2xl">
+        <i class="fab fa-github"></i>
+    </div>
+    <h4 class="font-bold mb-1">Open Source</h4>
+    <p class="text-xs opacity-60"><pre><code>Built on community standards and easily extensible for your specific needs.
+</code></pre>
+</p>
+</div>
+
+</div>
+<hr>
+<h2 id="3-media--visuals">3. Media &amp; Visuals</h2>
+<p>The figure shortcode wraps your images in the same premium border and shadow style used throughout the site.</p>
+<div class="my-8">
+    <div class="relative group">
+        <img src="/images/img.jpg" alt="Glassmorphism Demo"
+            class="rounded-2xl border border-white border-opacity-10 transition-transform duration-300 group-hover:scale-[1.01]">
+        
+        <p class="mt-3 text-center text-xs opacity-50 italic">Our signature glassmorphism style applied to a standard image component.</p>
+        
+    </div>
+</div>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>These shortcodes provide a powerful way to expand beyond simple links while keeping the &ldquo;Linktree&rdquo; simplicity where it counts.</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>Welcome</title>
+      <link>/posts/welcome/</link>
+      <pubDate>Sat, 31 Jan 2026 09:27:19 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/posts/welcome/</guid>
+      <description>&lt;p&gt;Welcome to your new post!&lt;/p&gt;&#xA;&lt;div class=&#34;my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start&#34;&gt;&#xA;    &lt;div class=&#34;mr-4 text-blue-400&#34;&gt;&#xA;        &lt;i class=&#34;fas fa-info-circle text-xl&#34;&gt;&lt;/i&gt;&#xA;    &lt;/div&gt;&#xA;    &lt;div class=&#34;text-sm opacity-90 text-blue-100&#34;&gt;&#xA;        &lt;strong&gt;Note:&lt;/strong&gt; This site uses the LucentLink-Hugo theme with custom glassmorphism effects.&#xA;    &lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&lt;p&gt;Here are some features of the platform:&lt;/p&gt;&#xA;&lt;div class=&#34;my-6 grid grid-cols-1 md:grid-cols-2 gap-4&#34;&gt;&#xA;    &#xA;    &lt;div&#xA;    class=&#34;p-4 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 flex flex-col items-center text-center&#34;&gt;&#xA;    &lt;div class=&#34;w-12 h-12 flex items-center justify-center bg-white bg-opacity-10 rounded-full mb-3 text-2xl&#34;&gt;&#xA;        &lt;i class=&#34;fas fa-brain&#34;&gt;&lt;/i&gt;&#xA;    &lt;/div&gt;&#xA;    &lt;h4 class=&#34;font-bold mb-1&#34;&gt;Agentic AI&lt;/h4&gt;&#xA;    &lt;p class=&#34;text-xs opacity-60&#34;&gt;&lt;pre&gt;&lt;code&gt;Powered by advanced agentic workflows for automation.&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>Welcome to your new post!</p>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+        <strong>Note:</strong> This site uses the LucentLink-Hugo theme with custom glassmorphism effects.
+    </div>
+</div>
+<p>Here are some features of the platform:</p>
+<div class="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+    
+    <div
+    class="p-4 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 flex flex-col items-center text-center">
+    <div class="w-12 h-12 flex items-center justify-center bg-white bg-opacity-10 rounded-full mb-3 text-2xl">
+        <i class="fas fa-brain"></i>
+    </div>
+    <h4 class="font-bold mb-1">Agentic AI</h4>
+    <p class="text-xs opacity-60"><pre><code>Powered by advanced agentic workflows for automation.
+</code></pre>
+</p>
+</div>
+    
+    <div
+    class="p-4 rounded-xl bg-white bg-opacity-5 border border-white border-opacity-10 flex flex-col items-center text-center">
+    <div class="w-12 h-12 flex items-center justify-center bg-white bg-opacity-10 rounded-full mb-3 text-2xl">
+        <i class="fas fa-bolt"></i>
+    </div>
+    <h4 class="font-bold mb-1">Fast Static Site</h4>
+    <p class="text-xs opacity-60"><pre><code>Built with Hugo for blazing fast performance.
+</code></pre>
+</p>
+</div>
+
+</div>
+<div class="my-6 p-4 rounded-xl border border-yellow-400 bg-yellow-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-yellow-400">
+        <i class="fas fa-exclamation-triangle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-yellow-100">
+        Always remember to back up your <code>config.toml</code> before making major changes!
+    </div>
+</div>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

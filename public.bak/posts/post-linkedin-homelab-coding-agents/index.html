@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BrzulovicAi</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">homelab-coding-agents</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>July 4, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>5 min read</span>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 mt-4">
+                    
+                    <span class="px-2 py-1 bg-white bg-opacity-10 rounded-md text-xs font-mono">#tech</span>
+                    
+                    <span class="px-2 py-1 bg-white bg-opacity-10 rounded-md text-xs font-mono">#ai</span>
+                    
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <p>🏠⚡ J&rsquo;ai 4 machines, 512 Mo de RAM sur les plus petites, et pourtant je fais tourner 5 coding agents différents en parallèle. Voici comment.</p>
+<p><strong>Le contexte</strong></p>
+<p>Depuis quelques mois je fais tourner un homelab de 4 nœuds sur mon réseau local (192.168.1.20/24) :</p>
+<ul>
+<li>2x Raspberry Pi Zero 2 (edge, ressources très contraintes)</li>
+<li>2x serveurs (un Optiplex et un Inspiron reconditionnés, rôle compute)</li>
+</ul>
+<p>L&rsquo;objectif : arrêter de dépendre d&rsquo;un seul agent IA, d&rsquo;un seul fournisseur de modèle, ou d&rsquo;une seule machine. Un vrai mesh où chaque nœud a un rôle défini, où les harnesss de coding agents (Claude Code, Codex, OpenCode, Vibe) coexistent avec mon propre harness maison (Oh-My-PI, alias <code>omp</code>), et où les Pi Zero ne sont pas juste des porte-clés USB glorifiés.</p>
+<p>Ce post en 4 parties :</p>
+<ul>
+<li>1️⃣ Le schéma d&rsquo;architecture</li>
+<li>2️⃣ Comparatif technique des harnesss</li>
+<li>3️⃣ Qui parle à l&rsquo;extérieur, et comment</li>
+<li>4️⃣ Le mesh entre les 4 machines</li>
+</ul>
+<hr>
+<p><strong>1️⃣ Architecture</strong></p>
+<pre tabindex="0"><code>     RÉSEAU 192.168.1.0/24
+┌───────────────────────────┐
+│                           │
+│  [Pi Zero 2 #1]  .21      │
+│   role : edge             │
+│   harness : omp           │
+│                           │
+│  [Pi Zero 2 #2]  .22      │
+│   role : edge             │
+│   harness : omp           │
+│                           │
+│  [Optiplex]      .23      │
+│   role : compute          │
+│   harness : omp,          │
+│    Claude Code, Codex,    │
+│    OpenCode, Vibe         │
+│                           │
+│  [Inspiron]      .24      │
+│   role : compute          │
+│   harness : omp,          │
+│    Claude Code, Codex,    │
+│    OpenCode, Vibe         │
+│                           │
+└───────────────────────────┘
+</code></pre><p>Les Pi Zero 2 ne font tourner qu&rsquo;<code>omp</code> : c&rsquo;est mon harness perso, taillé pour de l&rsquo;ARM Cortex-A53 avec 512 Mo de RAM, sans prétention. Il gère les tâches edge : polling de capteurs, petits scripts, relais vers le reste du mesh. Les deux serveurs, eux, encaissent tout le reste : c&rsquo;est là que je fais tourner les gros harnesss commerciaux ou open source.</p>
+<hr>
+<p><strong>2️⃣ Comparatif des harnesss</strong></p>
+<p>Petite précision importante avant le tableau : Claude Code, Codex CLI, OpenCode et Vibe ne font (quasiment) jamais tourner de modèle en local. Ce sont des clients CLI qui appellent une API distante ; le &ldquo;footprint&rdquo; qui compte, c&rsquo;est celui du runtime (Node.js ou Python) et de l&rsquo;orchestration, pas des poids du modèle.</p>
+<table>
+	<thead>
+			<tr>
+					<th>Harness</th>
+					<th>Modèle(s)</th>
+					<th>Footprint RAM/CPU</th>
+					<th>Exécution</th>
+					<th>Tool-use</th>
+					<th>Extensibilité</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>omp</strong></td>
+					<td>agnostique, léger, taillé maison</td>
+					<td>Très faible — conçu pour ARM 512 Mo</td>
+					<td>Local (calls API légers)</td>
+					<td>Basique, ciblé edge</td>
+					<td>Scripts custom</td>
+			</tr>
+			<tr>
+					<td><strong>Claude Code</strong></td>
+					<td>Claude (Sonnet/Opus) via API Anthropic</td>
+					<td>Runtime Node.js, modéré</td>
+					<td>Hybride (agent local, inférence distante)</td>
+					<td>Natif, riche (bash, fichiers, web)</td>
+					<td>MCP, hooks, plugins, subagents</td>
+			</tr>
+			<tr>
+					<td><strong>Codex CLI</strong></td>
+					<td>GPT (via ChatGPT ou API OpenAI)</td>
+					<td>Runtime Python/Node, modéré, sandbox OS-level</td>
+					<td>Hybride + cloud tasks async</td>
+					<td>Natif, sandbox à 3 niveaux</td>
+					<td>MCP natif, hooks, subagents</td>
+			</tr>
+			<tr>
+					<td><strong>OpenCode</strong></td>
+					<td>75+ providers (Anthropic, OpenAI, Google, local via Ollama…)</td>
+					<td>Runtime léger, TUI terminal</td>
+					<td>Hybride, provider-agnostique</td>
+					<td>Natif + LSP (diagnostics compilateur)</td>
+					<td>MCP, plugins</td>
+			</tr>
+			<tr>
+					<td><strong>Vibe (Mistral)</strong></td>
+					<td>Modèles Mistral (Devstral…)</td>
+					<td>Runtime Python, léger à modéré</td>
+					<td>Hybride</td>
+					<td>Natif (bash, fichiers, grep)</td>
+					<td>MCP (stdio/http), hooks, subagents</td>
+			</tr>
+	</tbody>
+</table>
+<p>Sur le papier, tous ces harnesss <em>pourraient</em> tourner sur un Pi Zero 2 puisque l&rsquo;inférence est déportée. En pratique, le confort de dev (TUI riche, plusieurs sessions parallèles, LSP) demande plus de RAM/CPU que ce que 512 Mo permettent sereinement — d&rsquo;où le choix de les réserver aux deux serveurs, et de garder <code>omp</code> sur les Pi comme client ultra-léger.</p>
+<hr>
+<p><strong>3️⃣ Communication avec l&rsquo;extérieur</strong></p>
+<table>
+	<thead>
+			<tr>
+					<th>Harness</th>
+					<th>Capacité native</th>
+					<th>Alternative si limitée</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>omp</strong></td>
+					<td>Appels API HTTP simples</td>
+					<td>MCP server maison si besoin d&rsquo;outils riches</td>
+			</tr>
+			<tr>
+					<td><strong>Claude Code</strong></td>
+					<td>MCP, web search, bash, filesystem</td>
+					<td>— (déjà natif)</td>
+			</tr>
+			<tr>
+					<td><strong>Codex CLI</strong></td>
+					<td>MCP natif, web search mid-task, cloud tasks</td>
+					<td>— (déjà natif)</td>
+			</tr>
+			<tr>
+					<td><strong>OpenCode</strong></td>
+					<td>MCP local/remote, LSP</td>
+					<td>Proxy HTTP si le serveur MCP distant est instable</td>
+			</tr>
+			<tr>
+					<td><strong>Vibe</strong></td>
+					<td>MCP (stdio/http/streamable-http), Connectors Mistral</td>
+					<td>Tunnel SSH si le serveur MCP est derrière un NAT</td>
+			</tr>
+	</tbody>
+</table>
+<p>Le point commun : tous parlent MCP nativement aujourd&rsquo;hui, ce qui simplifie énormément le mesh — un même serveur MCP (accès filesystem partagé, base de données, ou passerelle vers <code>omp</code>) peut être branché indifféremment sur Claude Code, Codex, OpenCode ou Vibe sans réécrire de glue code.</p>
+<hr>
+<p><strong>4️⃣ Le mesh entre les 4 machines</strong></p>
+<pre tabindex="0"><code>        ┌────────────────┐
+        │  Optiplex .23  │
+        │ orchestrateur  │
+        │  Claude Code   │
+        └───────┬────────┘
+          MCP over TCP / SSH
+      ┌──────────┼──────────┐
+      │          │          │
+┌─────┴────┐ ┌───┴────┐ ┌───┴────┐
+│Inspiron  │ │Pi Zero1│ │Pi Zero2│
+│  .24     │ │  .21   │ │  .22   │
+│ worker   │ │ edge   │ │ edge   │
+│Codex/Vibe│ │  omp   │ │  omp   │
+└──────────┘ └────────┘ └────────┘
+</code></pre><p>Stratégie concrète :</p>
+<ul>
+<li><strong>Optiplex</strong> joue l&rsquo;orchestrateur : Claude Code y tourne avec un serveur MCP maison exposé sur le réseau local, qui relaie les commandes vers les 3 autres nœuds.</li>
+<li><strong>Inspiron</strong> est le worker de compute : Codex CLI ou Vibe y exécutent les tâches lourdes (build, tests, génération de code) déléguées par l&rsquo;orchestrateur, via SSH ou MCP over TCP selon le besoin de statefulness.</li>
+<li><strong>Les 2 Pi Zero 2</strong> ne reçoivent que des tâches courtes et atomiques via <code>omp</code> — lecture de capteur, exécution d&rsquo;un script, remontée d&rsquo;un statut. Ils ne participent jamais à l&rsquo;inférence ni à l&rsquo;orchestration : ça évite qu&rsquo;ils deviennent le goulot d&rsquo;étranglement du mesh.</li>
+</ul>
+<p>Le protocole : MCP over TCP pour tout ce qui est appel d&rsquo;outil structuré, SSH pour les commandes ad hoc et le déploiement, HTTP simple pour les webhooks entre <code>omp</code> et le reste.</p>
+<p>Le bénéfice concret pour un DevOps IA : un seul cerveau (l&rsquo;orchestrateur) peut répartir intelligemment le travail entre 4 machines hétérogènes, sans dépendre d&rsquo;un seul fournisseur de modèle ni d&rsquo;un seul harness — et sans cramer les Pi Zero qui restent sur ce qu&rsquo;ils savent faire.</p>
+<p>Vous avez un setup multi-nœuds similaire ? Quel protocole vous utilisez pour le mesh entre vos agents ? Curieux de voir vos retours en commentaire 👇</p>
+<p>#DevOps #AI #LLM #Homelab #CodingAgent</p>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+	    Transparence IA
+Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d intelligence artificielle, puis relu, corrigé et complété par l auteur avant publication.
+    </div>
+</div>
+
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Brzulovic Misel | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Tags on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <title>Tags on Mišel Brzulović - Senior QA DevOps Engineer</title>
     <link>/tags/</link>
-    <description>Recent content in Tags on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <description>Recent content in Tags on Mišel Brzulović - Senior QA DevOps Engineer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr</language>
     <managingEditor>brzulovic@gmail.com</managingEditor>
@@ -99,7 +99,7 @@
       <content:encoded><![CDATA[]]></content:encoded>
     </item>
     <item>
-      <title>Ai Agents</title>
+      <title>AI Agents</title>
       <link>/tags/ai-agents/</link>
       <pubDate>Tue, 08 Sep 2026 18:33:53 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/tags/ai-agents/</guid>

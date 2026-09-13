@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</title>
+    <title>Posts on Mišel Brzulović - Senior QA DevOps Engineer</title>
     <link>/posts/</link>
-    <description>Recent content in Posts on Brzulović Mišel - Senior QA DevOps Engineer | Turning QA, Infrastructure &amp; Automation into Engineering at Scale</description>
+    <description>Recent content in Posts on Mišel Brzulović - Senior QA DevOps Engineer</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>fr</language>
     <managingEditor>brzulovic@gmail.com</managingEditor>
@@ -1555,7 +1555,7 @@ Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d i
       <link>/posts/hugo-theme-scrap/</link>
       <pubDate>Sun, 08 Mar 2026 17:33:07 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/posts/hugo-theme-scrap/</guid>
-      <description>&lt;link href=&#34;https://assets.calendly.com/assets/external/widget.css&#34; rel=&#34;stylesheet&#34;&gt;&#xA;    &#xA;&#xA;    &#xA;    &lt;script type=&#34;text/javascript&#34; src=&#34;https://assets.calendly.com/assets/external/widget.js&#34; async&gt;&lt;/script&gt;&#xA;&#xA;    &#xA;        &#xA;        &#xA;            &#xA;        &#xA;        &#xA;        &#xA;        &lt;a href=&#34;&#34; onclick=Calendly.initPopupWidget({url:&amp;#32;&amp;#39;https://calendly.com/brzulovic&amp;#39;});return&amp;#32;false;&gt;Schedule time with me&lt;/a&gt;&#xA;    &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&lt;div style=&#34;width: 90%;height: 200px;margin: 0 auto&#34;&gt;&#xA;    &lt;canvas id=&#34;dcd6bcf44fc8dc4dcce5ae45c2fab818&#34;&gt;&lt;/canvas&gt;&#xA;&lt;/div&gt;&#xA;&lt;script src=&#34;https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min.js&#34;&gt;&lt;/script&gt;&#xA;&lt;script type=&#34;text/javascript&#34;&gt;&#xA;    var ctx = document.getElementById(&#39;dcd6bcf44fc8dc4dcce5ae45c2fab818&#39;).getContext(&#39;2d&#39;);&#xA;    var options = &#xA;{&#xA;    type: &#39;bar&#39;,&#xA;    data: {&#xA;        labels: [&#39;Red&#39;, &#39;Blue&#39;, &#39;Yellow&#39;, &#39;Green&#39;, &#39;Purple&#39;, &#39;Orange&#39;],&#xA;        datasets: [{&#xA;            label: &#39;Bar Chart&#39;,&#xA;            data: [12, 19, 18, 16, 13, 14],&#xA;            backgroundColor: [&#xA;                &#39;rgba(255, 99, 132, 0.2)&#39;,&#xA;                &#39;rgba(54, 162, 235, 0.2)&#39;,&#xA;                &#39;rgba(255, 206, 86, 0.2)&#39;,&#xA;                &#39;rgba(75, 192, 192, 0.2)&#39;,&#xA;                &#39;rgba(153, 102, 255, 0.2)&#39;,&#xA;                &#39;rgba(255, 159, 64, 0.2)&#39;&#xA;            ],&#xA;            borderColor: [&#xA;                &#39;rgba(255, 99, 132, 1)&#39;,&#xA;                &#39;rgba(54, 162, 235, 1)&#39;,&#xA;                &#39;rgba(255, 206, 86, 1)&#39;,&#xA;                &#39;rgba(75, 192, 192, 1)&#39;,&#xA;                &#39;rgba(153, 102, 255, 1)&#39;,&#xA;                &#39;rgba(255, 159, 64, 1)&#39;&#xA;            ],&#xA;            borderWidth: 1&#xA;        }]&#xA;    },&#xA;    options: {&#xA;        maintainAspectRatio: false,&#xA;        scales: {&#xA;            yAxes: [{&#xA;                ticks: {&#xA;                    beginAtZero: true&#xA;                }&#xA;            }]&#xA;        }&#xA;    }&#xA;};&#xA;    new Chart(ctx, options);&#xA;&lt;/script&gt;</description>
+      <description>&lt;link href=&#34;https://assets.calendly.com/assets/external/widget.css&#34; rel=&#34;stylesheet&#34;&gt;&#xA;    &#xA;&#xA;    &#xA;    &lt;script type=&#34;text/javascript&#34; src=&#34;https://assets.calendly.com/assets/external/widget.js&#34; async&gt;&lt;/script&gt;&#xA;&#xA;    &#xA;        &#xA;        &#xA;            &#xA;        &#xA;        &#xA;        &#xA;        &lt;a href=&#34;&#34; onclick=Calendly.initPopupWidget({url:&amp;#32;&amp;#39;https://calendly.com/brzulovic&amp;#39;});return&amp;#32;false;&gt;Schedule time with me&lt;/a&gt;&#xA;    &#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&lt;div style=&#34;width: 90%;height: 200px;margin: 0 auto&#34;&gt;&#xA;    &lt;canvas id=&#34;4b1c4dcaef2a6cfc8dcc854bfd584ecd&#34;&gt;&lt;/canvas&gt;&#xA;&lt;/div&gt;&#xA;&lt;script src=&#34;https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min.js&#34;&gt;&lt;/script&gt;&#xA;&lt;script type=&#34;text/javascript&#34;&gt;&#xA;    var ctx = document.getElementById(&#39;4b1c4dcaef2a6cfc8dcc854bfd584ecd&#39;).getContext(&#39;2d&#39;);&#xA;    var options = &#xA;{&#xA;    type: &#39;bar&#39;,&#xA;    data: {&#xA;        labels: [&#39;Red&#39;, &#39;Blue&#39;, &#39;Yellow&#39;, &#39;Green&#39;, &#39;Purple&#39;, &#39;Orange&#39;],&#xA;        datasets: [{&#xA;            label: &#39;Bar Chart&#39;,&#xA;            data: [12, 19, 18, 16, 13, 14],&#xA;            backgroundColor: [&#xA;                &#39;rgba(255, 99, 132, 0.2)&#39;,&#xA;                &#39;rgba(54, 162, 235, 0.2)&#39;,&#xA;                &#39;rgba(255, 206, 86, 0.2)&#39;,&#xA;                &#39;rgba(75, 192, 192, 0.2)&#39;,&#xA;                &#39;rgba(153, 102, 255, 0.2)&#39;,&#xA;                &#39;rgba(255, 159, 64, 0.2)&#39;&#xA;            ],&#xA;            borderColor: [&#xA;                &#39;rgba(255, 99, 132, 1)&#39;,&#xA;                &#39;rgba(54, 162, 235, 1)&#39;,&#xA;                &#39;rgba(255, 206, 86, 1)&#39;,&#xA;                &#39;rgba(75, 192, 192, 1)&#39;,&#xA;                &#39;rgba(153, 102, 255, 1)&#39;,&#xA;                &#39;rgba(255, 159, 64, 1)&#39;&#xA;            ],&#xA;            borderWidth: 1&#xA;        }]&#xA;    },&#xA;    options: {&#xA;        maintainAspectRatio: false,&#xA;        scales: {&#xA;            yAxes: [{&#xA;                ticks: {&#xA;                    beginAtZero: true&#xA;                }&#xA;            }]&#xA;        }&#xA;    }&#xA;};&#xA;    new Chart(ctx, options);&#xA;&lt;/script&gt;</description>
       <content:encoded><![CDATA[
 
 
@@ -1591,11 +1591,11 @@ Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d i
 
 
 <div style="width: 90%;height: 200px;margin: 0 auto">
-    <canvas id="dcd6bcf44fc8dc4dcce5ae45c2fab818"></canvas>
+    <canvas id="4b1c4dcaef2a6cfc8dcc854bfd584ecd"></canvas>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min.js"></script>
 <script type="text/javascript">
-    var ctx = document.getElementById('dcd6bcf44fc8dc4dcce5ae45c2fab818').getContext('2d');
+    var ctx = document.getElementById('4b1c4dcaef2a6cfc8dcc854bfd584ecd').getContext('2d');
     var options = 
 {
     type: 'bar',

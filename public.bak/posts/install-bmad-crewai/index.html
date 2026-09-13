@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BrzulovicAi</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen">
+    
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    
+    <div class="container mx-auto px-4 py-12 max-w">
+        
+        <a href="/"
+            class="inline-flex items-center text-sm opacity-60 hover:opacity-100 transition-opacity mb-8">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Linktree
+        </a>
+
+        <article class="bg-white bg-opacity-5 backdrop-blur-lg rounded-3xl p-8 border border-white border-opacity-10">
+            <header class="mb-8">
+                <h1 class="text-4xl font-bold mb-4">full installation process with hello world type example for using BMAD Method and using CrewAI</h1>
+                <div class="flex items-center text-sm opacity-60 space-x-4">
+                    <span><i class="far fa-calendar-alt mr-2"></i>February 4, 2026</span>
+                    <span><i class="far fa-clock mr-2"></i>5 min read</span>
+                </div>
+                
+            </header>
+
+            <div
+                class="prose prose-invert max-w-none prose-h2:text-2xl prose-h3:text-xl prose-a:text-blue-400 hover:prose-a:underline">
+                <h2 id="getting-started-with-autonomous-agents-bmad-and-crewai---from-zero-to-hello-world">Getting Started with Autonomous Agents: BMAD and CrewAI - From Zero to &ldquo;Hello World&rdquo;</h2>
+<p>The world of AI is exploding, and one of the most exciting frontiers is autonomous agents. Imagine a team of AI assistants, each with specialized skills, collaborating to achieve a complex goal. That&rsquo;s the promise of frameworks like CrewAI, and methodologies like BMAD (Build, Measure, Analyze, Deploy) can help you structure your agent development process.</p>
+<p>This post will guide you through the full installation process, walking you through a simple &ldquo;Hello World&rdquo; type example to get you acquainted with CrewAI and thinking in terms of BMAD. Let&rsquo;s dive in!</p>
+<h3 id="what-is-crewai">What is CrewAI?</h3>
+<p>CrewAI is a framework for orchestrating multiple AI agents, allowing them to collaborate and accomplish complex tasks. Think of it as the conductor of an AI orchestra, ensuring each instrument (agent) plays its part harmoniously. CrewAI simplifies the process of defining agents, assigning roles, and managing their interactions.</p>
+<h3 id="bmad-a-practical-framework-for-agent-development">BMAD: A Practical Framework for Agent Development</h3>
+<p>Before we jump into code, let&rsquo;s talk BMAD. It&rsquo;s a simple yet powerful framework for iterative development, perfectly suited for AI agent projects:</p>
+<ul>
+<li><strong>Build:</strong> Create your initial CrewAI setup. This is our &ldquo;Hello World&rdquo; stage.</li>
+<li><strong>Measure:</strong> Observe the agent&rsquo;s performance. Does it actually produce the expected output?</li>
+<li><strong>Analyze:</strong> Identify areas for improvement. Is the agent too slow? Is its output inaccurate?</li>
+<li><strong>Deploy:</strong> Implement the improvements and repeat the cycle.</li>
+</ul>
+<p>This cyclical approach helps you refine your agents and teams over time.</p>
+<h3 id="installation-and-setup">Installation and Setup</h3>
+<p>Okay, let&rsquo;s get our hands dirty! Here&rsquo;s how to get CrewAI up and running:</p>
+<ol>
+<li>
+<p><strong>Install Python:</strong> Ensure you have Python 3.8 or higher installed. You can download it from <a class="link" href="https://www.python.org/downloads/"  target="_blank" rel="noopener"
+    >python.org</a>.</p>
+</li>
+<li>
+<p><strong>Create a Virtual Environment (Recommended):</strong>  Using a virtual environment keeps your project dependencies isolated.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m venv .venv
+</span></span><span style="display:flex;"><span>source .venv/bin/activate  <span style="color:#75715e"># On Linux/macOS</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># .venv\Scripts\activate  # On Windows</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Install CrewAI:</strong> Use pip to install the CrewAI package.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install crewai
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Install OpenAI (or your preferred LLM provider):</strong> CrewAI supports various Large Language Models (LLMs). We&rsquo;ll use OpenAI for this example. You&rsquo;ll also need an OpenAI API key.  Get one from <a class="link" href="https://platform.openai.com"  target="_blank" rel="noopener"
+    >platform.openai.com</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pip install openai
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Set your OpenAI API Key:</strong>  There are several ways to do this. The simplest is to set it as an environment variable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export OPENAI_API_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;YOUR_OPENAI_API_KEY&#34;</span>  <span style="color:#75715e"># On Linux/macOS</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># set OPENAI_API_KEY=YOUR_OPENAI_API_KEY  # On Windows</span>
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="hello-world-with-crewai-a-simple-greeting">Hello World with CrewAI: A Simple Greeting</h3>
+<p>Let&rsquo;s create a basic CrewAI setup that has a single agent whose only job is to say &ldquo;Hello World!&rdquo;. This will illustrate the core concepts of agent creation and task assignment.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> crewai <span style="color:#f92672">import</span> Crew, Agent, Task
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configure your LLM - replace with your key</span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>environ[<span style="color:#e6db74">&#34;OPENAI_API_KEY&#34;</span>] <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#34;OPENAI_API_KEY&#34;</span>)  <span style="color:#75715e"># Ensure your API key is set</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1. Build: Create the Agent</span>
+</span></span><span style="display:flex;"><span>greeting_agent <span style="color:#f92672">=</span> Agent(
+</span></span><span style="display:flex;"><span>    role<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The Greeter&#34;</span>,
+</span></span><span style="display:flex;"><span>    goal<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;To greet the world with enthusiasm.&#34;</span>,
+</span></span><span style="display:flex;"><span>    backstory<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A friendly AI assistant eager to spread positivity.&#34;</span>,
+</span></span><span style="display:flex;"><span>    verbose<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,  <span style="color:#75715e"># Set to True to see the agent&#39;s thought process</span>
+</span></span><span style="display:flex;"><span>    llm<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gpt-4&#34;</span>, <span style="color:#75715e"># Or gpt-3.5-turbo, etc.  Make sure you have access to it.</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2. Build: Create the Task</span>
+</span></span><span style="display:flex;"><span>greeting_task <span style="color:#f92672">=</span> Task(
+</span></span><span style="display:flex;"><span>    description<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Generate a simple &#39;Hello World!&#39; message.&#34;</span>,
+</span></span><span style="display:flex;"><span>    agent<span style="color:#f92672">=</span>greeting_agent,
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3. Build: Create the Crew</span>
+</span></span><span style="display:flex;"><span>hello_world_crew <span style="color:#f92672">=</span> Crew(
+</span></span><span style="display:flex;"><span>    agents<span style="color:#f92672">=</span>[greeting_agent],
+</span></span><span style="display:flex;"><span>    tasks<span style="color:#f92672">=</span>[greeting_task],
+</span></span><span style="display:flex;"><span>    verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, <span style="color:#75715e"># You can set this to be higher or lower.</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 4. Measure &amp; Deploy: Run the Crew and print the result!</span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> hello_world_crew<span style="color:#f92672">.</span>kickoff()
+</span></span><span style="display:flex;"><span>print(result)
+</span></span></code></pre></div><p><strong>Explanation:</strong></p>
+<ul>
+<li><strong>Agent:</strong>  We define an agent with a role, goal, and backstory. This helps the LLM understand its purpose. <code>verbose=True</code> will show you the agent&rsquo;s reasoning steps.</li>
+<li><strong>Task:</strong>  We create a task that instructs the agent to generate the &ldquo;Hello World!&rdquo; message.</li>
+<li><strong>Crew:</strong> We assemble a crew with the agent and the task.</li>
+<li><strong>kickoff():</strong>  This starts the crew, executing the task assigned to the agent.</li>
+<li><strong>Result:</strong> The result of the task is printed to the console.</li>
+</ul>
+<p><strong>Running the Code:</strong></p>
+<p>Save the code as a Python file (e.g., <code>hello_crewai.py</code>) and run it from your terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python hello_crewai.py
+</span></span></code></pre></div><p>You should see something like:</p>
+<pre tabindex="0"><code>Hello World!
+</code></pre><p>Congratulations! You&rsquo;ve successfully created your first CrewAI agent and run a simple task.</p>
+<h3 id="bmad-in-action">BMAD in Action</h3>
+<p>Let&rsquo;s see how BMAD applies to our simple example:</p>
+<ul>
+<li><strong>Build:</strong> We built the agent, task, and crew.</li>
+<li><strong>Measure:</strong> We observed that the agent correctly produced &ldquo;Hello World!&rdquo;.</li>
+<li><strong>Analyze:</strong>  In this simple example, there&rsquo;s not much to analyze. However, we <em>could</em> think about how to make the agent&rsquo;s greeting more personalized.</li>
+<li><strong>Deploy:</strong> We could modify the task to include the user&rsquo;s name and ask the agent to generate a personalized greeting:  &ldquo;Hello [Your Name] World!&rdquo;.</li>
+</ul>
+<p>This iterative process can be applied to much more complex scenarios.</p>
+<h3 id="next-steps">Next Steps</h3>
+<p>This &ldquo;Hello World&rdquo; example is just the beginning. Here are some ideas for exploring CrewAI further:</p>
+<ul>
+<li><strong>Multiple Agents:</strong> Create a crew with multiple agents, each with a different role (e.g., a researcher and a writer).</li>
+<li><strong>Tool Use:</strong> Equip your agents with tools that allow them to interact with the real world (e.g., search the internet, access databases).</li>
+<li><strong>More Complex Tasks:</strong> Tackle more challenging tasks that require collaboration and problem-solving.</li>
+<li><strong>Experiment with different LLMs:</strong> Try different LLMs beyond OpenAI.</li>
+</ul>
+<p>CrewAI, combined with a structured approach like BMAD, offers a powerful way to build sophisticated autonomous agent systems.  Start experimenting, and let the AI orchestra play!</p>
+<div class="my-6 p-4 rounded-xl border border-blue-400 bg-blue-400 bg-opacity-10 flex items-start">
+    <div class="mr-4 text-blue-400">
+        <i class="fas fa-info-circle text-xl"></i>
+    </div>
+    <div class="text-sm opacity-90 text-blue-100">
+	    Transparence IA
+Ce contenu a été partiellement rédigé ou structuré avec l aide d outils d intelligence artificielle, puis relu, corrigé et complété par l auteur avant publication.
+    </div>
+</div>
+
+
+            </div>
+        </article>
+
+        <footer class="mt-12 text-center text-xs opacity-40">
+            © 2026 Brzulovic Misel | Built with Hugo
+        </footer>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

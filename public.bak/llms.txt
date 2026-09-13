@@ -1,0 +1,264 @@
+# BrzulovicAi
+
+Base URL: /
+
+> ...
+
+# SECTION: CONTENT_INDEX
+
+## 5 essential Claude Code skills
+
+[URL](/posts/5-essential-claude-code-skills/)  
+Date: 2026-08-04
+
+Summary:
+The 5 essential Claude Code skills focus on encoding software engineering workflows directly into .claude/skills/ Markdown configurations. Rather than typing repetitive prompts, these skills enforce structured development loops, deep architecture analysis, and automated testing across your codebase.
+1. The &ldquo;Grill Me&rdquo; Plan Vetting Loop
+Core Purpose: Forces Claude to thoroughly interview you about a development plan before writing any code.
+How It Works: Restricts premature generation by making the AI ask rigorous, sequential clarifying questions.
+
+
+## homelab-coding-agents
+
+[URL](/posts/post-linkedin-homelab-coding-agents/)  
+Date: 2026-07-04
+
+Summary:
+🏠⚡ J&rsquo;ai 4 machines, 512 Mo de RAM sur les plus petites, et pourtant je fais tourner 5 coding agents différents en parallèle. Voici comment.
+Le contexte
+Depuis quelques mois je fais tourner un homelab de 4 nœuds sur mon réseau local (192.168.1.20/24) :
+2x Raspberry Pi Zero 2 (edge, ressources très contraintes) 2x serveurs (un Optiplex et un Inspiron reconditionnés, rôle compute) L&rsquo;objectif : arrêter de dépendre d&rsquo;un seul agent IA, d&rsquo;un seul fournisseur de modèle, ou d&rsquo;une seule machine. Un vrai mesh où chaque nœud a un rôle défini, où les harnesss de coding agents (Claude Code, Codex, OpenCode, Vibe) coexistent avec mon propre harness maison (Oh-My-PI, alias omp), et où les Pi Zero ne sont pas juste des porte-clés USB glorifiés.
+
+
+## litellmExample
+
+[URL](/posts/litellmexample/)  
+Date: 2026-06-24
+
+Summary:
+🚀 Level Up Your LLM Game with Litellm If you’ve ever felt like juggling multiple LLM APIs is a nightmare of authentication keys, rate limits, and versioning headaches, you’re not alone. Enter Litellm—the open-source gateway that turns a chaotic patchwork of providers into a single, coherent, and ultra‑smooth experience. In this post we’ll walk through:
+What Litellm actually is (and why it’s a game‑changer) How to get it up and running in minutes Real‑world code examples across popular languages Pro tips for scaling, monitoring, and cost‑optimizing Grab a coffee, and let’s dive in.
+
+
+## Free Harness use with liteLLM
+
+[URL](/posts/free-harness-use-with-litellm/)  
+Date: 2026-06-24
+
+Summary:
+Unlock the Power of Free‑Agent Harness with liteLLM – A Hands‑On Guide If you’ve been juggling multiple LLMs, chasing cost‑saving tricks, or just want a cleaner way to experiment with prompts, you’ve probably heard about free‑agent harnesses. When paired with liteLLM, that harness becomes a lightweight yet powerful engine that lets you route, cache, and fallback between dozens of models without writing a ton of boilerplate code.
+Below, I’ll walk you through why this combo is a game‑changer, show you a few practical patterns, and give you ready‑to‑run snippets you can drop into any Python project.
+
+
+## Free Agent Harness use with liteLLM
+
+[URL](/posts/free-agent-harness-use-with-litellm/)  
+Date: 2026-06-24
+
+Summary:
+Unlock the Power of Free‑Agent Harness with liteLLM – A Hands‑On Guide If you’ve been juggling multiple LLMs, chasing cost‑saving tricks, or just want a cleaner way to experiment with prompts, you’ve probably heard about free‑agent harnesses. When paired with liteLLM, that harness becomes a lightweight yet powerful engine that lets you route, cache, and fallback between dozens of models without writing a ton of boilerplate code.
+Below, I’ll walk you through why this combo is a game‑changer, show you a few practical patterns, and give you ready‑to‑run snippets you can drop into any Python project.
+
+
+## Conditions d’utilisation
+
+[URL](/conditions-d-utilisation/)  
+Date: 2026-03-26
+
+Summary:
+Conditions générales d’utilisation de [Nom de l’Application] Dernière mise à jour : 26 mars 2026
+Les présentes Conditions générales d’utilisation (« Conditions ») régissent l’accès et l’usage du site [URL du site] et de l’application web [Nom de l’Application] proposés par [Nom de l’Organisation]. En utilisant le Service, vous acceptez pleinement ces Conditions.
+1. Objet du Service [Nom de l’Application] est une application web permettant notamment de [décrire brièvement les fonctionnalités principales]. Le Service peut évoluer au fil du temps, avec ajout, modification ou suppression de fonctionnalités.
+
+
+## Politique de confidentialité
+
+[URL](/politique-de-confidentialite/)  
+Date: 2026-03-26
+
+Summary:
+Politique de confidentialité de [Nom de l’Application] Dernière mise à jour : 26 mars 2026
+La présente politique de confidentialité décrit de manière générale comment [Nom de l’Organisation] (« nous ») collecte, utilise, stocke, partage et protège les données lorsque vous utilisez le site [URL du site] et l’application web [Nom de l’Application], y compris lors de l’utilisation de la connexion avec votre compte Google.
+1. Responsable du traitement et contact Responsable : [Nom de l’Organisation / Personne] Adresse : [Adresse postale] E‑mail : [Adresse e‑mail de support] 2. Données collectées Nous pouvons collecter les catégories de données suivantes selon les fonctionnalités utilisées :
+
+
+## Backup and Purging Space
+
+[URL](/posts/backuping-purging-space/)  
+Date: 2026-03-08
+
+Summary:
+Optimiser le stockage: Stratégies de backup et de purge pour les équipes DevOps Pourquoi parler de backup et purge ? Dans un environnement DevOps, le volume de données générées (logs, artefacts, snapshots, bases de données …) explose rapidement.
+Coûts inutiles (cloud / on‑prem) Dégradation des performances (plus de I/O, temps de récupération) Risques de conformité (rétention excessive ou insuffisante) 1. Sauvegarde fiable: le golden copy automatisé Étape Outils / Exemple Bonnes pratiques Planification cron / GitHub Actions / GitLab CI Utiliser des jobs déclenchés à chaque merge ou chaque version stable. Création d’image docker commit, kubectl snapshot, Velero (K8s) Capturer l’état complet du conteneur/cluster, incluant les volumes persistants. Compression gzip, zstd, restic (--compression=auto) GZIP : +70 % de gain, ZSTD : meilleur ratio + vitesse. Chiffrement gpg, AWS KMS, Azure Key Vault Stocker les clés hors du même bucket que les backups. Stockage distant S3 (Life‑cycle), Azure Blob, Google Cloud Storage, MinIO (on‑prem) Activer le object‑versioning et la replication multi‑région. Verification restic snapshots, Velero restore --dry-run Test régulier de la restaurabilité : au moins un backup par mois. #!/usr/bin/env bash set -euo pipefail # Variables BACKUP_DIR=&#34;/var/www/myapp&#34; REPO=&#34;s3:s3.amazonaws.com/mybucket/backups&#34; PASSWORD=&#34;superSecretPass&#34; export RESTIC_PASSWORD=$PASSWORD # 1️⃣ Init repository (à faire une fois) # restic init -r $REPO # 2️⃣ Snapshot restic -r $REPO backup $BACKUP_DIR \ --exclude=&#34;*.log&#34; \ --exclude=&#34;cache/**&#34; \ --exclude=&#34;node_modules/**&#34; # 3️⃣ Forget + prune (conserver 7 derniers quotidiens, 4 hebdos, 12 mensuels) restic -r $REPO forget \ --keep-daily 7 \ --keep-weekly 4 \ --keep-monthly 12 \ --prune Astuce : intégrez ce script dans votre pipeline CI pour que chaque version tagged déclenche un backup automatisé.
+
+
+## free-llm-api-resources
+
+[URL](/posts/free-llm-api-resources/)  
+Date: 2026-03-08
+
+Summary:
+https://github.com/cheahjs/free-llm-api-resources/blob/main/README.md
+Free LLM API resources This lists various services that provide free access or credits towards API-based LLM usage.
+[!NOTE]
+Please don&rsquo;t abuse these services, else we might lose them.
+[!WARNING]
+This list explicitly excludes any services that are not legitimate (eg reverse engineers an existing chatbot)
+Free Providers OpenRouter Google AI Studio NVIDIA NIM Mistral (La Plateforme) Mistral (Codestral) HuggingFace Inference Providers Vercel AI Gateway OpenCode Zen Cerebras Groq Cohere GitHub Models Cloudflare Workers AI Providers with trial credits Fireworks Baseten Nebius Novita AI21 Upstage NLP Cloud Alibaba Cloud (International) Model Studio Modal Inference.net Hyperbolic SambaNova Cloud Scaleway Generative APIs Free Providers OpenRouter Limits:
+
+
+## hugo theme chart
+
+[URL](/posts/hugo-theme-scrap/)  
+Date: 2026-03-08
+
+Summary:
+ Schedule time with me 
+
+## test
+
+[URL](/posts/test/)  
+Date: 2026-02-19
+
+Summary:
+test write
+
+
+## Foo fighters (openrouter)
+
+[URL](/posts/foo-fighters-openrouter-/)  
+Date: 2026-02-04
+
+Summary:
+The Foo Fighters: More Than Just &ldquo;The Best of You&rdquo; Foo Fighters. The titans of modern rock. Dave Grohl, the ever-smiling frontman, a walking, talking, drumming embodiment of rock and roll enthusiasm. But beyond the catchy riffs and stadium anthems, lies a story of resilience, reinvention, and a relentless pursuit of musical joy.
+From Nirvana&rsquo;s Ashes: A New Dawn Let&rsquo;s face it: the shadow of Nirvana loomed large over Dave Grohl after Kurt Cobain&rsquo;s tragic passing. No one would have blamed him for retreating. Instead, he channeled his grief and creative energy into a new project. Armed with demos recorded almost entirely by himself, Grohl birthed Foo Fighters, a band initially intended as a cathartic exercise, not a global phenomenon. That rawness and authenticity are arguably what made their early material so compelling.
+
+
+## MoltWorker vs OpenClawd  (use H Heading )
+
+[URL](/posts/moltworker-vs-openclawd-use-h-heading-/)  
+Date: 2026-02-04
+
+Summary:
+The Cage Match You Didn&rsquo;t Know You Needed: MoltWorker vs OpenClawd The world of automated task management tools is getting increasingly crowded. Juggling deadlines, managing resources, and ensuring everything runs smoothly requires more than just spreadsheets and frantic emails. Enter MoltWorker and OpenClawd, two platforms vying for the crown of &ldquo;Best Automated Taskmaster.&rdquo; But which one deserves your allegiance? Let&rsquo;s break down this heavyweight battle and see who comes out on top.
+
+
+## MoltWorker vs OpenClawd 
+
+[URL](/posts/moltworker-vs-openclawd-/)  
+Date: 2026-02-04
+
+Summary:
+Let&rsquo;s dive into the exciting world of collaborative coding! Today, we&rsquo;re pitting two interesting contenders against each other: MoltWorker and OpenClawd. While these aren&rsquo;t necessarily direct competitors in the classic sense, they both offer innovative approaches to simplifying complex workflows, albeit from slightly different angles. So, grab your coffee (or your preferred coding fuel) and let&rsquo;s explore!
+MoltWorker: The Streamlined Automation Engine
+Imagine you&rsquo;re building a complex data processing pipeline. You need to run multiple tasks in parallel, manage dependencies, handle errors gracefully, and orchestrate the whole thing without ending up in a spaghetti code nightmare. That&rsquo;s where MoltWorker shines.
+
+
+## full installation process with hello world type example for using BMAD Method and using CrewAI
+
+[URL](/posts/install-bmad-crewai/)  
+Date: 2026-02-04
+
+Summary:
+Getting Started with Autonomous Agents: BMAD and CrewAI - From Zero to &ldquo;Hello World&rdquo; The world of AI is exploding, and one of the most exciting frontiers is autonomous agents. Imagine a team of AI assistants, each with specialized skills, collaborating to achieve a complex goal. That&rsquo;s the promise of frameworks like CrewAI, and methodologies like BMAD (Build, Measure, Analyze, Deploy) can help you structure your agent development process.
+This post will guide you through the full installation process, walking you through a simple &ldquo;Hello World&rdquo; type example to get you acquainted with CrewAI and thinking in terms of BMAD. Let&rsquo;s dive in!
+
+
+## admin.brzulovicai.ip-ddns.com
+
+[URL](/posts/admin/)  
+Date: 2026-01-31
+
+Summary:
+admin.brzulovicai.ip-ddns.com; https://admin.brzulovicai.ip-ddns.com/ https://admin.brzulovicai.ip-ddns.com/n8n/veille https://admin.brzulovicai.ip-ddns.com/n8n/prompts https://admin.brzulovicai.ip-ddns.com/n8n/log/ai https://admin.brzulovicai.ip-ddns.com/n8n/log/errors https://admin.brzulovicai.ip-ddns.com/n8n/cache https://admin.brzulovicai.ip-ddns.com/n8n/(.*) https://admin.brzulovicai.ip-ddns.com/.well-known/acme-challenge/ 
+
+## api.brzulovicai.ip-ddns.com
+
+[URL](/posts/api/)  
+Date: 2026-01-31
+
+Summary:
+api.brzulovicai.ip-ddns.com; https://api.brzulovicai.ip-ddns.com/@api_error https://api.brzulovicai.ip-ddns.com// https://api.brzulovicai.ip-ddns.com//baserow https://api.brzulovicai.ip-ddns.com//fabric/(.*) https://api.brzulovicai.ip-ddns.com//n8n/veille https://api.brzulovicai.ip-ddns.com//n8n/prompts https://api.brzulovicai.ip-ddns.com//n8n/log/ai https://api.brzulovicai.ip-ddns.com//n8n/log/errors https://api.brzulovicai.ip-ddns.com//n8n/cache https://api.brzulovicai.ip-ddns.com//.well-known/acme-challenge/ 
+
+## app, inpiron, optiplex
+
+[URL](/posts/todo/)  
+Date: 2026-01-31
+
+Summary:
+app.brzulovicai.ip-ddns.com; https://app.brzulovicai.ip-ddns.com/~ ^/(form|app) https://app.brzulovicai.ip-ddns.com// https://app.brzulovicai.ip-ddns.com//.well-known/acme-challenge/ https://app.brzulovicai.ip-ddns.com//hugo/ https://app.brzulovicai.ip-ddns.com//opencode/ https://app.brzulovicai.ip-ddns.com//www https://app.brzulovicai.ip-ddns.com//rpimonitor https://app.brzulovicai.ip-ddns.com//rpimonitor/zero2 https://app.brzulovicai.ip-ddns.com//rpimonitor/dietpi https://app.brzulovicai.ip-ddns.com//haproxy/dietpi https://app.brzulovicai.ip-ddns.com//haproxy/zero2 https://app.brzulovicai.ip-ddns.com//openwebui https://app.brzulovicai.ip-ddns.com//veille https://app.brzulovicai.ip-ddns.com//perplexity https://app.brzulovicai.ip-ddns.com/~ /form-.*/ https://app.brzulovicai.ip-ddns.com//fabric https://app.brzulovicai.ip-ddns.com//app https://app.brzulovicai.ip-ddns.com//whisper https://app.brzulovicai.ip-ddns.com//scrap https://app.brzulovicai.ip-ddns.com//prompts 
+
+## www.brzulovicai.ip-ddns.com
+
+[URL](/posts/www/)  
+Date: 2026-01-31
+
+Summary:
+www.brzulovicai.ip-ddns.com https://www.brzulovicai.ip-ddns.com/@notfound https://www.brzulovicai.ip-ddns.com// https://www.brzulovicai.ip-ddns.com//opencode/ https://www.brzulovicai.ip-ddns.com//fabric/(.*) https://www.brzulovicai.ip-ddns.com//openwebui https://www.brzulovicai.ip-ddns.com//notebook https://www.brzulovicai.ip-ddns.com//.well-known/acme-challenge/ 
+
+## My First Post
+
+[URL](/posts/my-first-post/)  
+Date: 2026-01-31
+
+Summary:
+Feature Showcase Welcome to the comprehensive demonstration of our custom Hugo shortcodes. These elements are designed to maintain the sleek, glassmorphism aesthetic of your site while providing rich content formatting options.
+1. Interaction Alerts Use these to highlight important information or warnings within your documentation or blog posts.
+Pro Tip: You can use standard Markdown inside these shortcodes, including bold, italics, and links. Attention: Ensure your config.toml structure matches the expected parameters for the partials to render correctly. 2. Dynamic Grids &amp; Icons The grid shortcode allows you to create responsive layouts. It&rsquo;s perfect for listing features, services, or project milestones.
+
+
+## Welcome
+
+[URL](/posts/welcome/)  
+Date: 2026-01-31
+
+Summary:
+Welcome to your new post!
+Note: This site uses the LucentLink-Hugo theme with custom glassmorphism effects. Here are some features of the platform:
+Agentic AI Powered by advanced agentic workflows for automation. 
+
+## Project Showcase
+
+[URL](/showcase/)  
+Date: 2026-01-31
+
+Summary:
+Feature Showcase Welcome to the comprehensive demonstration of our custom Hugo shortcodes. These elements are designed to maintain the sleek, glassmorphism aesthetic of your site while providing rich content formatting options.
+1. Interaction Alerts Use these to highlight important information or warnings within your documentation or blog posts.
+Pro Tip: You can use standard Markdown inside these shortcodes, including bold, italics, and links. Attention: Ensure your config.toml structure matches the expected parameters for the partials to render correctly. 2. Dynamic Grids &amp; Icons The grid shortcode allows you to create responsive layouts. It&rsquo;s perfect for listing features, services, or project milestones.
+
+
+## 
+
+[URL](/miselbrzulovic-dct-en/)
+
+Summary:
+Misel BRZULOVIC - DevOps &amp; QA Engineer | AI &amp; Automation Specialist 📍 Paris, France | 📧 brzulovic@gmail.com | 🔗 LinkedIn | 🐙 GitHub
+🚀 Professional Summary Senior DevOps &amp; QA Engineer with 20+ years of experience in automation, cloud infrastructure, and cybersecurity, specializing in industrializing testing processes and modernizing CI/CD pipelines.
+Recent AI &amp; Automation Expertise (2025-2026):
+AI Agent Development: Proficient with Pi Coding Agent for autonomous development, testing, and deployment Workflow Automation: Certified n8n Automation Professional with hands-on experience in low-code automation LLM Operations: Deployed Ollama + OpenWebUI with multiple models for AI-powered workflows Observability &amp; AI Integration: Implemented Grafana, Uptrace, and GCP Logging for AI-driven monitoring Cybersecurity Automation: Developed PowerShell scripts for IACS compliance and security patching Key Strengths: ✔ DevOps &amp; CI/CD Industrialization (Jenkins, Azure DevOps, GitHub Actions) ✔ Cloud &amp; Infrastructure as Code (AWS, GCP, Azure, Terraform, Kubernetes) ✔ Test Automation &amp; QA Strategy (Selenium, TestComplete, Bats, Python frameworks) ✔ AI &amp; Automation Tools (n8n, Pi Agent, Ollama, OpenWebUI) ✔ Cybersecurity &amp; Compliance (IACS, PowerShell automation, audit reporting) ✔ Multi-Cloud &amp; Hybrid Environments (Windows/Linux, z/OS, AS-400, IoT)
+
+
+## 
+
+[URL](/miselbrzulovic-dct-fr/)
+
+Summary:
+Points clés Savoir-faire et compétences mis en œuvre Intégration continue CI/CD Jenkins, AzureDevops, Bamboo, Github-actions, Gitlab-ci, Concourse, Dagger.io
+Cloud &amp; outils AWS, GCP, Azure, Terraform, Packer, Ansible Docker, Ansible, Boto Nginx, Haproxy, Apache, Lighttpd
+VM &amp; Containerisation Docker, Docker-compose, Vagrant, Virsh, Hyper-V, Virtualbox
+SGDB MongoDb, PostgreSQL, Oracle, Maria/Mysql, MS SqlServer
+Outils : Git, Redmine, Jira, Mantis, Testlink
+Languages Bash, Shell, Bats, Awk, Sed, Cron, Curl, Java, C, C++, Lua, Xml, Xhtml, Css, JS, Vbs, Json, Angular, VueJs, Golang, Python, Ruby, Php, Asp
+
+
+## 
+
+[URL](/posts/chat_cretealinkedinarticledevopscodecenteredaboutbackupingandpurgingdatasavespace/)
+
+Summary:
+💡 Optimiser le stockage : Stratégies de backup et de purge pour les équipes DevOps 🚀
+🎯 Pourquoi parler de backup &amp; purge ? Dans un environnement DevOps, le volume de données générées (logs, artefacts, snapshots, bases de données …) explose rapidement.
+Un stockage mal géré entraîne :
+Coûts inutiles (cloud / on‑prem) Dégradation des performances (plus de I/O, temps de récupération) Risques de conformité (rétention excessive ou insuffisante) Une politique équilibrée entre sauvegarde fiable et purge intelligente permet de garder le contrôle tout en libérant de l’espace.
+
