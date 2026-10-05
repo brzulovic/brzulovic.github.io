@@ -8,8 +8,24 @@
     <language>fr</language>
     <managingEditor>brzulovic@gmail.com</managingEditor>
     <webMaster>brzulovic@gmail.com</webMaster>
-    <lastBuildDate>Fri, 11 Sep 2026 15:35:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 11:00:44 +0000</lastBuildDate>
     <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Artificial Intelligence</title>
+      <link>/categories/artificial-intelligence/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/artificial-intelligence/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Productivity</title>
+      <link>/categories/productivity/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/categories/productivity/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
     <item>
       <title>Intelligence Artificielle</title>
       <link>/categories/intelligence-artificielle/</link>
@@ -39,14 +55,6 @@
       <link>/categories/business/</link>
       <pubDate>Tue, 08 Sep 2026 19:00:19 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/categories/business/</guid>
-      <description></description>
-      <content:encoded><![CDATA[]]></content:encoded>
-    </item>
-    <item>
-      <title>Artificial Intelligence</title>
-      <link>/categories/artificial-intelligence/</link>
-      <pubDate>Tue, 08 Sep 2026 18:33:53 +0000</pubDate><author>brzulovic@gmail.com</author>
-      <guid>/categories/artificial-intelligence/</guid>
       <description></description>
       <content:encoded><![CDATA[]]></content:encoded>
     </item>

@@ -6,6 +6,16 @@ Base URL: /
 
 # SECTION: CONTENT_INDEX
 
+## Claude Second Brain & Folder Workflow / Guide Complet : Système Second Cerveau avec Claude
+
+[URL](/scrapped/claude-second-brain-folder-workflow-guide/)  
+Date: 2026-10-05
+
+Summary:
+🇫🇷 Version Française Le concept de &ldquo;second cerveau&rdquo; peut sembler complexe, mais il s&rsquo;agit essentiellement d&rsquo;un ensemble de fichiers texte organisés, gérés par un fichier index qui guide l&rsquo;IA. Pas besoin d&rsquo;Obsidian ou de bases de données propriétaires ; tout repose sur du Markdown pur sur votre disque.
+Pourquoi les fichiers plats plutôt que les applications ? Les applications imposent souvent des formats propriétaires qui créent des frictions pour les agents IA. En utilisant du Markdown brut, vous garantissez une lisibilité maximale pour l&rsquo;IA.
+
+
 ## functiongemma.fine-tuning.function.calling
 
 [URL](/posts/functiongemma.un.slm.specialise.dans.le.function.calling/)  
@@ -179,6 +189,7 @@ The 5 essential Claude Code skills focus on encoding software engineering workfl
 1. The &ldquo;Grill Me&rdquo; Plan Vetting Loop
 Core Purpose: Forces Claude to thoroughly interview you about a development plan before writing any code.
 How It Works: Restricts premature generation by making the AI ask rigorous, sequential clarifying questions.
+Value: Uncovers hidden technical dependencies and map architecture flaws early in the design tree.
 
 
 ## misel Brzulovic DCT en
@@ -395,7 +406,7 @@ Date: 2026-01-31
 Summary:
 Welcome to your new post!
 Note: This site uses the LucentLink-Hugo theme with custom glassmorphism effects. Here are some features of the platform:
-Agentic AI Powered by advanced agentic workflows for automation. 
+Agentic AI Powered by advanced agentic workflows for automation. Fast Static Site Built with Hugo for blazing fast performance. 
 
 ## Project Showcase
 

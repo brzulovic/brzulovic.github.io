@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Claude on Mišel Brzulović - Senior QA DevOps Engineer</title>
+    <link>/tags/claude/</link>
+    <description>Recent content in Claude on Mišel Brzulović - Senior QA DevOps Engineer</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>fr</language>
+    <managingEditor>brzulovic@gmail.com</managingEditor>
+    <webMaster>brzulovic@gmail.com</webMaster>
+    <lastBuildDate>Mon, 05 Oct 2026 11:00:44 +0000</lastBuildDate>
+    <atom:link href="/tags/claude/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Claude Second Brain &amp; Folder Workflow / Guide Complet : Système Second Cerveau avec Claude</title>
+      <link>/scrapped/claude-second-brain-folder-workflow-guide/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/scrapped/claude-second-brain-folder-workflow-guide/</guid>
+      <description>&lt;h2 id=&#34;-version-française&#34;&gt;🇫🇷 Version Française&lt;/h2&gt;&#xA;&lt;p&gt;Le concept de &amp;ldquo;second cerveau&amp;rdquo; peut sembler complexe, mais il s&amp;rsquo;agit essentiellement d&amp;rsquo;un ensemble de fichiers texte organisés, gérés par un fichier index qui guide l&amp;rsquo;IA. Pas besoin d&amp;rsquo;Obsidian ou de bases de données propriétaires ; tout repose sur du Markdown pur sur votre disque.&lt;/p&gt;&#xA;&lt;h3 id=&#34;pourquoi-les-fichiers-plats-plutôt-que-les-applications-&#34;&gt;Pourquoi les fichiers plats plutôt que les applications ?&lt;/h3&gt;&#xA;&lt;p&gt;Les applications imposent souvent des formats propriétaires qui créent des frictions pour les agents IA. En utilisant du Markdown brut, vous garantissez une lisibilité maximale pour l&amp;rsquo;IA.&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h2 id="-version-française">🇫🇷 Version Française</h2>
+<p>Le concept de &ldquo;second cerveau&rdquo; peut sembler complexe, mais il s&rsquo;agit essentiellement d&rsquo;un ensemble de fichiers texte organisés, gérés par un fichier index qui guide l&rsquo;IA. Pas besoin d&rsquo;Obsidian ou de bases de données propriétaires ; tout repose sur du Markdown pur sur votre disque.</p>
+<h3 id="pourquoi-les-fichiers-plats-plutôt-que-les-applications-">Pourquoi les fichiers plats plutôt que les applications ?</h3>
+<p>Les applications imposent souvent des formats propriétaires qui créent des frictions pour les agents IA. En utilisant du Markdown brut, vous garantissez une lisibilité maximale pour l&rsquo;IA.</p>
+<h3 id="la-structure-recommandée">La structure recommandée</h3>
+<p>Utilisez trois dossiers principaux :</p>
+<ul>
+<li><code>notes/</code> : Entrées spécifiques à un sujet.</li>
+<li><code>people/</code> : Fiches de contacts ou entreprises.</li>
+<li><code>projects/</code> : État d&rsquo;avancement de vos projets actuels.</li>
+</ul>
+<h3 id="le-rôle-du-fichier-claudemd">Le rôle du fichier CLAUDE.md</h3>
+<p>Ce fichier est le système nerveux de votre second cerveau. Placé à la racine, il indique à l&rsquo;agent comment interpréter votre structure. Si vous utilisez <em>Claude Code</em>, ce fichier est automatiquement chargé dans le prompt système.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span># Guide de navigation
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> @MEMORY.md : Contexte global
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> @projects/ : Projets actifs
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> @notes/ : Base de connaissances
+</span></span></code></pre></div><h2 id="-english-version">🇬🇧 English Version</h2>
+<p>Building a &ldquo;second brain&rdquo; doesn&rsquo;t require complex software. It is simply a collection of flat .md files organized in folders, managed by a single <code>CLAUDE.md</code> index file that acts as a compass for your AI agent.</p>
+<h3 id="the-principle-flat-files-over-apps">The Principle: Flat Files Over Apps</h3>
+<p>Proprietary apps often create friction. An AI agent performs best when it can read plain text files directly from your disk without intermediate layers. Flat Markdown is accessible, universal, and perfectly readable by any agent.</p>
+<h3 id="recommended-directory-skeleton">Recommended Directory Skeleton</h3>
+<ul>
+<li><code>notes/</code>: Topic-specific entries. Keep one topic per file.</li>
+<li><code>people/</code>: Cards for contacts, companies, or meeting notes.</li>
+<li><code>projects/</code>: Current status, paused work, and next steps.</li>
+</ul>
+<h3 id="claudemd-the-map">CLAUDE.md: The Map</h3>
+<p>This file is the nervous system of your setup. It tells the agent how to navigate your files. By using <code>CLAUDE.md</code> at the root, tools like <em>Claude Code</em> automatically ingest your custom instructions and context on startup.</p>
+<h3 id="pro-tip-leveraging--connections">Pro-Tip: Leveraging @-Connections</h3>
+<p>Reference your core files directly in the index using <code>@</code> paths to ensure the agent keeps your critical context in its active memory.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span># Knowledge Map
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Refer to @MEMORY.md for core principles.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Projects are located in @projects/.
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> Always check @decisions.md before concluding a task.
+</span></span></code></pre></div>]]></content:encoded>
+    </item>
+  </channel>
+</rss>

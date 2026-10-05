@@ -8,10 +8,50 @@
     <language>fr</language>
     <managingEditor>brzulovic@gmail.com</managingEditor>
     <webMaster>brzulovic@gmail.com</webMaster>
-    <lastBuildDate>Fri, 11 Sep 2026 15:35:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Oct 2026 11:00:44 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AI</title>
+      <title>Automation</title>
+      <link>/tags/automation/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/automation/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Claude</title>
+      <link>/tags/claude/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/claude/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Markdown</title>
+      <link>/tags/markdown/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/markdown/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Second Brain</title>
+      <link>/tags/second-brain/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/second-brain/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Workflow</title>
+      <link>/tags/workflow/</link>
+      <pubDate>Mon, 05 Oct 2026 11:00:44 +0000</pubDate><author>brzulovic@gmail.com</author>
+      <guid>/tags/workflow/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    <item>
+      <title>Ai</title>
       <link>/tags/ai/</link>
       <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/tags/ai/</guid>
@@ -23,14 +63,6 @@
       <link>/tags/alegriagroup/</link>
       <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/tags/alegriagroup/</guid>
-      <description></description>
-      <content:encoded><![CDATA[]]></content:encoded>
-    </item>
-    <item>
-      <title>Automation</title>
-      <link>/tags/automation/</link>
-      <pubDate>Fri, 11 Sep 2026 15:35:15 +0000</pubDate><author>brzulovic@gmail.com</author>
-      <guid>/tags/automation/</guid>
       <description></description>
       <content:encoded><![CDATA[]]></content:encoded>
     </item>
@@ -323,7 +355,7 @@
       <content:encoded><![CDATA[]]></content:encoded>
     </item>
     <item>
-      <title>Local-LLM</title>
+      <title>Local LLM</title>
       <link>/tags/local-llm/</link>
       <pubDate>Sun, 23 Aug 2026 00:05:46 +0000</pubDate><author>brzulovic@gmail.com</author>
       <guid>/tags/local-llm/</guid>
