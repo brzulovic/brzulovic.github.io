@@ -58,6 +58,18 @@ L&rsquo;idée : le développeur écrit naturellement ce qu&rsquo;il cherche, et 
 snippetgemma/ ├── templates/ │ ├── python/ │ │ ├── requests.py │ │ ├── fastapi.py │ │ └── pytest.py │ ├── javascript/ │ │ ├── fetch.js │ │ └── express.js │ └── docker/ │ └── dockerfile │ ├── dataset/ │ ├── train.jsonl │ └── test.jsonl │ ├── evaluate.py └── app.py Le développeur peut demander :
 
 
+## Misel BRZULOVIC
+
+[URL](/miselbrzulovic-dct-fr/)  
+Date: 2026-09-17
+
+Summary:
+- DevOps &amp; QA Engineer | AI &amp; Automation Specialist - 📍 Paris, France | 📧 brzulovic@gmail.com | 🔗 LinkedIn | 🐙 GitHub | 🐙 GitHub | 🐙 GitHub
+Points clés Savoir-faire et compétences mis en œuvre Intégration continue CI/CD Jenkins, AzureDevops, Bamboo, Github-actions, Gitlab-ci, Concourse, Dagger.io
+Cloud &amp; outils AWS, GCP, Azure, Terraform, Packer, Ansible Docker, Ansible, Boto Nginx, Haproxy, Apache, Lighttpd
+VM &amp; Containerisation Docker, Docker-compose, Vagrant, Virsh, Hyper-V, Virtualbox
+
+
 ## Maîtriser les Super-Agents IA : Session de Questions-Réponses / Mastering AI Super-Agents: Q&A Session
 
 [URL](/scrapped/maitriser-super-agents-ia-session-qa/)  
@@ -192,30 +204,20 @@ How It Works: Restricts premature generation by making the AI ask rigorous, sequ
 Value: Uncovers hidden technical dependencies and map architecture flaws early in the design tree.
 
 
-## misel Brzulovic DCT en
+## Misel BRZULOVIC
 
 [URL](/miselbrzulovic-dct-en/)  
 Date: 2026-07-26
 
 Summary:
-Misel BRZULOVIC - DevOps &amp; QA Engineer | AI &amp; Automation Specialist 📍 Paris, France | 📧 brzulovic@gmail.com | 🔗 LinkedIn | 🐙 GitHub
+- DevOps &amp; QA Engineer | AI &amp; Automation Specialist - 📍 Paris, France | 📧 brzulovic@gmail.com | 🔗 LinkedIn | 🐙 GitHub | 🐙 GitHub | 🐙 GitHub
 🚀 Professional Summary Senior DevOps &amp; QA Engineer with 20+ years of experience in automation, cloud infrastructure, and cybersecurity, specializing in industrializing testing processes and modernizing CI/CD pipelines.
 Recent AI &amp; Automation Expertise (2025-2026):
-AI Agent Development: Proficient with Pi Coding Agent for autonomous development, testing, and deployment Workflow Automation: Certified n8n Automation Professional with hands-on experience in low-code automation LLM Operations: Deployed Ollama + OpenWebUI with multiple models for AI-powered workflows Observability &amp; AI Integration: Implemented Grafana, Uptrace, and GCP Logging for AI-driven monitoring Cybersecurity Automation: Developed PowerShell scripts for IACS compliance and security patching Key Strengths: ✔ DevOps &amp; CI/CD Industrialization (Jenkins, Azure DevOps, GitHub Actions) ✔ Cloud &amp; Infrastructure as Code (AWS, GCP, Azure, Terraform, Kubernetes) ✔ Test Automation &amp; QA Strategy (Selenium, TestComplete, Bats, Python frameworks) ✔ AI &amp; Automation Tools (n8n, Pi Agent, Ollama, OpenWebUI) ✔ Cybersecurity &amp; Compliance (IACS, PowerShell automation, audit reporting) ✔ Multi-Cloud &amp; Hybrid Environments (Windows/Linux, z/OS, AS-400, IoT)
-
-
-## misel Brzulovic DCT fr
-
-[URL](/miselbrzulovic-dct-fr/)  
-Date: 2026-07-26
-
-Summary:
-Points clés Savoir-faire et compétences mis en œuvre Intégration continue CI/CD Jenkins, AzureDevops, Bamboo, Github-actions, Gitlab-ci, Concourse, Dagger.io
-Cloud &amp; outils AWS, GCP, Azure, Terraform, Packer, Ansible Docker, Ansible, Boto Nginx, Haproxy, Apache, Lighttpd
-VM &amp; Containerisation Docker, Docker-compose, Vagrant, Virsh, Hyper-V, Virtualbox
-SGDB MongoDb, PostgreSQL, Oracle, Maria/Mysql, MS SqlServer
-Outils : Git, Redmine, Jira, Mantis, Testlink
-Languages Bash, Shell, Bats, Awk, Sed, Cron, Curl, Java, C, C++, Lua, Xml, Xhtml, Css, JS, Vbs, Json, Angular, VueJs, Golang, Python, Ruby, Php, Asp
+AI Agent Development: Proficient with Pi Coding Agent for autonomous development, testing, and deployment
+Workflow Automation: n8n Automation Professional with hands-on experience in low-code automation
+LLM Operations: Deployed Ollama + OpenWebUI with multiple models for AI-powered workflows
+Observability &amp; AI Integration: Implemented Grafana, Uptrace, and GCP Logging for AI-driven monitoring
+Cybersecurity Automation: Developed PowerShell scripts for IACS compliance and security patching
 
 
 ## homelab-coding-agents
